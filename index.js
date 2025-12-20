@@ -1,11 +1,27 @@
 const { app, BrowserWindow } = require('electron')
+const electron = require('electron')
 
 const createWindow = () => {
   const win = new BrowserWindow({
-    width: 800,
-    height: 600
-  })
+    width : 960,
+    height : 540,
+    minWidth : 360,
+    minHeight : 270,
+    resizable : true,
+    frame: false,
+    darkTheme : true,
+    icon : "./assets/images/icons/app.ico",
+    webPreferences : [
 
+    ]
+  })
+  let position = determine_screen_with_pointer_center()
+  position = {
+    x: parseInt(position.x - win.getSize()[0] / 2.0),
+    y: parseInt(position.y - win.getSize()[1] / 2.0)
+  }
+  win.setPosition(position.x, position.y)
+//   win.maximize()
   win.loadFile('index.html')
 }
 
@@ -16,3 +32,11 @@ app.whenReady().then(() => {
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit()
 })
+
+function determine_screen_with_pointer_center() {
+    // get config if user wants app loaded specific way
+    let pointer_location = electron.screen.getCursorScreenPoint()
+    let screen_data = electron.screen.getDisplayNearestPoint(pointer_location)
+    let screen_center = {x: screen_data.bounds.x + screen_data.bounds.width/2.0, y: screen_data.bounds.y + screen_data.bounds.height/2.0}
+    return screen_center
+}
