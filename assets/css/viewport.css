@@ -3,40 +3,47 @@
     display : flex;
     flex-direction : column;
     height: 100%;
+    width : 100dvw;
+    /* overflow: visible; */
 }
 
 #tab-bar {
+    position: relative;
     display: flex;
     flex-direction: row;
     height: 30px;
-    width: 100%;
     gap : 2px;
     border-bottom : 2px solid var(--var-color-theme-dark);
     box-sizing: border-box;
     transition-duration : var(--var-transition-duration);
-    
+    width: fit-content;
+    min-width: 100dvw;
 }
 
 
+
 .tab {
-    /* flex-grow: 2; */
-    text-align: center;
+    text-align: left;
     line-height: 26px;
     background : var(--var-color-theme-darkest);
     border: 2px solid var(--var-color-theme-dark);
     height: 28px;
     box-sizing: border-box;
     transition-duration : var(--var-transition-duration);
-    border-bottom: 0px solid transparent;
-    /* transition-property: width, border-color; */
-    width: 200px;
+    border-bottom: 0px solid var(--var-color-theme-darkest);
+    min-width: 200px;
+    white-space: nowrap;
+    z-index: 2;
+    padding-left : 4px;
+    padding-right : 4px;
 }
 
 .active-tab {
     /* background: linear-gradient(var(--var-color-theme-dark), var(--var-color-theme-darkest)); */
     background : var(--var-color-theme-darkest);
-    color : var(--var-color-theme-text);
+    color : var(--var-color-theme-text-dark);
     height: 30px;
+    position: relative;
 }
 
 .active-tab:hover #projects {

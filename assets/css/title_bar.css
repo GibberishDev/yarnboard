@@ -56,8 +56,8 @@
 
 .title-bar-button svg {
     transition-duration: var(--var-transition-duration);
-    fill: var(--var-color-theme-text);
-    stroke: var(--var-color-theme-text);
+    fill: var(--var-color-theme-text-dark);
+    stroke: var(--var-color-theme-text-dark);
 }
 
 .title-bar-button:hover svg {
