@@ -7,7 +7,7 @@
     background: var(--var-color-theme-darkest);
     fill: var(--var-color-theme-dark);
     stroke: var(--var-color-theme-dark);
-    transition-duration: 150ms;
+    transition-duration: var(--var-transition-duration);
     gap: 2px;
     z-index: 1;
 }
@@ -33,7 +33,7 @@
     line-height: 26px;
     user-select: none;
     -webkit-user-select: none;
-    transition-duration: 150ms;
+    transition-duration: var(--var-transition-duration);
     font-weight: 700;
     border: 2px solid var(--var-color-theme-dark);
     box-sizing: border-box;
@@ -44,7 +44,7 @@
     width: 45px;
     height: 100%;
     cursor: pointer;
-    transition-duration: 150ms;
+    transition-duration: var(--var-transition-duration);
     z-index: 2;
     user-select: none;
     -webkit-user-select: none;
@@ -55,9 +55,9 @@
 }
 
 .title-bar-button svg {
-    transition-duration: 150ms;
-    fill: var(--var-color-theme-dark);
-    stroke: var(--var-color-theme-dark);
+    transition-duration: var(--var-transition-duration);
+    fill: var(--var-color-theme-text);
+    stroke: var(--var-color-theme-text);
 }
 
 .title-bar-button:hover svg {

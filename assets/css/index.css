@@ -1,6 +1,7 @@
 @import url(./variables.css);
 @import url(./title_bar.css);
 @import url(./status_bar.css);
+@import url(./viewport.css);
 
 * {
     font-family: var(--var-font-regular);
@@ -34,9 +35,7 @@ body {
     overflow : hidden;
     scrollbar-width : none;
     text-align : end;
-
-    border: 2px solid var(--var-color-theme-dark);
-    box-sizing: border-box;
+    gap : 2px
 }
 
 #main-body::-webkit-scrollbar {
