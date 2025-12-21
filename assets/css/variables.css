@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap'); /*TODO: Download fonts to have offline app look alright*/
+@import url('https://fonts.googleapis.com/css2?family=Covered+By+Your+Grace&display=swap');
+
+:root {
+    --var-outline-width: 5px;
+    --var-selection-rect-inactive: all;
+
+    --var-font-regular: "space grotesk";
+    --var-font-handwritten: "Covered By Your Grace";
+
+    --var-color-close: #e81123;
+    
+    --var-color-theme-darkest: #0d0d0d;
+    --var-color-theme-dark: #333333;
+    --var-color-theme-text-dark: #595959;
+    --var-color-theme-text: #a6a6a6;
+    --var-color-theme-accent: #1d6600;
+    --var-color-theme-accent-bright: #33b300;
+}

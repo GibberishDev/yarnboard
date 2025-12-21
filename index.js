@@ -1,7 +1,10 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, ipcMain } = require('electron')
 const electron = require('electron')
+const PATH = require('path')
 
-const createWindow = () => {
+let mainWindow;
+
+function createWindow() {
   const win = new BrowserWindow({
     width : 960,
     height : 540,
@@ -11,9 +14,11 @@ const createWindow = () => {
     frame: false,
     darkTheme : true,
     icon : "./assets/images/icons/app.ico",
-    webPreferences : [
-
-    ]
+    webPreferences : {
+      nodeIntegration: true,
+      contextIsolation: true,
+      preload: PATH.join(__dirname,"preload.js") 
+    }
   })
   let position = determine_screen_with_pointer_center()
   position = {
@@ -23,10 +28,11 @@ const createWindow = () => {
   win.setPosition(position.x, position.y)
 //   win.maximize()
   win.loadFile('index.html')
+  return win
 }
 
 app.whenReady().then(() => {
-  createWindow()
+  mainWindow = createWindow()
 })
 
 app.on('window-all-closed', () => {
@@ -39,4 +45,23 @@ function determine_screen_with_pointer_center() {
     let screen_data = electron.screen.getDisplayNearestPoint(pointer_location)
     let screen_center = {x: screen_data.bounds.x + screen_data.bounds.width/2.0, y: screen_data.bounds.y + screen_data.bounds.height/2.0}
     return screen_center
+}
+
+ipcMain.on('toggle-maximize', toggleMaximize)
+ipcMain.on('minimize', minimize)
+ipcMain.on('close', close)
+
+function toggleMaximize() {
+  if (mainWindow.isMaximized()) {
+    mainWindow.restore()
+  } else {
+    mainWindow.maximize()
+  }
+}
+function minimize() {
+  mainWindow.minimize()
+}
+function close() {
+  // TODO: implement confirmations and proper shutdown procedure
+  mainWindow.close()
 }

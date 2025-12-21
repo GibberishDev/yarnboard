@@ -1,0 +1,49 @@
+@import url(./variables.css);
+@import url(./title_bar.css);
+@import url(./status_bar.css);
+
+* {
+    font-family: var(--var-font-regular);
+    margin: 0;
+    user-select: none;
+    -webkit-user-select: none;
+    color: var(--var-color-theme-text-dark);
+}
+
+img {
+    user-select: none;
+    pointer-events: none;
+}
+
+body {
+    background: var(--var-color-theme-darkest);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    margin: 0px;
+    height: 100dvh;
+    gap : 2px;
+}
+
+#main-body {
+    width : 100%;
+    height : 100%;
+    display : flex;
+    flex-direction : row;
+    align-items : center;
+    overflow : hidden;
+    scrollbar-width : none;
+    text-align : end;
+
+    border: 2px solid var(--var-color-theme-dark);
+    box-sizing: border-box;
+}
+
+#main-body::-webkit-scrollbar {
+    display: none;
+}
+
+.no {
+    cursor: not-allowed;
+    color: var(--var-color-theme-text-dark);
+}
