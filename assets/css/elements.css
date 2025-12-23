@@ -1,0 +1,53 @@
+@import url(./variables.css);
+
+:root {
+    --outline-scale: 1.0;
+}
+
+.element {
+    pointer-events: var(--var-selection-rect-inactive) !important;
+}
+
+.selected:not(.pin-element) {
+    outline: calc(2px * var(--outline-scale)) solid var(--var-color-theme-accent-bright);
+    outline-offset: calc(2px * var(--outline-scale));
+    outline-style: dashed;
+}
+
+#selection-rect {
+    position: fixed;
+    background: rgb(from var(--var-color-theme-accent-bright) r g b / 0.25);
+    outline: calc(1px * var(--outline-scale)) dashed var(--var-color-theme-accent-bright);
+    display: none;
+    width: 10px;
+    height: 10px;
+    pointer-events: none;
+    z-index: 1;
+}
+
+
+.pin-element {
+    position: absolute;
+    aspect-ratio: 1 / 1.5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    fill: var(--var-color-theme-accent);
+    transform-origin: 50% 100%;
+    translate: -50% -100%;
+}
+
+@keyframes speen {
+    0% {rotate: 0deg;}
+    100% {rotate: 360deg;}
+    
+}
+
+.pin-element.selected {
+    stroke: var(--var-color-theme-accent-bright);
+
+}
+.pin-element svg {
+    flex-grow: 1;
+    height: 100%;
+}

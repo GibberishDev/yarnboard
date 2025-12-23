@@ -2,9 +2,20 @@
 <head>
     <meta charset="UTF-16">
     <title>Yarnboard - unsaved •</title>
-    <link rel="stylesheet" href="./assets/css/index.css">
+
+    <!-- region Styles -->
+      <link rel="stylesheet" href="./assets/css/variables.css">
+      <link rel="stylesheet" href="./assets/css/title_bar.css">
+      <link rel="stylesheet" href="./assets/css/status_bar.css">
+      <link rel="stylesheet" href="./assets/css/viewport.css">
+      <link rel="stylesheet" href="./assets/css/index.css">
+    <!-- endregion -->
+
+    <!-- region Scripts -->
     <script defer src="./src/scripts/title_bar.js"></script>
-    <script defer src="./src/scripts/file_system.js"></script>
+    <script defer src="./src/scripts/window_manager.js"></script>
+    <!-- endregion -->
+
 </head>
 <body>
     <div id="title-bar-container">
@@ -82,13 +93,10 @@
     </div>
     <div id="main-body">
         <div id="sidebar" style="display: none;"></div>
-        <div id="project-container">
+        <div id="window-container">
           <div id="tab-bar">
           </div>
-          <div id="projects">
-            <!-- <div class="viewport-vignette"></div> -->
-            <div id="project-id-0" class="viewport current"></div>
-            <div id="project-id-1" class="viewport"></div>
+          <div id="viewports">
           </div>
         </div>
     </div>

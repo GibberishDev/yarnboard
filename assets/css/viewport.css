@@ -1,4 +1,4 @@
-#project-container {
+#window-container {
     flex-grow : 1;
     display : flex;
     flex-direction : column;
@@ -36,20 +36,22 @@
     z-index: 2;
     padding-left : 4px;
     padding-right : 4px;
+    color : var(--var-color-theme-text-dark)
 }
 
 .active-tab {
     /* background: linear-gradient(var(--var-color-theme-dark), var(--var-color-theme-darkest)); */
     background : var(--var-color-theme-darkest);
-    color : var(--var-color-theme-text-dark);
+    color : var(--var-color-theme-text);
     height: 30px;
     position: relative;
+    text-shadow: 0px 0px 2px var(--var-color-theme-text);
 }
 
 .active-tab:hover #projects {
     border-color : var(--var-color-theme-accent);
 }
-
+ 
 .tab:hover:not(.active-tab) {
     border-color : var(--var-color-theme-accent);
     color : var(--var-color-theme-accent-bright);
@@ -58,43 +60,41 @@
 .viewport {
     width: 100%;
     height: 100%;
-    box-shadow: 0 0 10px var(--var-color-theme-darkest) inset, 0 0 10px var(--var-color-theme-darkest) inset, 0 0 10px var(--var-color-theme-darkest) inset, 0 0 10px var(--var-color-theme-darkest) inset, 0 0 10px var(--var-color-theme-darkest) inset, 0 0 10px var(--var-color-theme-darkest) inset;
 }
-.viewport:not(.current) {
+.viewport:not(.current-viewport) {
     display: none;
 }
 
-#projects {
+#viewports {
     transition-duration : var(--var-transition-duration);
     flex-grow : 1;
     box-sizing : border-box;
     border : 2px solid var(--var-color-theme-dark);
     border-top : 0px solid transparent;
 }
-
 #tab-bar.hidden {
     display: none;
 }
-#project-container:has(#tab-bar.hidden) #projects {
+#window-container:has(#tab-bar.hidden) #viewports {
     border-top: 2px solid var(--var-color-theme-dark)
 }
-#project-container:has(#projects:hover) > #tab-bar{
+#window-container:has(#viewports:hover) > #tab-bar{
     border-color : var(--var-color-theme-accent);
 }
-#project-container:has(#projects:hover) > #projects{
+#window-container:has(#viewports:hover) > #viewports{
     border-color : var(--var-color-theme-accent);
 }
-#project-container:has(#projects:hover) .active-tab{
+#window-container:has(#viewports:hover) .active-tab{
     border-color : var(--var-color-theme-accent);
     color : var(--var-color-theme-accent-bright);
 }
-#project-container:has(.active-tab:hover) > #tab-bar{
+#window-container:has(.active-tab:hover) > #tab-bar{
     border-color : var(--var-color-theme-accent);
 }
-#project-container:has(.active-tab:hover) > #projects{
+#window-container:has(.active-tab:hover) > #viewports{
     border-color : var(--var-color-theme-accent);
 }
-#project-container:has(.active-tab:hover) .active-tab{
+#window-container:has(.active-tab:hover) .active-tab{
     border-color : var(--var-color-theme-accent);
     color : var(--var-color-theme-accent-bright);
 }

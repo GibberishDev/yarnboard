@@ -1,7 +1,4 @@
-@import url(./variables.css);
-@import url(./title_bar.css);
-@import url(./status_bar.css);
-@import url(./viewport.css);
+
 
 * {
     font-family: var(--var-font-regular);
