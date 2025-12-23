@@ -77,11 +77,17 @@ function scrollToTab(id) {
     var tabLeftOffest = document.querySelector("#tab-id-" + id).offsetLeft
     var tabRightOffest = tabLeftOffest + tabRect.width
     var wishScroll = 0
-    if ((tabRightOffest-currentScroll) >= (containerBoundingRect.width + 2)) {
+    var isToRight = (tabRightOffest-currentScroll) >= (containerBoundingRect.width + 2)
+    var isToLeft = tabLeftOffest < currentScroll
+    console.log(isToLeft, isToRight)
+    if (!isToLeft && !isToRight) {
+        return
+    }
+    if (isToRight) {
         console.log("Right ", tabLeftOffest, tabRightOffest, currentScroll, containerBoundingRect.width)
         wishScroll = tabLeftOffest + tabRect.width - containerBoundingRect.width
     }
-    if (tabLeftOffest < currentScroll) {
+    if (isToLeft) {
         console.log("Left ", tabRightOffest, currentScroll)
         wishScroll = tabLeftOffest
     }
