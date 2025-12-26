@@ -36,7 +36,10 @@
     z-index: 2;
     padding-left : 4px;
     padding-right : 4px;
-    color : var(--var-color-theme-text-dark)
+    color : var(--var-color-theme-text-dark);
+    display: flex;
+    align-items: center;
+    flex-direction: row;
 }
 
 .active-tab {
@@ -65,7 +68,7 @@
     display: none;
 }
 
-#viewports {
+#viewport {
     transition-duration : var(--var-transition-duration);
     flex-grow : 1;
     box-sizing : border-box;
@@ -75,26 +78,72 @@
 #tab-bar.hidden {
     display: none;
 }
-#window-container:has(#tab-bar.hidden) #viewports {
+#window-container:has(#tab-bar.hidden) #viewport {
     border-top: 2px solid var(--var-color-theme-dark)
 }
-#window-container:has(#viewports:hover) > #tab-bar{
+#window-container:has(#viewport:hover) > #tab-bar{
     border-color : var(--var-color-theme-accent);
 }
-#window-container:has(#viewports:hover) > #viewports{
+#window-container:has(#viewport:hover) > #viewport{
     border-color : var(--var-color-theme-accent);
 }
-#window-container:has(#viewports:hover) .active-tab{
+#window-container:has(#viewport:hover) .active-tab{
     border-color : var(--var-color-theme-accent);
     color : var(--var-color-theme-accent-bright);
+    text-shadow: 0px 0px 2px var(--var-color-theme-accent-bright);
 }
 #window-container:has(.active-tab:hover) > #tab-bar{
     border-color : var(--var-color-theme-accent);
 }
-#window-container:has(.active-tab:hover) > #viewports{
+#window-container:has(.active-tab:hover) > #viewport{
     border-color : var(--var-color-theme-accent);
 }
 #window-container:has(.active-tab:hover) .active-tab{
     border-color : var(--var-color-theme-accent);
     color : var(--var-color-theme-accent-bright);
+    text-shadow: 0px 0px 2px var(--var-color-theme-accent-bright);
+}
+
+.tab-title {
+    flex-grow: 1;
+    max-width: 200px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.tab-button {
+    width: 26px;
+    height: 26px;
+    line-height: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    transition-duration: var(--var-transition-duration);
+    border: 4px solid var(--var-color-theme-darkest);
+}
+.tab-button:not(.active-tab) svg.tab-close-button {
+    height: 16px;
+    width: 16px;
+    stroke: var(--var-color-theme-text);
+    fill: none;
+    stroke-width: 2px;
+    opacity: 0;
+    transition-duration: var(--var-transition-duration);
+}
+.tab:hover svg.tab-close-button {
+    opacity: 1;
+    stroke: var(--var-color-theme-text-dark);
+}
+.tab.active-tab svg.tab-close-button {
+    opacity: 1;
+    stroke: var(--var-color-theme-text);
+}
+.tab-button:hover svg.tab-close-button {
+    opacity: 1;
+    stroke: var(--var-color-theme-accent-bright);
+}
+.tab-button:hover {
+    background: color(from var(--var-color-theme-accent) srgb r g b / 25%);
+    border: 4px solid var(--var-color-theme-darkest);
 }

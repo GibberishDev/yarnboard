@@ -31,8 +31,9 @@ function updateTabs() {
     tabBar.innerHTML = ""
     openWindows.forEach((windowId) => {
         var tabElement = document.createElement("div")
+        tabElement.innerHTML = document.querySelector("#tab-template").innerHTML
         tabElement.classList.add("tab")
-        tabElement.innerText = windowId
+        tabElement.querySelector(".tab-title").textContent = windowId
         tabElement.id = "tab-id-" + windowId
         bindTabEvents(tabElement)
         tabBar.appendChild(tabElement)
@@ -130,6 +131,14 @@ function bindTabEvents(tab) {
     tab.addEventListener("click", () => {
         selectId(tab.id.replace("tab-id-", ""))
     })
+    tab.addEventListener("mouseup", (ev) => {
+        if (ev.which == 2) {
+            closeWindow(tab.id.replace("tab-id-", ""))
+        }
+    })
+    tab.querySelector(".tab-button").addEventListener("click", () => {
+        closeWindow(tab.id.replace("tab-id-", ""))
+    })
 }
 
 function createWindow(id) {
@@ -173,8 +182,7 @@ function openWindowViewport(id) {
             el.classList.remove("current-viewport")
         })
         viewportElement.classList.add("current-viewport")
-        viewportElement.style.background = "rgba("+Math.random() * 255 + ", "+Math.random() * 255 + ", "+Math.random() * 255 + ", 0.25)"
-        document.querySelector("#viewports").appendChild(viewportElement)
+        document.querySelector("#viewport").appendChild(viewportElement)
     }
 }
 
@@ -184,8 +192,8 @@ function updateViewports() {
         el.classList.remove("current-viewport")
     })
     if (document.querySelector("#" + viewportSelectedId) == null) {
-        if (document.querySelector("#viewports").childElementCount > 0) {
-            document.querySelector("#viewports").children[0].classList.add("current-viewport")
+        if (document.querySelector("#viewport").childElementCount > 0) {
+            document.querySelector("#viewport").children[0].classList.add("current-viewport")
         }
     } else {
         document.querySelector("#" + viewportSelectedId).classList.add("current-viewport")
@@ -209,12 +217,6 @@ function selectId(id) {
     scrollToTab(id)
 }
 
-
-createWindow(uuidv4())
-createWindow(uuidv4())
-createWindow(uuidv4())
-createWindow(uuidv4())
-createWindow(uuidv4())
-createWindow(uuidv4())
+updateTabs()
 
 

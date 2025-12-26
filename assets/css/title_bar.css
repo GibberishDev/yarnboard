@@ -61,8 +61,8 @@
 }
 
 .title-bar-button:hover svg {
-    fill: var(--var-color-theme-accent);
-    stroke: var(--var-color-theme-accent);
+    fill: var(--var-color-theme-accent-bright);
+    stroke: var(--var-color-theme-accent-bright);
 }
 
 #button-close:hover {
