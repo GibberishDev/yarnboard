@@ -1,10 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap'); /*TODO: Download fonts to have offline app look alright*/
 @import url('https://fonts.googleapis.com/css2?family=Covered+By+Your+Grace&display=swap');
+@import url('../fonts/JetBrainsMono-Regular.ttf');
 
 :root {
     --var-outline-width : 5px;
     --var-selection-rect-inactive : all;
-    --var-font-regular : "space grotesk";
+    --var-font-regular : "JetBrains Mono";
     --var-font-handwritten : "Covered By Your Grace";
     --var-color-close : #e81123;
     --var-transition-duration : 150ms;
