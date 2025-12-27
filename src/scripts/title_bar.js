@@ -20,7 +20,3 @@ if (userAgent.includes("yarnboard-electron") == false) { //Not an application an
     })
 
 }
-
-window.addEventListener('fullscreenchange', (ev) => {
-    console.log(ev)
-})
