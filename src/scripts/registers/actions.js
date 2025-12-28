@@ -13,7 +13,7 @@ new BindAction("action.app.project.save" , ()=>{alert("save")}, [], 'control+s')
 new BindAction("action.app.project.save_as" , ()=>{alert("save_as")}, [], 'control+shift+s')
 new BindAction("action.app.project.close" , ()=>{alert("close")}, [], 'control+w')
 new BindAction("action.app.viewport.settings" , ()=>{alert("settings")}, [], 'control+,')
-new BindAction("action.app.viewport.command_palette" , togglePalette, [], 'control+p')
+new BindAction("action.app.viewport.command_palette" , () => {togglePalette(true)}, [], 'control+p')
 
 if (navigator.userAgent.includes("yarnboard-electron")) {
     new BindAction("action.app.debug.toggleDevTools", ()=>{window.yarnboardAPI.devTools()}, [], 'f12')

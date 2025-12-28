@@ -10,6 +10,8 @@ export var listeningAccelerators = {}
 export var registeredActions = {}
 export var currentInputContext = "default"
 
+var previousInputContext = "default"
+
 export function setContext(newContext) {
   currentInputContext = newContext
 }
@@ -95,9 +97,11 @@ function constructAccelerator() {
 
 function checkBinds(accelerator) {
   if (Object.keys(listeningAccelerators).includes(accelerator)) {
-    let keybindEvent = new KeyboardEvent("bind",{bubbles:true})
-    keybindEvent.bind = listeningAccelerators[accelerator].context
-    document.activeElement.dispatchEvent(keybindEvent)
+    if (Object.keys(listeningAccelerators[accelerator].context).includes(currentInputContext)) {
+      let keybindEvent = new KeyboardEvent("bind",{bubbles:true})
+      keybindEvent.bind = listeningAccelerators[accelerator].context
+      document.activeElement.dispatchEvent(keybindEvent)
+    }
   }
 }
 
@@ -121,4 +125,13 @@ if (navigator.userAgent.includes("yarnboard-electron")) {
 
 export function executeAction(id) {
   registeredActions[id].context[currentInputContext].callable()
+}
+
+export function inputText(state) {
+  if (state) {
+    previousInputContext = currentInputContext
+    currentInputContext = "text_input"
+  } else {
+    currentInputContext = previousInputContext
+  }
 }

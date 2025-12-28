@@ -5,7 +5,7 @@ function fuzzySearchStringArray(sourceArray, searchTerm, scoreThreshold = 0.0) {
         let scoreExact = string.completeMatchSearch(searchTerm)
         let scoreOrdered = string.orderedMatchSearch(searchTerm)
         let scoreUnordered = string.unorderedMatchSearch(searchTerm)
-        let score = scoreExact * 3 + scoreOrdered * 2 + scoreUnordered
+        let score = scoreExact + scoreOrdered + scoreUnordered
         if (score > scoreThreshold || scoreExact > 0) {
             matches[sourceArray[i]] = score
         }
@@ -20,7 +20,8 @@ String.prototype.completeMatchSearch = function(searchTerm) {
     searchTerm = searchTerm.toLowerCase();
     var score = 0
     if (string.indexOf(searchTerm) > -1) {
-        score = searchTerm.length/string.length
+        var position = string.indexOf(searchTerm)
+        score = searchTerm.length/Math.max(string.length -(string.length-position),1)
         } 
     return score
 }

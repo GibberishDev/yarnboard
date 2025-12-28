@@ -9,7 +9,7 @@
     "action.app.project.new": "Project: New project",
     "action.app.project.open": "Project: Open existing project",
     "action.app.project.save": "Project: Save project",
-    "action.app.project.save_as": "Project: Save project as...",
+    "action.app.project.save_as": "Project: Save project as",
     "action.app.project.close": "Project: Close current project",
     "action.app.viewport.settings": "View: Open settings",
     "action.app.debug.toggleDevTools" : "Debug: Open developer console",
