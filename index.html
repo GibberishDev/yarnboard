@@ -9,14 +9,17 @@
       <link rel="stylesheet" href="./assets/css/status_bar.css">
       <link rel="stylesheet" href="./assets/css/viewport.css">
       <link rel="stylesheet" href="./assets/css/index.css">
+      <link rel="stylesheet" href="./assets/css/command_palette.css">
     <!-- endregion -->
 
     <!-- region Scripts -->
+    <script defer src="./src/scripts/utils.js"></script>
     <script defer src="./src/scripts/keybinds.js" type="module"></script>
     <script defer src="./src/scripts/localization.js"></script>
     <script defer src="./src/scripts/window_manager.js"></script>
     <script defer src="./src/scripts/title_bar.js"></script>
     <script defer src="./src/scripts/fuzzy_search.js"></script>
+    <script defer src="./src/scripts/command_palette.js" type="module"></script>
     <!-- endregion -->
 
     <!-- region bootstrap -->
@@ -135,6 +138,34 @@
         </div>
       </div>
       <div id="status-bar-app-stats">Yarnboard 0.0.1</div>
+    </div>
+    <div id="command-palette-wrapper" class="hidden">
+      <div id="command-palette-panel"></div>
+      <div id="command-palette">
+        <input type="text" id="command-palette-search" placeholder="Search…" spellcheck="false">
+        <div id="command-palette-actions-list">
+          <div class="command-palette-item">Test list item</div>
+          <div class="command-palette-item">Test list item</div>
+          <div class="command-palette-item">Test list item</div>
+          <div class="command-palette-item">Test list item</div>
+          <div class="command-palette-item">Test list item</div>
+          <div class="command-palette-item">Test list item</div>
+          <div class="command-palette-item">Test list item</div>
+          <div class="command-palette-item">Test list item</div>
+          <div class="command-palette-item">Test list item</div>
+          <div class="command-palette-item">Test list item</div>
+          <div class="command-palette-item">Test list item</div>
+          <div class="command-palette-item">Test list item</div>
+          <div class="command-palette-item">Test list item</div>
+          <div class="command-palette-item">Test list item</div>
+          <div class="command-palette-item">Test list item</div>
+          <div class="command-palette-item">Test list item</div>
+          <div class="command-palette-item">Test list item</div>
+          <div class="command-palette-item">Test list item</div>
+          <div class="command-palette-item">Test list item</div>
+          <div class="command-palette-item">Test list item</div>
+        </div>
+      </div>
     </div>
 </body>
 <template id="tab-template">

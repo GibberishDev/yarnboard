@@ -28,15 +28,15 @@ async function loadLanguageFile(language) {
 }
 
 function fileExists(url) {
-    if(url){
-        var req = new XMLHttpRequest();
-        req.open('GET', url, false);
-        req.send();
-        return req.status==200;
+    if (url) {
+        var reqeust = new XMLHttpRequest();
+        reqeust.open('GET', url, false);
+        reqeust.send();
+        return reqeust.status==200;
     } else {
         return false;
     }
 }
-currentLanguage = "en_us" //TODO: Change to load save language from preferences
+currentLanguage = "en_us" //TODO: Change to load saved language from preferences
 loadLanguageFile(currentLanguage).then(lang => loadedLanguage = lang)
 loadLanguageFile("en_us")

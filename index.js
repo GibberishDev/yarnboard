@@ -39,6 +39,7 @@ function createWindow() {
 app.whenReady().then(() => {
   mainWindow = createWindow()
   disableDefaultSortcuts()
+  mainWindow.webContents.toggleDevTools()
 })
 
 app.on('window-all-closed', () => {

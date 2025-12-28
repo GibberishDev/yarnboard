@@ -76,11 +76,13 @@ document.addEventListener("keydown", (ev) => {
     var accelerator = constructAccelerator()
     checkBinds(accelerator)
   }
+  ev.preventDefault()
 })
 document.addEventListener("keyup", (ev) => {
   if (Object.keys(modifiers).includes(ev.key)) {
     modifiers[ev.key] = false
   }
+  ev.preventDefault()
 })
 
 function constructAccelerator() {

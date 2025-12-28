@@ -1,7 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap'); /*TODO: Download fonts to have offline app look alright*/
 @import url('https://fonts.googleapis.com/css2?family=Covered+By+Your+Grace&display=swap');
-@import url('../fonts/JetBrainsMono-Regular.ttf');
-
+@font-face {
+    font-family: JetBrains Mono;
+    src: url(../fonts/JetBrainsMono-Regular.ttf);
+}
 :root {
     --var-outline-width : 5px;
     --var-selection-rect-inactive : all;
@@ -11,25 +13,25 @@
     --var-transition-duration : 150ms;
 
     /* Yarnboard dark */
-
+/* 
     --var-color-theme-darkest : #0d0d0d;
     --var-color-theme-dark : #333333;
     --var-color-theme-text-dark : #595959;
     --var-color-theme-text : #a6a6a6;
     --var-color-theme-accent : #1d6600;
     --var-color-theme-accent-bright : #33b300;
-    
+     */
     /* Gruvbox dark */
-/*         
+        
     --var-color-theme-darkest : #282828;
     --var-color-theme-dark : #928374;
     --var-color-theme-text-dark : #ebdbb2;
     --var-color-theme-text : #fbf1c7;
     --var-color-theme-accent : #98971a;
     --var-color-theme-accent-bright : #b8bb26;
-     */
+    
     /* Gruvbox light */
-    /*     
+/*         
     --var-color-theme-darkest : #fbf1c1;
     --var-color-theme-dark : #928374;
     --var-color-theme-text-dark : #282828;
