@@ -15,15 +15,12 @@
     <!-- region Scripts -->
     <script defer src="./src/scripts/utils.js"></script>
     <script defer src="./src/scripts/keybinds.js" type="module"></script>
+    <script defer src="./src/scripts/registers/actions.js" type="module"></script>
     <script defer src="./src/scripts/localization.js"></script>
     <script defer src="./src/scripts/window_manager.js"></script>
     <script defer src="./src/scripts/title_bar.js"></script>
     <script defer src="./src/scripts/fuzzy_search.js"></script>
     <script defer src="./src/scripts/command_palette.js" type="module"></script>
-    <!-- endregion -->
-
-    <!-- region bootstrap -->
-    <script defer src="./src/scripts/registers/actions.js" type="module"></script>
     <!-- endregion -->
 
 </head>
@@ -143,27 +140,9 @@
       <div id="command-palette-panel"></div>
       <div id="command-palette">
         <input type="text" id="command-palette-search" placeholder="Search…" spellcheck="false">
-        <div id="command-palette-actions-list">
-          <div class="command-palette-item">Test list item</div>
-          <div class="command-palette-item">Test list item</div>
-          <div class="command-palette-item">Test list item</div>
-          <div class="command-palette-item">Test list item</div>
-          <div class="command-palette-item">Test list item</div>
-          <div class="command-palette-item">Test list item</div>
-          <div class="command-palette-item">Test list item</div>
-          <div class="command-palette-item">Test list item</div>
-          <div class="command-palette-item">Test list item</div>
-          <div class="command-palette-item">Test list item</div>
-          <div class="command-palette-item">Test list item</div>
-          <div class="command-palette-item">Test list item</div>
-          <div class="command-palette-item">Test list item</div>
-          <div class="command-palette-item">Test list item</div>
-          <div class="command-palette-item">Test list item</div>
-          <div class="command-palette-item">Test list item</div>
-          <div class="command-palette-item">Test list item</div>
-          <div class="command-palette-item">Test list item</div>
-          <div class="command-palette-item">Test list item</div>
-          <div class="command-palette-item">Test list item</div>
+        <div id="command-palette-actions-list" class="command-palette-list">
+        </div>
+        <div id="command-palette-elements-list" class="command-palette-list">
         </div>
       </div>
     </div>

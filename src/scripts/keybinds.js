@@ -76,13 +76,11 @@ document.addEventListener("keydown", (ev) => {
     var accelerator = constructAccelerator()
     checkBinds(accelerator)
   }
-  ev.preventDefault()
 })
 document.addEventListener("keyup", (ev) => {
   if (Object.keys(modifiers).includes(ev.key)) {
     modifiers[ev.key] = false
   }
-  ev.preventDefault()
 })
 
 function constructAccelerator() {
@@ -119,4 +117,8 @@ document.addEventListener("bind", (ev) => {
 })
 if (navigator.userAgent.includes("yarnboard-electron")) {
   window.yarnboardAPI.bindAccelerator((event, accelerator) => checkBinds(accelerator))
+}
+
+export function executeAction(id) {
+  registeredActions[id].context[currentInputContext].callable()
 }
