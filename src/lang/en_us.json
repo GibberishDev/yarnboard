@@ -1,0 +1,18 @@
+{
+    "language":"un_us",
+    "action.viewport.selection.transform_move": "Transform: Move selection",
+    "action.viewport.selection.transform_rotate": "Transform: Rotate selection",
+    "action.viewport.selection.transform_scale": "Transform: Scale selection",
+    "action.viewport.selection.select_all": "Selection: Select all",
+    "action.viewport.selection.deselect_all": "Selection: Clear selection",
+    "action.viewport.selection.invert": "Selection: Invert selection",
+    "action.app.project.new": "Project: New project",
+    "action.app.project.open": "Project: Open existing project",
+    "action.app.project.save": "Project: Save project",
+    "action.app.project.save_as": "Project: Save project as...",
+    "action.app.project.close": "Project: Close current project",
+    "action.app.viewport.settings": "View: Open settings",
+    "ui.hint.minimize" : "Minimize application",
+    "ui.hint.maximize" : "Maximize application",
+    "ui.hint.close" : "Close application"
+}

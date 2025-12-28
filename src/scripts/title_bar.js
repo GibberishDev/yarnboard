@@ -18,5 +18,7 @@ if (userAgent.includes("yarnboard-electron") == false) { //Not an application an
     closeButton.addEventListener("click", () => {
         window.yarnboardAPI.close()
     })
+    
+    localizeString("ui.hint.minimize").then(text=>minimizeButton.title = text)
 
 }
