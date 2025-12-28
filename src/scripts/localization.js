@@ -8,6 +8,10 @@ async function localizeString(code) {
     } else if (loadedLanguage["language"] != currentLanguage) {
         await loadLanguageFile(currentLanguage).then(data => loadedLanguage = data)
     }
+    if (!Object.keys(loadedLanguage).includes(code)) {
+        console.warn("WARNING: Localization string for " + code + " is missing in language " + currentLanguage)
+        return code
+    }
     return loadedLanguage[code]
 }
 

@@ -12,7 +12,12 @@
     "action.app.project.save_as": "Project: Save project as...",
     "action.app.project.close": "Project: Close current project",
     "action.app.viewport.settings": "View: Open settings",
-    "ui.hint.minimize" : "Minimize application",
-    "ui.hint.maximize" : "Maximize application",
-    "ui.hint.close" : "Close application"
+    "ui.titlebar.hint.minimize" : "Minimize application",
+    "ui.titlebar.hint.maximize" : "Maximize application",
+    "ui.titlebar.hint.close" : "Close application",
+    "ui.statusbar.hint.project_name" : "Name of the project",
+    "ui.statusbar.hint.connections" : "Connections count: select/total",
+    "ui.statusbar.hint.elements" : "Elements count: select/total",
+    "ui.statusbar.hint.time" : "Time spent in project",
+    "ui.statusbar.hint.version" : "App version"
 }

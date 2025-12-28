@@ -19,6 +19,8 @@ if (userAgent.includes("yarnboard-electron") == false) { //Not an application an
         window.yarnboardAPI.close()
     })
     
-    localizeString("ui.hint.minimize").then(text=>minimizeButton.title = text)
+    localizeString("ui.titlebar.hint.minimize").then(text=>minimizeButton.title = text)
+    localizeString("ui.titlebar.hint.maxomize").then(text=>maximizeButton.title = text)
+    localizeString("ui.titlebar.hint.close").then(text=>closeButton.title = text)
 
 }
