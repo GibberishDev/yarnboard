@@ -18,6 +18,7 @@ function createWindow() {
     webPreferences : {
       nodeIntegration: true,
       contextIsolation: true,
+      autoplayPolicy: 'no-user-gesture-required',
       preload: PATH.join(__dirname,"preload.js"),
     }
   })
@@ -31,7 +32,16 @@ function createWindow() {
   win.loadFile('index.html')
   .then(() => {disableDefaultSortcuts()})
   
-  
+
+  win.webContents.on( //Disable alt+f4 to enable proper project closing sequence and ability to rebind alt+f4
+    "before-input-event",
+    (ev,input) => {
+      if ( input.code == 'F4' && input.alt ) {
+        ev.preventDefault()
+        mainWindow.webContents.send('bindAccelerator', "alt+f4")
+      }
+    }
+  )
   
   return win
 }
@@ -39,7 +49,7 @@ function createWindow() {
 app.whenReady().then(() => {
   mainWindow = createWindow()
   disableDefaultSortcuts()
-  mainWindow.webContents.toggleDevTools()
+  // mainWindow.webContents.toggleDevTools()
 })
 
 app.on('window-all-closed', () => {
@@ -65,6 +75,7 @@ ipcMain.on('toggle-maximize', toggleMaximize)
 ipcMain.on('minimize', minimize)
 ipcMain.on('close', close)
 ipcMain.on('devTools', devTools)
+ipcMain.on('fixFocus', fixFocus)
 
 function toggleMaximize() {
   if (mainWindow.isMaximized()) {
@@ -85,6 +96,11 @@ function devTools() {
   mainWindow.webContents.toggleDevTools()
 }
 
+function fixFocus() {
+  mainWindow.blur()
+  mainWindow.focus()
+}
+
 function disableDefaultSortcuts() {
   globalShortcut.register("CommandOrControl+=", () => {mainWindow.webContents.send('bindAccelerator', "control+=")}) //zoom in secondary
   globalShortcut.register("CommandOrControl+Shift+=", () => {mainWindow.webContents.send('bindAccelerator', "control+shift+=")}) //zoom in
@@ -94,6 +110,7 @@ function disableDefaultSortcuts() {
   globalShortcut.register("F5", () => {mainWindow.webContents.send('bindAccelerator', "f5")}) //reload secondary
   globalShortcut.register("CommandOrControl+R", () => {mainWindow.webContents.send('bindAccelerator', "control+r")}) //reload
   globalShortcut.register("CommandOrControl+Shift+I", () => {mainWindow.webContents.send('bindAccelerator', "control+shift+i")}) //developer console
+  globalShortcut.register("Alt+F4", () => {mainWindow.webContents.send('bindAccelerator', "alt+f4")}) //close app
 }
 function enableDefaultSortcuts() {
   globalShortcut.unregister("CommandOrControl+=") //zoom in secondary
@@ -104,5 +121,6 @@ function enableDefaultSortcuts() {
   globalShortcut.unregister("F5") //reload secondary
   globalShortcut.unregister("CommandOrControl+R") //reload
   globalShortcut.unregister("CommandOrControl+Shift+I") //developer console
+  globalShortcut.unregister("Alt+F4") //close app
 }
 // npm install @jitsi/robotjs for set mouse position

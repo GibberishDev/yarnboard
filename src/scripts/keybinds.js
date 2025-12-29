@@ -70,10 +70,22 @@ window.onblur = ()=>{
     "Meta" : false,
   }
 }
+window.onfocus = ()=>{
+  modifiers = {
+    "Control" : false,
+    "Alt" : false,
+    "Shift" : false,
+    "Meta" : false,
+  }
+}
 document.addEventListener("keydown", (ev) => {
   if (Object.keys(modifiers).includes(ev.key)) {
     modifiers[ev.key] = true
   } else {
+    modifiers["Control"] = ev.ctrlKey
+    modifiers["Alt"] = ev.altKey
+    modifiers["Shift"] = ev.shiftKey
+    modifiers["Meta"] = ev.metaKey
     lastPressedKey = ev.key
     var accelerator = constructAccelerator()
     checkBinds(accelerator)

@@ -12,7 +12,7 @@
     "action.app.project.save_as": "Project: Save project as",
     "action.app.project.close": "Project: Close current project",
     "action.app.viewport.settings": "View: Open settings",
-    "action.app.debug.toggleDevTools" : "Debug: Open developer console",
+    "action.app.debug.toggleDevTools" : "Debug: Toggle developer console",
     "action.app.viewport.command_palette" : "View: Toggle command palette",
     "ui.titlebar.hint.minimize" : "Minimize application",
     "ui.titlebar.hint.maximize" : "Maximize application",

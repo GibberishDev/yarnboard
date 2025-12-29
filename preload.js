@@ -4,6 +4,7 @@ contextBridge.exposeInMainWorld('yarnboardAPI', {
     minimize : () => ipcRenderer.send('minimize'),
     close : () => ipcRenderer.send('close'),
     devTools : () => ipcRenderer.send('devTools'),
+    fixFocus : () => ipcRenderer.send('fixFocus'),
 
     bindAccelerator : (accelerator) => {ipcRenderer.on('bindAccelerator', accelerator)},
 })

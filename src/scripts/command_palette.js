@@ -71,12 +71,10 @@ function search() {
         showAllElements()
         return
     }
-    console.log(searchTerm)
     let searchArray = Object.keys(actionsNames)
     var searchResult = fuzzySearchStringArray(searchArray, searchTerm,0.4)
     hideAllElements()
     for (let i = searchResult.length - 1; i>=0;i--) {
-        console.log(searchResult[i][1])
         showElement(actionsNames[searchResult[i][0]], searchResult[i][1])
     }
 

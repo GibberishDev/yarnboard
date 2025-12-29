@@ -80,19 +80,15 @@ function scrollToTab(id) {
     var wishScroll = 0
     var isToRight = (tabRightOffest-currentScroll) >= (containerBoundingRect.width + 2)
     var isToLeft = tabLeftOffest < currentScroll
-    console.log(isToLeft, isToRight)
     if (!isToLeft && !isToRight) {
         return
     }
     if (isToRight) {
-        console.log("Right ", tabLeftOffest, tabRightOffest, currentScroll, containerBoundingRect.width)
         wishScroll = tabLeftOffest + tabRect.width - containerBoundingRect.width
     }
     if (isToLeft) {
-        console.log("Left ", tabRightOffest, currentScroll)
         wishScroll = tabLeftOffest
     }
-    console.log(wishScroll)
     if (wishScroll < 0) {
         tabBar.style.removeProperty("translate")
     } else if (wishScroll > maxScroll) {

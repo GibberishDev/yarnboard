@@ -13,23 +13,32 @@
     --var-transition-duration : 150ms;
 
     /* Yarnboard dark */
-/* 
+
     --var-color-theme-darkest : #0d0d0d;
     --var-color-theme-dark : #333333;
     --var-color-theme-text-dark : #595959;
     --var-color-theme-text : #a6a6a6;
     --var-color-theme-accent : #1d6600;
     --var-color-theme-accent-bright : #33b300;
+    
+    /* Yarnboard dark hight contrast */
+/* 
+    --var-color-theme-darkest : #000;
+    --var-color-theme-dark : #fff;
+    --var-color-theme-text-dark : #fff;
+    --var-color-theme-text : #fff;
+    --var-color-theme-accent : #0000ff;
+    --var-color-theme-accent-bright : #ffff00;
      */
     /* Gruvbox dark */
-        
+/*         
     --var-color-theme-darkest : #282828;
     --var-color-theme-dark : #928374;
     --var-color-theme-text-dark : #ebdbb2;
     --var-color-theme-text : #fbf1c7;
     --var-color-theme-accent : #98971a;
     --var-color-theme-accent-bright : #b8bb26;
-    
+     */
     /* Gruvbox light */
 /*         
     --var-color-theme-darkest : #fbf1c1;

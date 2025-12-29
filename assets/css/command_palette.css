@@ -34,6 +34,7 @@
 }
 #command-palette-search:hover {
     border-color: var(--var-color-theme-accent);
+    color: var(--var-color-theme-accent-bright);
 }
 
 #command-palette-search:focus {
@@ -45,7 +46,7 @@
 }
 #command-palette-search::selection {
     color: var(--var-color-theme-darkest);
-    background-color: var(--var-color-theme-accent)
+    background-color: var(--var-color-theme-accent-bright)
 }
 .command-palette-list {
     display : flex;
