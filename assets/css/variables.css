@@ -27,11 +27,11 @@
     --var-color-theme-dark : #fff;
     --var-color-theme-text-dark : #fff;
     --var-color-theme-text : #fff;
-    --var-color-theme-accent : #0000ff;
+    --var-color-theme-accent : #d000ff;
     --var-color-theme-accent-bright : #ffff00;
      */
     /* Gruvbox dark */
-/*         
+/* 
     --var-color-theme-darkest : #282828;
     --var-color-theme-dark : #928374;
     --var-color-theme-text-dark : #ebdbb2;
@@ -49,7 +49,7 @@
     --var-color-theme-accent-bright : #d79921;
      */
     /* Solarized dark */
-/*         
+/* 
     --var-color-theme-darkest : #002b36;
     --var-color-theme-dark : #073642;
     --var-color-theme-text-dark : #839496;
@@ -64,8 +64,8 @@
     --var-color-theme-text-dark : #657b83;
     --var-color-theme-text : #586e75;
     --var-color-theme-accent : #859900;
-    --var-color-theme-accent-bright : #859900;
-     */
+    --var-color-theme-accent-bright : #859900; */
+    
 
 }
 

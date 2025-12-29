@@ -74,6 +74,7 @@
     box-sizing : border-box;
     border : 2px solid var(--var-color-theme-dark);
     border-top : 0px solid transparent;
+    overflow: hidden;
 }
 #tab-bar.hidden {
     display: none;

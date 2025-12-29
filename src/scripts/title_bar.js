@@ -5,9 +5,9 @@ let closeButton = document.querySelector("#button-close")
 
 let userAgent = navigator.userAgent
 if (userAgent.includes("yarnboard-electron") == false) { //Not an application and runs on web
-    minimizeButton.remove()
-    maximizeButton.remove()
-    closeButton.remove()
+//     minimizeButton.remove()
+//     maximizeButton.remove()
+//     closeButton.remove()
 } else {
     minimizeButton.addEventListener("click", () => {
         window.yarnboardAPI.minimize()

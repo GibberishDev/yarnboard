@@ -32,6 +32,7 @@ export async function togglePalette(actionList = false) {
         if (actionList) {
             searchElement.value = ">"
         }
+        search()
         document.addEventListener('mousedown', hideOnOutsideClick)
     }
 }
@@ -52,9 +53,13 @@ function populateActionsList() {
         element.classList.add("command-palette-item")
         element.dataset.id = id
         element.dataset.search_score = 0
+        element.title = id
         localizeString(id).then((responce) => {
             element.textContent = responce
             actionsNames[responce] = id
+            if (i == actionsList.length - 1) {
+                sortActionsAlphabetically()
+            }
         })
         element.addEventListener("click", (ev) => {
             executeAction(element.dataset.id)
@@ -62,13 +67,22 @@ function populateActionsList() {
         })
         actionsListElement.appendChild(element)
     }
+    
 }
 
 function search() {
     var searchTerm = searchElement.value
-    if (searchTerm.indexOf(">") == 0) {searchTerm = searchTerm.replace(">","")}
+    if (searchTerm.indexOf(">") == 0) {
+        searchTerm = searchTerm.replace(">","")
+        actionsListElement.style.display = ""
+        elementsListElement.style.display = "none"
+    } else {
+        actionsListElement.style.display = "none"
+        elementsListElement.style.display = ""
+    }
     if (searchTerm == "") {
         showAllElements()
+        sortActionsAlphabetically()
         return
     }
     let searchArray = Object.keys(actionsNames)
@@ -100,5 +114,9 @@ function showElement(id, score) {
 }
 
 function sortActionsAlphabetically() {
-    
+    var array = Object.keys(actionsNames)
+    array = array.sort((a, b) => a.localeCompare(b))
+    for (let i = 0; i<array.length;i++) {
+        showElement(actionsNames[array[array.length - 1 - i]],1.0)
+    }
 }
