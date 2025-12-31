@@ -10,7 +10,7 @@
       <link rel="stylesheet" href="./assets/css/viewport.css">
       <link rel="stylesheet" href="./assets/css/index.css">
       <link rel="stylesheet" href="./assets/css/command_palette.css">
-      <link rel="stylesheet" href="./assets/css/setings.css">
+      <link rel="stylesheet" href="./assets/css/settings.css">
     <!-- endregion -->
 
     <!-- region Scripts -->
@@ -22,6 +22,7 @@
     <script defer src="./src/scripts/title_bar.js"></script>
     <script defer src="./src/scripts/fuzzy_search.js"></script>
     <script defer src="./src/scripts/command_palette.js" type="module"></script>
+    <script defer src="./src/scripts/custom_elements.js"></script>
     <!-- endregion -->
 
 </head>
@@ -109,64 +110,143 @@
               <div id="settings-title">Settings</div>
               <input type="text" id="settings-search" placeholder="Search…" spellcheck="false">
               <div id="settings-sidebar">
-                <div id="setting-category-general" class="settings-category expanded">
+                <div id="settings-category-general" class="settings-sidebar-category expanded">
                   <p>General</p>
-                  <div class="settings-subcategory">Language</div>
-                  <div class="settings-subcategory">Project behavior</div>
-                  <div class="settings-subcategory selected">Saving</div>
-                  <div class="settings-subcategory">Saving shadkjhsajkdhjkashjk</div>
+                  <div class="settings-sidebar-subcategory">Language</div>
+                  <div class="settings-sidebar-subcategory">Username</div>
+                  <div class="settings-sidebar-subcategory">Streamer mode</div>
+                  <div class="settings-sidebar-subcategory">Streamer mode restricted entries</div>
+                  <div class="settings-sidebar-subcategory">Undo limit</div>
+                  <div class="settings-sidebar-subcategory">Undo selection</div>
                 </div>
-                <div class="settings-category">
-                  <p>Keyboard</p>
-                  <div class="settings-subcategory">Edit shortcuts</div>
-                  <div class="settings-subcategory">Action behavior</div>
+                <div id="setting-category-interface" class="settings-sidebar-category">
+                  <p>Interface</p>
+                  <div class="settings-sidebar-subcategory">Autohide tab bar</div>
+                  <div class="settings-sidebar-subcategory">Suggest context aware keybinds</div>
+                  <div class="settings-sidebar-subcategory">Splash art</div>
+                  <div class="settings-sidebar-subcategory">Autoplay animated images/videos</div>
+                  <div class="settings-sidebar-subcategory">Custom css</div>
+                  <div class="settings-sidebar-subcategory">Theme</div>
                 </div>
-                <div class="settings-category expanded">
-                  <p>Personalization</p>
-                  <div class="settings-subcategory">Color scheme</div>
-                  <div class="settings-subcategory">Custom css</div>
-                  <div class="settings-subcategory">Project signing</div>
-                  <div class="settings-subcategory">Color scheme</div>
-                  <div class="settings-subcategory">Custom css</div>
-                  <div class="settings-subcategory">Project signing</div>
-                  <div class="settings-subcategory">Color scheme</div>
-                  <div class="settings-subcategory">Custom css</div>
-                  <div class="settings-subcategory">Project signing</div>
-                </div>
-                <div class="settings-category expanded">
-                  <p>Personalization</p>
-                  <div class="settings-subcategory">Color scheme</div>
-                  <div class="settings-subcategory">Custom css</div>
-                  <div class="settings-subcategory">Project signing</div>
-                  <div class="settings-subcategory">Color scheme</div>
-                  <div class="settings-subcategory">Custom css</div>
-                  <div class="settings-subcategory">Project signing</div>
-                  <div class="settings-subcategory">Color scheme</div>
-                  <div class="settings-subcategory">Custom css</div>
-                  <div class="settings-subcategory">Project signing</div>
-                </div>
-                <div class="settings-category expanded">
-                  <p>Personalization</p>
-                  <div class="settings-subcategory">Color scheme</div>
-                  <div class="settings-subcategory">Custom css</div>
-                  <div class="settings-subcategory">Project signing</div>
-                  <div class="settings-subcategory">Color scheme</div>
-                  <div class="settings-subcategory">Custom css</div>
-                  <div class="settings-subcategory">Project signing</div>
-                  <div class="settings-subcategory">Color scheme</div>
-                  <div class="settings-subcategory">Custom css</div>
-                  <div class="settings-subcategory">Project signing</div>
-                </div>
-                <div class="settings-category">
-                  <p>Accesibility</p>
-                  <div class="settings-subcategory">Color scheme</div>
-                </div>
-                <div class="settings-category">
-                  <p>Accesibility</p>
-                  <div class="settings-subcategory">Color scheme</div>
+                <div id="setting-category-Controls" class="settings-sidebar-category expanded">
+                  <p>Controls</p>
+                  <div class="settings-sidebar-subcategory">Zoom action factor</div>
+                  <div class="settings-sidebar-subcategory">Show gizmos</div>
+                  <div class="settings-sidebar-subcategory">Deselect everything on background click</div>
+                  <div class="settings-sidebar-subcategory">Reveal selected element in tree</div>
                 </div>
               </div>
-              <div id="settings-panel"></div>
+              <div id="settings-panel">
+                <div class="settings-category">
+                  <p>General</p>
+                  <div class="setting type-dropdown">
+                    <div class="setting-label">Language</div>
+                    <div class="setting-description">Interface language</div>
+                    <select name="language" id="setting-language">
+                      <option value="en_us">English language (EN)</option>
+                      <option value="ru_ru">Русский язык (RU)</option>
+                      <option value="de_de">Deutsche Sprache (DE)</option>
+                      <option value="pt_pt">Língua portuguesa (PT)</option>
+                      <option value="fr_fr">Langue française (FR)</option>
+                      <option value="es_es">Idioma español (ES)</option>
+                      <option value="en_us">English language (EN)</option>
+                      <option value="ru_ru">Русский язык (RU)</option>
+                      <option value="de_de">Deutsche Sprache (DE)</option>
+                      <option value="pt_pt">Língua portuguesa (PT)</option>
+                      <option value="fr_fr">Langue française (FR)</option>
+                      <option value="es_es">Idioma español (ES)</option>
+                      <option value="en_us">English language (EN)</option>
+                      <option value="ru_ru">Русский язык (RU)</option>
+                      <option value="de_de">Deutsche Sprache (DE)</option>
+                      <option value="pt_pt">Língua portuguesa (PT)</option>
+                      <option value="fr_fr">Langue française (FR)</option>
+                      <option value="es_es">Idioma español (ES)</option>
+                      <option value="en_us">English language (EN)</option>
+                      <option value="ru_ru">Русский язык (RU)</option>
+                      <option value="de_de">Deutsche Sprache (DE)</option>
+                      <option value="pt_pt">Língua portuguesa (PT)</option>
+                      <option value="fr_fr">Langue française (FR)</option>
+                      <option value="es_es">Idioma español (ES)</option>
+                      <option value="en_us">English language (EN)</option>
+                      <option value="ru_ru">Русский язык (RU)</option>
+                      <option value="de_de">Deutsche Sprache (DE)</option>
+                      <option value="pt_pt">Língua portuguesa (PT)</option>
+                      <option value="fr_fr">Langue française (FR)</option>
+                      <option value="es_es">Idioma español (ES)</option>
+                      <option value="en_us">English language (EN)</option>
+                      <option value="ru_ru">Русский язык (RU)</option>
+                      <option value="de_de">Deutsche Sprache (DE)</option>
+                      <option value="pt_pt">Língua portuguesa (PT)</option>
+                      <option value="fr_fr">Langue française (FR)</option>
+                      <option value="es_es">Idioma español (ES)</option>
+                      <option value="en_us">English language (EN)</option>
+                      <option value="ru_ru">Русский язык (RU)</option>
+                      <option value="de_de">Deutsche Sprache (DE)</option>
+                      <option value="pt_pt">Língua portuguesa (PT)</option>
+                      <option value="fr_fr">Langue française (FR)</option>
+                      <option value="es_es">Idioma español (ES)</option>
+                      <option value="en_us">English language (EN)</option>
+                      <option value="ru_ru">Русский язык (RU)</option>
+                      <option value="de_de">Deutsche Sprache (DE)</option>
+                      <option value="pt_pt">Língua portuguesa (PT)</option>
+                      <option value="fr_fr">Langue française (FR)</option>
+                      <option value="es_es">Idioma español (ES)</option>
+                      <option value="en_us">English language (EN)</option>
+                      <option value="ru_ru">Русский язык (RU)</option>
+                      <option value="de_de">Deutsche Sprache (DE)</option>
+                      <option value="pt_pt">Língua portuguesa (PT)</option>
+                      <option value="fr_fr">Langue française (FR)</option>
+                      <option value="es_es">Idioma español (ES)</option>
+                      <option value="en_us">English language (EN)</option>
+                      <option value="ru_ru">Русский язык (RU)</option>
+                      <option value="de_de">Deutsche Sprache (DE)</option>
+                      <option value="pt_pt">Língua portuguesa (PT)</option>
+                      <option value="fr_fr">Langue française (FR)</option>
+                      <option value="es_es">Idioma español (ES)</option>
+                    </select>
+                  </div>
+                  <div class="setting type-text">
+                    <div class="setting-label">Username</div>
+                    <div class="setting-description">Username that is used to sign projects edited by you. It will NOT be protected from editing in any way. Its just attribution and blame tool (similar to git blame where one can track who made what change)</div>
+                    <input type="text">
+                  </div>
+                  <div class="setting type-checkbox">
+                    <div class="setting-label">Streamer mode</div>
+                    <div class="setting-description">If enabled some information will be hidden</div>
+                    <div class="checkbox">
+                      <div class="checkbox-visalizer"></div>
+                      <input type="checkbox">
+                    </div>
+                  </div>
+                  <div class="setting type-text">
+                    <div class="setting-label">Streamer mode: Restricted entries</div>
+                    <div class="setting-description">Write entries in comma separated list to disable them in streamer mode</div>
+                    <input type="text">
+                  </div>
+                  <div class="setting type-number">
+                    <div class="setting-label">Undo limit</div>
+                    <div class="setting-description">How many steps are remembered in undo history</div>
+                    <div class="input-number">
+                      <input type="number" min="0" step="1" value="256" onblur="ui_number(event)">
+                      <button class="number-input-increment up" onclick="ui_incrementor(event)">
+                        <svg width="10"height="10"viewBox="0 0 10 10"><path style="fill-opacity:1;stroke:none;"d="M 0,10 5,0 10,10 Z"/></svg>
+                      </button>
+                      <button class="number-input-increment down" onclick="ui_decrementor(event)">
+                        <svg width="10"height="10"viewBox="0 0 10 10"><path style="fill-opacity:1;stroke:none;"d="M 0,0 5,10 10,0 Z"/></svg>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="setting type-checkbox">
+                    <div class="setting-label">Undo selection</div>
+                    <div class="setting-description">Decides whether to include selection in undo history</div>
+                    <div class="checkbox">
+                      <div class="checkbox-visalizer"></div>
+                      <input type="checkbox" onclick="ui_checkbox(event)">
+                    </div>
+                  </div>
+                  
+                </div>
+              </div>
             </div>
           </div>
         </div>

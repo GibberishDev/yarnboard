@@ -15,6 +15,7 @@ function createWindow() {
     darkTheme : true,
     icon : "./assets/images/icons/app.ico",
     fullscreenable : false,
+    roundedCorners : false,
     webPreferences : {
       nodeIntegration: true,
       contextIsolation: true,

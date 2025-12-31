@@ -20,41 +20,13 @@
 #command-palette:hover {
     border-color: var(--var-color-theme-accent);
 }
-
-#command-palette-search {
-    background : var(--var-color-theme-darkest);
-    border : 2px solid var(--var-color-theme-dark);
-    color: var(--var-color-theme-text);
-    line-height: 26px;
-    font-size: 14px;
-    box-sizing: border-box;
-    height: 30px;
-    padding-left: 2px;
-    transition-duration: var(--var-transition-duration);
-}
-#command-palette-search:hover {
-    border-color: var(--var-color-theme-accent);
-    color: var(--var-color-theme-accent-bright);
-}
-
-#command-palette-search:focus {
-    background : var(--var-color-theme-darkest);
-    border : 2px solid var(--var-color-theme-accent);
-    color: var(--var-color-theme-accent-bright);
-    outline: none;
-
-}
-#command-palette-search::selection {
-    color: var(--var-color-theme-darkest);
-    background-color: var(--var-color-theme-accent-bright)
-}
 .command-palette-list {
     display : flex;
     flex-direction: column;
     margin-top : 2px;
     margin-bottom : 2px;
     overflow-y : scroll;
-    scrollbar-width : none;
+    /* scrollbar-width : none; */
     max-height : calc(60dvh - 14px);
 }
 #command-palette-elements-list {
