@@ -179,16 +179,18 @@ function listSetting(id, value, list) {
     element.querySelector(".setting-description").innerText = localizeString(id+".description")
     var selectElement = element.querySelector("select")
     selectElement.id = id
-    selectElement.value = value
     for (let i=0;i<list.length;i++) {
         var option = document.createElement("option")
         option.value = list[i]
         option.innerText = localizeString(list[i])
         selectElement.appendChild(option)
     }
+    selectElement.value = value
     selectElement.addEventListener("input", ev=>{
         var id = ev.target.id
         var value = ev.target.value
+        registeredSettings[id].value = value
+        console.log(registeredSettings[id])
         var signal = new InputEvent("ui_input")
         signal.inputdata = {"id": id, "value":value, "type": "list"}
         document.dispatchEvent(signal)
@@ -263,7 +265,10 @@ function populate_panel() {
 
 
 }
-
+document.addEventListener("locale_changed", (ev) => {
+    populate_sidebar()
+    populate_panel()
+})
 document.addEventListener("ready", (ev)=>{
     generate_list()
     populate_sidebar()

@@ -40,7 +40,7 @@
     "setting.general.streamermode.entries" : "Streamer mode hidden entries",
     "setting.general.streamermode.entries.description" : "Write down entries in comma separated list you wish to be hidden",
     "setting.general.undolimit" : "Undo limit",
-    "setting.general.undolimit.description" : "Limit maximum entries stored in undo history. Set to -1 for unlimited. (may lead to decreased perfomance longer oyu work on a project)",
+    "setting.general.undolimit.description" : "Limit maximum entries stored in undo history. Set to -1 for unlimited. (may lead to decreased perfomance longer you work on a project)",
     "setting.general.undoselection" : "Undo selection",
     "setting.general.undoselection.description" : "Decides whether to nclude selection of elements in undo history"
 

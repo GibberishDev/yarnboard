@@ -53,3 +53,16 @@ loadLanguageFile("en_us").then(lang => {
     fallbackLanguage = lang
     moduleReady("fallbackLanguage")
 })
+
+
+document.addEventListener("ui_input", (ev) => {
+    if (ev.inputdata.id == "setting.general.language") {
+        currentLanguage = ev.inputdata.value
+        loadLanguageFile(currentLanguage).then(lang => {
+            loadedLanguage = lang
+            var event = new Event("locale_changed")
+            document.dispatchEvent(event)
+            console.log(currentLanguage)
+        })
+    }
+})

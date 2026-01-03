@@ -45,5 +45,3 @@ function number_input(element) {
     document.dispatchEvent(signal)
 
 }
-
-document.addEventListener("ui_input", (ev) => console.log(ev.inputdata))
