@@ -55,14 +55,13 @@ loadLanguageFile("en_us").then(lang => {
 })
 
 
-document.addEventListener("ui_input", (ev) => {
-    if (ev.inputdata.id == "setting.general.language") {
-        currentLanguage = ev.inputdata.value
+document.addEventListener("settingUpdated", (ev) => {
+    if (ev.id == "setting.general.language") {
+        currentLanguage = ev.value
         loadLanguageFile(currentLanguage).then(lang => {
             loadedLanguage = lang
             var event = new Event("locale_changed")
             document.dispatchEvent(event)
-            console.log(currentLanguage)
         })
     }
 })

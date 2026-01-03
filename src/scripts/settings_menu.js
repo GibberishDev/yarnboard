@@ -28,7 +28,7 @@ class Setting {
         event.id = this.id
         event.value = this.value
         document.dispatchEvent(event)
-        console.info("Set " + id + " value to \"" + value + "\"")
+        console.info("Set " + this.id + " value to \"" + value + "\"")
     }
     get = () => {
         return self.value
@@ -190,7 +190,6 @@ function listSetting(id, value, list) {
         var id = ev.target.id
         var value = ev.target.value
         registeredSettings[id].value = value
-        console.log(registeredSettings[id])
         var signal = new InputEvent("ui_input")
         signal.inputdata = {"id": id, "value":value, "type": "list"}
         document.dispatchEvent(signal)
@@ -273,4 +272,9 @@ document.addEventListener("ready", (ev)=>{
     generate_list()
     populate_sidebar()
     populate_panel()
+})
+
+
+document.addEventListener("ui_input", (ev) => {
+    registeredSettings[ev.inputdata.id].set(ev.inputdata.value)
 })
