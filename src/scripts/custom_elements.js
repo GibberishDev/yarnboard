@@ -21,24 +21,10 @@ function ui_number(event) {
     if (!isNaN(max)){if (value > max) {
         value = max
     }}
-    if (!isNaN(step)) {
+    if (!isNaN(step)) {if (value % step != 0) {
         value = Math.round(value / step) * step
-        if (type_int) value = Math.round(value)
-    }
-    element.value = value
-    number_input(element)
-}
-function fixValue(event, element) {
-    console.log(event)
-    element.removeEventListener("blur", (ev) => fixValue(ev, element))
-    let min = parseFloat(element.min)
-    let max = parseFloat(element.max)
-    let step = parseFloat(element.step)
-    let type_int = Number.isInteger(step)
-    let value = element.value
-    if (!isNaN(min)){if (value < min) {
-        value = min
     }}
+    if (value == "") {value = element.dataset.default}
     element.value = value
     number_input(element)
 }
@@ -54,10 +40,10 @@ function ui_decrementor(event) {
 function number_input(element) {
     var value = element.value
     var id = element.id
-    var signal = new InputEvent("ui_input")
+    var signal = new Event("ui_input")
     signal.inputdata = {"id": id, "value":value, "type": "number"}
     document.dispatchEvent(signal)
 
 }
 
-document.addEventListener("ui_input", (ev) => console.log(ev))
+document.addEventListener("ui_input", (ev) => console.log(ev.inputdata))

@@ -85,24 +85,32 @@
     text-overflow: ellipsis;
     cursor: pointer;
 }
-.settings-sidebar-subcategory.selected {
-    color: var(--var-color-theme-accent);
+.settings-sidebar-subcategory.selected,
+.settings-sidebar-subcategory:hover {
+    color: var(--var-color-theme-accent-bright);
 }
 .settings-sidebar-category:not(.expanded) .settings-sidebar-subcategory {
     height: 0px;
     opacity: 0;
 }
-.settings-sidebar-subcategory::before {
-    content: "├ ";
+.settings-sidebar-category:has(.selected),
+.settings-sidebar-category:has(:hover) {
+    color: var(--var-color-theme-accent-bright);
 }
-.settings-sidebar-category:has(.selected) {
-    color: var(--var-color-theme-accent);
-}
-.settings-sidebar-category:has(.selected) .settings-sidebar-subcategory:not(:last-child):not(.selected)::before {
+
+.settings-sidebar-category:has(.settings-sidebar-subcategory.selected) .settings-sidebar-subcategory:not(:last-child):not(.selected)::before,
+.settings-sidebar-category:has(.settings-sidebar-subcategory:hover) .settings-sidebar-subcategory:not(:last-child):not(:hover)::before {
     content: "┠ ";
     color: var(--var-color-theme-accent);
 }
-.settings-sidebar-subcategory.selected::before {
+.settings-sidebar-subcategory::before,
+.settings-sidebar-category:has(.settings-sidebar-subcategory:hover)  .settings-sidebar-subcategory:hover ~ .settings-sidebar-subcategory:not(:last-child)::before,
+.settings-sidebar-category:has(.settings-sidebar-subcategory.selected)  .settings-sidebar-subcategory.selected ~ .settings-sidebar-subcategory:not(:last-child)::before {
+    content: "├ ";
+    color: var(--var-color-theme-text);
+}
+.settings-sidebar-subcategory.selected::before,
+.settings-sidebar-subcategory:hover::before {
     content: "┡ ";
     color: var(--var-color-theme-accent);
 }
@@ -110,7 +118,8 @@
     content: "└ ";
     color: var(--var-color-theme-text);
 }
-.settings-sidebar-subcategory.selected:last-child::before {
+.settings-sidebar-subcategory.selected:last-child::before,
+.settings-sidebar-subcategory:hover:last-child::before {
     content: "┗ ";
     color: var(--var-color-theme-accent);
 }
@@ -127,6 +136,7 @@
     display: flex;
     flex-direction: column;
     padding: 30px;
+    gap: 60px;
 }
 .settings-category {
     display: flex;

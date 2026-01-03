@@ -1,4 +1,5 @@
 import {registeredActions, executeAction, inputText} from "./keybinds.js"
+import {localizeString} from "./localization.js"
 
 const paletteWrapper = document.querySelector("#command-palette-wrapper")
 const paletteElement = document.querySelector("#command-palette")
@@ -54,19 +55,15 @@ function populateActionsList() {
         element.dataset.id = id
         element.dataset.search_score = 0
         element.title = id
-        localizeString(id).then((responce) => {
-            element.textContent = responce
-            actionsNames[responce] = id
-            if (i == actionsList.length - 1) {
-                sortActionsAlphabetically()
-            }
-        })
+        element.textContent = localizeString(id)
+        actionsNames[localizeString(id)] = id
         element.addEventListener("click", (ev) => {
             executeAction(element.dataset.id)
             togglePalette()
         })
         actionsListElement.appendChild(element)
     }
+    sortActionsAlphabetically()
     
 }
 

@@ -1,18 +1,24 @@
+import { moduleReady } from "./registers/ready.js"
+
+export const AVALIABLE_LANGUAGES = [ //HACK: either update each time new language added or read file system for lang files
+    "en_us",
+    "ru_ru",
+]
+
 var currentLanguage = "en_us"
 var loadedLanguage = undefined
 var fallbackLanguage = undefined
 
-async function localizeString(code) {
-    if (loadedLanguage == undefined) {
-        await loadLanguageFile(currentLanguage).then(data => loadedLanguage = data)
-    } else if (loadedLanguage["language"] != currentLanguage) {
-        await loadLanguageFile(currentLanguage).then(data => loadedLanguage = data)
-    }
-    if (!Object.keys(loadedLanguage).includes(code)) {
-        // console.warn("WARNING: Localization string for " + code + " is missing in language " + currentLanguage)
+export function localizeString(code) {
+    if (loadedLanguage[code] != undefined) {
+        return loadedLanguage[code]
+    } else if (fallbackLanguage[code] != undefined) {
+        console.warn("Localisation code does not exist in " + currentLanguage + ": " + code)
+        return fallbackLanguage[code]
+    } else {
+        console.warn("Localisation code does not exist: " + code)
         return code
     }
-    return loadedLanguage[code]
 }
 
 async function loadLanguageFile(language) {
@@ -20,6 +26,7 @@ async function loadLanguageFile(language) {
     if (!fileExists(path)) {
         path = "./src/lang/en_us.json"
     }
+    var text = {}
     await fetch(path)
     .then((response) => response.json()).then(data=>{
         text = data
@@ -38,5 +45,11 @@ function fileExists(url) {
     }
 }
 currentLanguage = "en_us" //TODO: Change to load saved language from preferences
-loadLanguageFile(currentLanguage).then(lang => loadedLanguage = lang)
-loadLanguageFile("en_us")
+loadLanguageFile(currentLanguage).then(lang => {
+    loadedLanguage = lang
+    moduleReady("language")
+})
+loadLanguageFile("en_us").then(lang => {
+    fallbackLanguage = lang
+    moduleReady("fallbackLanguage")
+})

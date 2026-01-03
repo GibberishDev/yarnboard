@@ -29,9 +29,12 @@
     /* scrollbar-width : none; */
     max-height : calc(60dvh - 14px);
 }
-#command-palette-elements-list {
+.command-palette-list::-webkit-scrollbar {
+    background: transparent;
+    width: 8px;
 }
-#command-palette-actions-list {
+.command-palette-list::-webkit-scrollbar-thumb {
+    background: var(--var-color-theme-accent);
 }
 .command-palette-item {
     transition-duration: var(--var-transition-duration);

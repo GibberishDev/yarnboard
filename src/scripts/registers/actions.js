@@ -1,5 +1,11 @@
-import {BindAction, registeredActions} from "../keybinds.js"
+import {BindAction} from "../keybinds.js"
 import {togglePalette} from "../command_palette.js"
+import {moduleReady} from "./ready.js"
+
+
+function newProject() {
+    createWindow(uuidv4())
+}
 
 new BindAction("action.viewport.selection.transform_move" , ()=> {alert("move");window.yarnboardAPI.fixFocus()} , [] , 'g')
 new BindAction("action.viewport.selection.transform_move_reset" , ()=> {alert("reset move")} , [] , 'alt+g')
@@ -24,6 +30,5 @@ new BindAction("action.app.general.close_app" , () => {window.yarnboardAPI.close
 if (navigator.userAgent.includes("yarnboard-electron")) {
     new BindAction("action.app.debug.toggleDevTools", ()=>{window.yarnboardAPI.devTools()}, [], 'f12')
 }
-function newProject() {
-    createWindow(uuidv4())
-}
+
+moduleReady("actions")

@@ -1,3 +1,5 @@
+import { localizeString } from "./localization.js"
+
 let titlebarLabel = document.querySelector("#title-bar-label")
 let minimizeButton = document.querySelector("#button-minimize")
 let maximizeButton = document.querySelector("#button-maximize")
@@ -19,8 +21,10 @@ if (userAgent.includes("yarnboard-electron") == false) { //Not an application an
         window.yarnboardAPI.close()
     })
     
-    localizeString("ui.titlebar.hint.minimize").then(text=>minimizeButton.title = text)
-    localizeString("ui.titlebar.hint.maxomize").then(text=>maximizeButton.title = text)
-    localizeString("ui.titlebar.hint.close").then(text=>closeButton.title = text)
 
 }
+document.addEventListener("ready", (ev)=>{
+    minimizeButton.title = localizeString("ui.titlebar.hint.minimize")
+    maximizeButton.title = localizeString("ui.titlebar.hint.maximize")
+    closeButton.title = localizeString("ui.titlebar.hint.close")
+})
