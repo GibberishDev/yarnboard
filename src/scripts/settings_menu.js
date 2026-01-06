@@ -264,17 +264,24 @@ function populate_panel() {
 
 
 }
+
 document.addEventListener("locale_changed", (ev) => {
-    populate_sidebar()
-    populate_panel()
-})
-document.addEventListener("ready", (ev)=>{
-    generate_list()
-    populate_sidebar()
-    populate_panel()
+    update()
 })
 
+document.addEventListener("ready", (ev)=>{
+    generate_list()
+})
 
 document.addEventListener("ui_input", (ev) => {
     registeredSettings[ev.inputdata.id].set(ev.inputdata.value)
 })
+
+export function update() {
+    populate_sidebar()
+    populate_panel()
+}
+
+export function getSetting(id) {
+    return registeredSettings[id].value
+}

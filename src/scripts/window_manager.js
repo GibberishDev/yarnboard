@@ -1,6 +1,12 @@
-var openWindows = []
+import { update } from "./settings_menu.js"
+import { getSetting } from "./settings_menu.js"
+
+export var openWindows = []
 var selectedID = ""
 var selectedIdHistory = []
+var appWindowIds = [
+    "settings",
+]
 
 class YarnboardWindow {
     constructor(id, displayName, saveLocation) {
@@ -10,16 +16,8 @@ class YarnboardWindow {
     }
 }
 
-function getBlankProject() {
-    let id = uuidv4()
+function getBlankProject(id) {
     return new YarnboardWindow(id, "Untitled board", "null")
-}
-
-function uuidv4() {
-    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c) {
-        var r = Math.random() * 16 | 0, v = c == "x" ? r : (r & 0x3 | 0x8);
-        return v.toString(16);
-    });
 }
 
 let tabBar = document.querySelector("#tab-bar")
@@ -38,12 +36,12 @@ function updateTabs() {
         bindTabEvents(tabElement)
         tabBar.appendChild(tabElement)
     })
-    if (tabBar.childElementCount < 2) {
+    if ((tabBar.childElementCount < 2 && getSetting("setting.interface.hidetabbar") == true) || tabBar.childElementCount < 1) {
         tabBar.classList.add("hidden")
     } else {
         tabBar.classList.remove("hidden")
     }
-    if (tabBar.childElementCount > 1) {
+    if (tabBar.childElementCount >= 1) {
         if (selectedID != "") {
             let tab = document.querySelector("#tab-id-"+selectedID)
             if (tab != null) {
@@ -66,7 +64,7 @@ window.onresize = (ev) => {scrollTabs()}
 // TODO: scroll to tab
 
 function scrollToTab(id) {
-    containerBoundingRect = document.querySelector("#window-container").getBoundingClientRect()
+    let containerBoundingRect = document.querySelector("#window-container").getBoundingClientRect()
     if (tabBar.getBoundingClientRect().width <= containerBoundingRect.width) {
         tabBar.style.removeProperty("translate")
         return
@@ -100,7 +98,7 @@ function scrollToTab(id) {
 }
 
 function scrollTabs(ev = null) {
-    containerBoundingRect = document.querySelector("#window-container").getBoundingClientRect()
+    let containerBoundingRect = document.querySelector("#window-container").getBoundingClientRect()
     if (ev == null && tabBar.getBoundingClientRect().width <= containerBoundingRect.width) {
         tabBar.style.removeProperty("translate")
         return
@@ -135,9 +133,12 @@ function bindTabEvents(tab) {
     tab.querySelector(".tab-button").addEventListener("click", () => {
         closeWindow(tab.id.replace("tab-id-", ""))
     })
+    tab.addEventListener("drag", (ev) => {
+        console.log(ev)
+    })
 }
 
-function createWindow(id) {
+export function createWindow(id) {
     if (openWindows.includes(id)) {
         // switch to opened window
         selectId(id)
@@ -168,9 +169,8 @@ function closeWindow(id) {
     }
 }
 
-function openWindowViewport(id) {
-    //TODO: if id is absent in the known id list and not found in loaded projects list drop it
-    if (true) {
+function openWindowViewport(id, path="") {
+    if (appWindowIds.includes(id)) {
         var viewportElement = document.createElement("div")
         viewportElement.id = "viewport-id-" + id
         viewportElement.classList.add("viewport")
@@ -179,6 +179,28 @@ function openWindowViewport(id) {
         })
         viewportElement.classList.add("current-viewport")
         document.querySelector("#viewport").appendChild(viewportElement)
+        switch (id) {
+            case "settings" : {
+                viewportElement.innerHTML = SETTINGS_TEMPLATE
+                update()
+            }
+        }
+
+    } else if (isUUID(id)) {
+        var viewportElement = document.createElement("div")
+        viewportElement.id = "viewport-id-" + id
+        viewportElement.classList.add("viewport")
+        document.querySelectorAll(".current-viewport").forEach((el)=>{
+            el.classList.remove("current-viewport")
+        })
+        viewportElement.classList.add("current-viewport")
+        document.querySelector("#viewport").appendChild(viewportElement)
+        if (path!= "") {
+            return
+        } else {
+            return
+        }
+
     }
 }
 
@@ -213,6 +235,36 @@ function selectId(id) {
     scrollToTab(id)
 }
 
-updateTabs()
+document.addEventListener("ready", (ev)=>{
+    updateTabs()
+})
+
+const SETTINGS_TEMPLATE = `<div id="settings-viewport">
+    <div id="settings-title">Settings</div>
+    <input type="text" id="settings-search" placeholder="Search…" spellcheck="false">
+    <div id="settings-sidebar">
+    </div>
+    <div id="settings-panel">
+    </div>
+</div>`
 
 
+export function openSettings() {
+    if (openWindows.includes("settings")) {
+        selectId("settings")
+    } else {
+        createWindow("settings")
+    }
+}
+
+export function uuidv4() {
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16 | 0, v = c == "x" ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
+}
+
+function isUUID(id) {
+    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+    return uuidRegex.test(id)
+}

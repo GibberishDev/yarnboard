@@ -133,6 +133,7 @@
     background: var(--var-color-theme-darkest);
     border-top: 2px solid var(--var-color-theme-dark);
     overflow-y: auto;
+    overflow-x: hidden;
     display: flex;
     flex-direction: column;
     padding: 30px;
@@ -182,7 +183,7 @@ select {
 }
 
 .setting.type-checkbox{
-    grid-template-rows: 20px auto;
+    grid-template-rows: minmax(20px, auto) auto;
 }
 .setting.type-checkbox .setting-description{
     grid-column: 2/3;

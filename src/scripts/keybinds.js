@@ -147,3 +147,7 @@ export function inputText(state) {
     currentInputContext = previousInputContext
   }
 }
+
+document.addEventListener("action", (ev) => {
+  registeredActions[ev.action].context[ev.context].callable()
+})

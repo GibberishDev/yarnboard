@@ -19,9 +19,9 @@
     <script defer type="module" src="./src/scripts/title_bar.js"></script>
     <script defer type="module" src="./src/scripts/command_palette.js"></script>
     <script defer type="module" src="./src/scripts/settings_menu.js"></script>
+    <script defer type="module" src="./src/scripts/window_manager.js"></script>
     <script defer src="./src/scripts/custom_elements.js"></script>
     <script defer src="./src/scripts/utils.js"></script>
-    <script defer src="./src/scripts/window_manager.js"></script>
     <script defer src="./src/scripts/fuzzy_search.js"></script>
     <!-- endregion -->
 
@@ -76,7 +76,7 @@
           <path style=" stroke-width: 2px; stroke-linecap: round; fill: none;" d="M 5 6 L 21 6"></path>
         </svg>
       </div>
-      <div id="title-bar-settings-button" class="title-bar-button">
+      <div id="title-bar-settings-button" class="title-bar-button" onclick="{var event = new Event('action');event.action = 'action.app.viewport.settings';event.context = 'default';document.dispatchEvent(event)}">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26" height="26px" width="26px" xmlns:bx="https://boxy-svg.com">
           <ellipse style=" stroke-width: 4px; fill: none;" cx="13" cy="13" rx="5" ry="5"></ellipse>
           <path d="M 11 19 L 14.98 19 L 14.22 21.34 L 11.76 21.34 L 11 19 Z" style=" stroke-width: 2px; stroke-linejoin: round; stroke-linecap: round;"></path>
@@ -112,14 +112,6 @@
           <div id="tab-bar">
           </div>
           <div id="viewport">
-            <div id="settings-viewport">
-              <div id="settings-title">Settings</div>
-              <input type="text" id="settings-search" placeholder="Search…" spellcheck="false">
-              <div id="settings-sidebar">
-              </div>
-              <div id="settings-panel">
-              </div>
-            </div>
           </div>
         </div>
     </div>
