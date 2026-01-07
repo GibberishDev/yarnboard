@@ -86,7 +86,7 @@ document.addEventListener("keydown", (ev) => {
     modifiers["Alt"] = ev.altKey
     modifiers["Shift"] = ev.shiftKey
     modifiers["Meta"] = ev.metaKey
-    lastPressedKey = ev.key
+    lastPressedKey = ev.code
     var accelerator = constructAccelerator()
     checkBinds(accelerator)
     if (accelerator == "control+p") ev.preventDefault()
@@ -104,7 +104,7 @@ function constructAccelerator() {
   if (modifiers.Alt) {accelerator += "alt+"} 
   if (modifiers.Shift) {accelerator += "shift+"} 
   if (modifiers.Meta) {accelerator += "meta+"}
-  accelerator += lastPressedKey
+  accelerator += lastPressedKey.replace("Key","")
   return accelerator.toLowerCase()
 }
 

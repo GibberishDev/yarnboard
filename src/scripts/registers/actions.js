@@ -24,7 +24,7 @@ new BindAction("action.app.project.open" , ()=> {alert("open");window.yarnboardA
 new BindAction("action.app.project.save" , ()=> {alert("save");window.yarnboardAPI.fixFocus()} , [] , 'control+s')
 new BindAction("action.app.project.save_as" , ()=> {alert("save_as");window.yarnboardAPI.fixFocus()} , [] , 'control+shift+s')
 new BindAction("action.app.project.close" , ()=> {alert("close");window.yarnboardAPI.fixFocus()} , [] , 'control+w')
-new BindAction("action.app.viewport.settings" , openSettings , [] , 'control+,')
+new BindAction("action.app.viewport.settings" , openSettings , [] , 'control+comma')
 new BindAction("action.app.viewport.command_palette" , () => {togglePalette(true)} , [] , 'control+p')
 new BindAction("action.app.general.close_app" , () => {window.yarnboardAPI.close()} , [] , 'alt+f4')
 
