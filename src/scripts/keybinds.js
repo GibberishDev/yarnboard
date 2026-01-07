@@ -89,6 +89,7 @@ document.addEventListener("keydown", (ev) => {
     lastPressedKey = ev.key
     var accelerator = constructAccelerator()
     checkBinds(accelerator)
+    if (accelerator == "control+p") ev.preventDefault()
   }
 })
 document.addEventListener("keyup", (ev) => {

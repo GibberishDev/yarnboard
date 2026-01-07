@@ -41,6 +41,21 @@
     align-items: center;
     flex-direction: row;
     -webkit-user-drag: element;
+    cursor: pointer;
+    transition-property: border, height, background, color, text-shadow;
+}
+
+.tab.insert-left {
+    box-shadow: -2px 0 0 var(--var-color-theme-accent-bright);
+}
+.tab.insert-left:first-child {
+    border-left: 2px solid var(--var-color-theme-accent-bright) !important;
+}
+.tab.insert-right {
+    box-shadow: 2px 0 0 var(--var-color-theme-accent-bright);
+}
+.tab.insert-right:last-child {
+    border-right: 2px solid var(--var-color-theme-accent-bright) !important;
 }
 
 .active-tab {

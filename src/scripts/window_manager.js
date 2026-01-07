@@ -2,11 +2,15 @@ import { update } from "./settings_menu.js"
 import { getSetting } from "./settings_menu.js"
 
 export var openWindows = []
+var openWindowsLastTime = ""
 var selectedID = ""
 var selectedIdHistory = []
 var appWindowIds = [
     "settings",
 ]
+var autoScrollMult = 0
+var autoScroll = false
+let edgeThreshold = 75 //Maybe make it a setting
 
 class YarnboardWindow {
     constructor(id, displayName, saveLocation) {
@@ -21,21 +25,25 @@ function getBlankProject(id) {
 }
 
 let tabBar = document.querySelector("#tab-bar")
+
 tabBar.addEventListener("wheel", (event) => {
     scrollTabs(event)
 })
 
 function updateTabs() {
-    tabBar.innerHTML = ""
-    openWindows.forEach((windowId) => {
-        var tabElement = document.createElement("div")
-        tabElement.innerHTML = document.querySelector("#tab-template").innerHTML
-        tabElement.classList.add("tab")
-        tabElement.querySelector(".tab-title").textContent = windowId
-        tabElement.id = "tab-id-" + windowId
-        bindTabEvents(tabElement)
-        tabBar.appendChild(tabElement)
-    })
+    if (openWindows.toString() !== openWindowsLastTime.toString()) {
+        tabBar.innerHTML = ""
+        openWindows.forEach((windowId) => {
+            var tabElement = document.createElement("div")
+            tabElement.innerHTML = document.querySelector("#tab-template").innerHTML
+            tabElement.classList.add("tab")
+            tabElement.querySelector(".tab-title").textContent = windowId
+            tabElement.id = "tab-id-" + windowId
+            bindTabEvents(tabElement)
+            tabBar.appendChild(tabElement)
+        })
+    }
+    openWindowsLastTime = openWindows.toString()
     if ((tabBar.childElementCount < 2 && getSetting("setting.interface.hidetabbar") == true) || tabBar.childElementCount < 1) {
         tabBar.classList.add("hidden")
     } else {
@@ -43,6 +51,9 @@ function updateTabs() {
     }
     if (tabBar.childElementCount >= 1) {
         if (selectedID != "") {
+            if (document.querySelectorAll(".active-tab")[0] != undefined) {
+                document.querySelectorAll(".active-tab").forEach(el=>el.classList.remove("active-tab"))
+            }
             let tab = document.querySelector("#tab-id-"+selectedID)
             if (tab != null) {
                 tab.classList.add("active-tab")
@@ -134,7 +145,13 @@ function bindTabEvents(tab) {
         closeWindow(tab.id.replace("tab-id-", ""))
     })
     tab.addEventListener("drag", (ev) => {
-        console.log(ev)
+        tabDrag(ev)
+    })
+    tab.addEventListener("dragstart", (ev) => {
+        tabDrag(ev)
+    })
+    tab.addEventListener("dragend", (ev) => {
+        tabDrag(ev)
     })
 }
 
@@ -142,14 +159,13 @@ export function createWindow(id) {
     if (openWindows.includes(id)) {
         // switch to opened window
         selectId(id)
-        updateTabs()
         return
     } else {
         openWindows.push(id)
+        console.log("PUSH: ", openWindows)
         // open corresponding project window
         openWindowViewport(id)
         selectId(id)
-        updateTabs()
     }
 }
 
@@ -267,4 +283,78 @@ export function uuidv4() {
 function isUUID(id) {
     const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
     return uuidRegex.test(id)
+}
+
+function tabDrag(event) {
+    if (event.type == "dragstart") {
+        selectId(event.target.id.replace("tab-id-", ""))
+        autoScroll = true
+        smoothScroll()
+    } else if (event.type == "dragend"){
+        autoScrollMult = 0
+        autoScroll = false
+        reorderTabs(event, true)
+        return
+    } else if (event.x != 0) {
+        if (event.x < edgeThreshold) {
+            autoScrollMult = -1 + (event.x / edgeThreshold)
+        } else if (event.x > document.querySelector("#window-container").getBoundingClientRect().width - edgeThreshold) {
+            autoScrollMult =  1 - ((document.querySelector("#window-container").getBoundingClientRect().width - event.x) / edgeThreshold)
+        } else {
+            autoScrollMult = 0
+        }
+        reorderTabs(event, false)
+    }
+}
+
+function smoothScroll() {
+    if (autoScroll) {
+        setTimeout(smoothScroll, 50)
+    }
+    var currentScroll = Math.abs(parseInt(tabBar.style.getPropertyValue("translate")))
+    if (isNaN(currentScroll)) currentScroll = 0
+    var wishScroll = currentScroll + (75 * autoScrollMult)
+    var maxScroll = tabBar.getBoundingClientRect().width - document.querySelector("#window-container").getBoundingClientRect().width
+    if (autoScrollMult < 0) {
+        wishScroll = Math.max(0, wishScroll)
+    } else if (autoScrollMult > 0) {
+        wishScroll = Math.min(maxScroll, wishScroll)
+    } else {
+        wishScroll = currentScroll
+    }
+    tabBar.style.setProperty("translate", -wishScroll + "px")
+}
+
+function reorderTabs(event, drop) {
+    let dropPoint = event.x
+    let dropTab = event.target
+    var tabs = tabBar.children
+    var dropBefore = undefined
+    var dropAfter = undefined
+    for (let tab of tabs) {
+        tab.classList.remove("insert-left","insert-right")
+        let rect = tab.getBoundingClientRect()
+        let tabWidth = rect.width
+        let tabPos = rect.x
+        if (dropPoint > tabPos &&
+        dropPoint < tabPos + tabWidth/2.0) {
+            tab.classList.add("insert-left")
+            dropBefore = tab
+        } else if (dropPoint > tabPos + tabWidth/2.0 && (dropPoint < tabPos + tabWidth ||tabWidth && tabBar.lastElementChild == tab)) {
+            tab.classList.add("insert-right")
+            dropAfter = tab
+        }
+    }
+    if (drop) {
+        document.querySelectorAll(".insert-left").forEach(el=>el.classList.remove("insert-left"))
+        document.querySelectorAll(".insert-right").forEach(el=>el.classList.remove("insert-right"))
+        if (dropBefore != undefined) {
+            tabBar.insertBefore(dropTab, dropBefore)
+            return
+        }
+        if (dropAfter != undefined) {
+            tabBar.insertBefore(dropTab, dropAfter.nextSibling)
+            return
+        }
+    }
 }
