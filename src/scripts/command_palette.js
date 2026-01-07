@@ -1,5 +1,6 @@
 import {registeredActions, executeAction, inputText} from "./keybinds.js"
 import {localizeString} from "./localization.js"
+import { fuzzySearchStringArray } from "./fuzzy_search.js"
 
 const paletteWrapper = document.querySelector("#command-palette-wrapper")
 const paletteElement = document.querySelector("#command-palette")

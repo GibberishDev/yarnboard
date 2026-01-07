@@ -31,6 +31,7 @@
     "ui.statusbar.hint.time" : "Time spent in project",
     "ui.statusbar.hint.version" : "App version",
     "settings.category.general" : "General",
+    "settings.category.interface" : "Interface",
     "setting.general.language" : "Interface language",
     "setting.general.language.description" : "Display language of the interface",
     "setting.general.username" : "Username",
@@ -42,6 +43,8 @@
     "setting.general.undolimit" : "Undo limit",
     "setting.general.undolimit.description" : "Limit maximum entries stored in undo history. Set to -1 for unlimited. (may lead to decreased perfomance longer you work on a project)",
     "setting.general.undoselection" : "Undo selection",
-    "setting.general.undoselection.description" : "Decides whether to nclude selection of elements in undo history"
+    "setting.general.undoselection.description" : "Decides whether to include selection of elements in undo history",
+    "setting.interface.hidetabbar" : "Hide tab bar",
+    "setting.interface.hidetabbar.description" : "Hide tab bar when only 1 tab present to save on space. If 'OFF' tab bar will be visible with single tab. If 'ON' tab bar will be hidden if ther are less than 2 tabs open"
 
 }

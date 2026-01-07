@@ -1,8 +1,10 @@
 import { AVALIABLE_LANGUAGES, localizeString } from "./localization.js"
 import { inputText } from "./keybinds.js"
+import { fuzzySearchStringArray } from "./fuzzy_search.js"
 
 export var registeredSettings = {}
 var settingsList = {}
+var searchList = {}
 export const SETTINGS_TYPE  = Object.freeze({
     STRING : 0,
     LIST : 1,
@@ -76,7 +78,11 @@ function generate_list() {
         if (settingsList[settting.category_id] == null) {
             settingsList[settting.category_id] = {}
         }
-        settingsList[settting.category_id][settting.id] = settting.type
+        settingsList[settting.category_id][settting.id] = {
+            "type" : settting.type,
+            "category" : settting.category_id,
+
+        }
     }
 }
 
@@ -225,6 +231,7 @@ function populate_panel() {
         let category = settingsList[Object.keys(settingsList)[cat]]
         var categoryElement = document.createElement("div")
         categoryElement.classList.add("settings-category")
+        categoryElement.dataset.id = Object.keys(settingsList)[cat]
         panel.appendChild(categoryElement)
         var categoryLabel = document.createElement("p")
         categoryLabel.innerText = localizeString(Object.keys(settingsList)[cat])
@@ -232,37 +239,41 @@ function populate_panel() {
         
         for (let sett = 0; sett < Object.keys(category).length; sett++) {
             var setting = registeredSettings[Object.keys(category)[sett]]
+            var el = undefined
             switch (setting.type) {
                 case SETTINGS_TYPE.INTEGER : {
-                    categoryElement.appendChild(numberSetting(setting.id, setting.default_value, setting.value, setting.step, setting.min, setting.max))
+                    el = numberSetting(setting.id, setting.default_value, setting.value, setting.step, setting.min, setting.max)
                     break
                 }
                 case SETTINGS_TYPE.FLOAT : {
-                    categoryElement.appendChild(numberSetting(setting.id, setting.default_value, setting.value, setting.step, setting.min, setting.max))
+                    el = numberSetting(setting.id, setting.default_value, setting.value, setting.step, setting.min, setting.max)
                     break
                 }
                 case SETTINGS_TYPE.STRING : {
-                    categoryElement.appendChild(stringSetting(setting.id, setting.value))
+                    el = stringSetting(setting.id, setting.value)
                     break
                 }
                 case SETTINGS_TYPE.LIST : {
-                    categoryElement.appendChild(listSetting(setting.id, setting.value, AVALIABLE_LANGUAGES))
+                    el = listSetting(setting.id, setting.value, AVALIABLE_LANGUAGES)
                     break
                 }
                 case SETTINGS_TYPE.BOOL : {
-                    categoryElement.appendChild(boolSetting(setting.id, setting.value))
+                    el = boolSetting(setting.id, setting.value)
                     break
                 }
                 default : {
-                    categoryElement.appendChild(stringSetting(setting.id, setting.value))
+                    el = stringSetting(setting.id, setting.value)
                     break
                 }
             }
+            el.dataset.panelid = setting.id
+            settingsList[Object.keys(settingsList)[cat]][setting.id].translation = el.querySelector(".setting-label").innerText
+            categoryElement.appendChild(el)
+            
         }
         panel.appendChild(categoryElement)
     }
-
-
+    genSearchList()
 }
 
 document.addEventListener("locale_changed", (ev) => {
@@ -284,4 +295,43 @@ export function update() {
 
 export function getSetting(id) {
     return registeredSettings[id].value
+}
+
+export function bindSearchEvents(searchBarElement) {
+    searchBarElement.addEventListener("focus", ()=>{inputText(true)})
+    searchBarElement.addEventListener("blur", ()=>{inputText(false)})
+    searchBarElement.addEventListener("input", ev=>{searchSettings(ev)})
+}
+
+function genSearchList() {
+    searchList = {}
+    for (let cat in settingsList) {
+        for (let setting in settingsList[cat]) {
+            searchList[settingsList[cat][setting].translation] = setting
+        }
+    }
+}
+
+function searchSettings(event) {
+    let searchTerm = event.target.value
+    if (searchTerm == "") {
+        update()
+        return
+    }
+    let result = fuzzySearchStringArray(Object.keys(searchList), searchTerm, 0.4)
+    document.querySelectorAll(".settings-sidebar-subcategory").forEach(el=>el.classList.add("hidden"))
+    document.querySelectorAll(".setting").forEach(el=>el.classList.add("hidden"))
+    for (let i = result.length - 1; i>=0;i--) {
+        let settingId = searchList[result[i][0]]
+        let sidebar_element = document.querySelector("[data-id=\"" +  settingId + "\"]")
+        let panel_element = document.querySelector("[data-panelid=\"" + settingId  + "\"]")
+        sidebar_element.classList.remove("hidden")
+        panel_element.classList.remove("hidden")
+        let sidebarCategoryElement = document.querySelector("#settings-sidebar").querySelector("[data-id=\""+ registeredSettings[settingId].category_id + "\"]")
+        sidebarCategoryElement.insertBefore(sidebar_element, sidebarCategoryElement.firstChild.nextSibling)
+        let panelCategoryElement = document.querySelector("#settings-panel").querySelector("[data-id=\""+ registeredSettings[settingId].category_id + "\"]")
+        panelCategoryElement.insertBefore(panel_element, panelCategoryElement.firstChild.nextSibling)
+    }
+
+
 }

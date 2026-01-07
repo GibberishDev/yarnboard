@@ -31,6 +31,7 @@
     "ui.statusbar.hint.time" : "Время проведено в проекте",
     "ui.statusbar.hint.version" : "Врсия приложения",
     "settings.category.general" : "Общие",
+    "settings.category.interface" : "Интерфейс",
     "setting.general.language" : "Язык интерфейса",
     "setting.general.language.description" : "",
     "setting.general.username" : "Имя пользователя",
@@ -42,6 +43,8 @@
     "setting.general.undolimit" : "Количество шагов отмены действия",
     "setting.general.undolimit.description" : "Ограничить максимальное количество шагов отмены действия. Установить на -1 если желаете снять ограничения. (Может привести к уменьшенной призводительности при длительной работе с пректом)",
     "setting.general.undoselection" : "Выделение в истории отмены действия",
-    "setting.general.undoselection.description" : "Включать или нет выделение элементов в историю отмены действия"
+    "setting.general.undoselection.description" : "Включать или нет выделение элементов в историю отмены действия",
+    "setting.interface.hidetabbar" : "Скрывать вкладки",
+    "setting.interface.hidetabbar.description" : "Скрывать панель вкладок, когда на панели только 1 вкладка. Если опция ВКЛЮЧЕНА то панель вкладок скрывается при количестве вкладок меньше двух. Если опция ВЫКЛЮЧЕНА то панель скрывается только если все вклад закрыты"
 
 }

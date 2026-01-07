@@ -93,7 +93,9 @@
     overflow: hidden;
 }
 #tab-bar.hidden {
-    display: none;
+    height: 0px;
+    overflow: hidden;
+    border: 0px solid transparent;
 }
 #window-container:has(#tab-bar.hidden) #viewport {
     border-top: 2px solid var(--var-color-theme-dark)

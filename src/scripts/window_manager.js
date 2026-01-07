@@ -1,5 +1,5 @@
 import { update } from "./settings_menu.js"
-import { getSetting } from "./settings_menu.js"
+import { getSetting, bindSearchEvents } from "./settings_menu.js"
 
 export var openWindows = []
 var openWindowsLastTime = ""
@@ -162,7 +162,6 @@ export function createWindow(id) {
         return
     } else {
         openWindows.push(id)
-        console.log("PUSH: ", openWindows)
         // open corresponding project window
         openWindowViewport(id)
         selectId(id)
@@ -198,6 +197,7 @@ function openWindowViewport(id, path="") {
         switch (id) {
             case "settings" : {
                 viewportElement.innerHTML = SETTINGS_TEMPLATE
+                bindSearchEvents(document.querySelector("#settings-search"))
                 update()
             }
         }
@@ -357,4 +357,14 @@ function reorderTabs(event, drop) {
             return
         }
     }
+}
+
+document.addEventListener("settingUpdated", (ev) => {
+    if (ev.id == "setting.interface.hidetabbar") {
+        updateTabs()
+    }
+})
+
+export function closeCurrent() {
+    closeWindow(selectedID)
 }

@@ -196,3 +196,16 @@ select {
     margin-right: 5px;
 }
 
+.setting.hidden,
+.settings-sidebar-subcategory.hidden {
+    display: none;
+}
+.settings-sidebar-category:not(),
+.settings-category:not(:has(.settings-category:not(:has(.hidden)))) {
+    display: none;
+}
+
+.settings-sidebar-category:not(.settings-sidebar-category:has(.settings-sidebar-subcategory:not(.hidden))),
+.settings-category:not(.settings-category:has(.setting:not(.hidden))) {
+    display: none;
+}

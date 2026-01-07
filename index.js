@@ -112,6 +112,7 @@ function disableDefaultSortcuts() {
   globalShortcut.register("CommandOrControl+R", () => {mainWindow.webContents.send('bindAccelerator', "control+r")}) //reload
   globalShortcut.register("CommandOrControl+Shift+I", () => {mainWindow.webContents.send('bindAccelerator', "control+shift+i")}) //developer console
   globalShortcut.register("Alt+F4", () => {mainWindow.webContents.send('bindAccelerator', "alt+f4")}) //close app
+  globalShortcut.register("CommandOrControl+M", () => {mainWindow.webContents.send('bindAccelerator', "control+m")}) //minimize app
 }
 function enableDefaultSortcuts() {
   globalShortcut.unregister("CommandOrControl+=") //zoom in secondary
@@ -123,5 +124,6 @@ function enableDefaultSortcuts() {
   globalShortcut.unregister("CommandOrControl+R") //reload
   globalShortcut.unregister("CommandOrControl+Shift+I") //developer console
   globalShortcut.unregister("Alt+F4") //close app
+  globalShortcut.unregister("CommandOrControl+M") //minimize app. Why is this even default bind on ctrl m wtf
 }
 // npm install @jitsi/robotjs for set mouse position

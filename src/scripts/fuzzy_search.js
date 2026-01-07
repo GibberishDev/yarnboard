@@ -1,4 +1,4 @@
-function fuzzySearchStringArray(sourceArray, searchTerm, scoreThreshold = 0.0) {
+export function fuzzySearchStringArray(sourceArray, searchTerm, scoreThreshold = 0.0) {
     var matches = {}
     for (let i=0;i<sourceArray.length;i++) {
         var string = sourceArray[i]
