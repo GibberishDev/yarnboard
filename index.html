@@ -1,168 +1,162 @@
 <!DOCTYPE html>
 <head>
-    <meta charset="UTF-16">
-    <title>Yarnboard</title>
-
-    <!-- region Styles -->
-      <link rel="stylesheet" href="./assets/css/variables.css">
-      <link rel="stylesheet" href="./assets/css/title_bar.css">
-      <link rel="stylesheet" href="./assets/css/status_bar.css">
-      <link rel="stylesheet" href="./assets/css/viewport.css">
-      <link rel="stylesheet" href="./assets/css/index.css">
-      <link rel="stylesheet" href="./assets/css/command_palette.css">
-      <link rel="stylesheet" href="./assets/css/settings.css">
-    <!-- endregion -->
-
-    <!-- region Scripts -->
-    <script defer type="module" src="./src/scripts/registers/ready.js"></script>
-    <script defer type="module" src="./src/scripts/keybinds.js"></script>
-    <script defer type="module" src="./src/scripts/title_bar.js"></script>
-    <script defer type="module" src="./src/scripts/command_palette.js"></script>
-    <script defer type="module" src="./src/scripts/settings_menu.js"></script>
-    <script defer type="module" src="./src/scripts/window_manager.js"></script>
-    <script defer type="module" src="./src/scripts/fuzzy_search.js"></script>
-    <script defer src="./src/scripts/custom_elements.js"></script>
-    <script defer src="./src/scripts/utils.js"></script>
-    <!-- endregion -->
-
-    <!-- region registers -->
-    <script defer type="module" src="./src/scripts/localization.js"></script>
-    <script defer type="module" src="./src/scripts/registers/actions.js"></script>
-    <script defer type="module" src="./src/scripts/registers/settings.js"></script>
-    <!-- endregion -->
-
+	<meta charset="UTF-16">
+	<title>Yarnboard</title>
+	<link rel="icon" type="image/x-icon" href="./assets/images/icons/app.ico">
+	<!-- region Styles -->
+	<link rel="stylesheet" href="./assets/css/variables.css">
+	<link rel="stylesheet" href="./assets/css/title_bar.css">
+	<link rel="stylesheet" href="./assets/css/status_bar.css">
+	<link rel="stylesheet" href="./assets/css/viewport.css">
+	<link rel="stylesheet" href="./assets/css/index.css">
+	<link rel="stylesheet" href="./assets/css/command_palette.css">
+	<link rel="stylesheet" href="./assets/css/settings.css">
+	<!-- endregion -->
+	<!-- region Scripts -->
+	<script defer type="module" src="./src/scripts/registers/ready.js"></script>
+	<script defer type="module" src="./src/scripts/keybinds.js"></script>
+	<script defer type="module" src="./src/scripts/title_bar.js"></script>
+	<script defer type="module" src="./src/scripts/command_palette.js"></script>
+	<script defer type="module" src="./src/scripts/settings_menu.js"></script>
+	<script defer type="module" src="./src/scripts/window_manager.js"></script>
+	<script defer type="module" src="./src/scripts/fuzzy_search.js"></script>
+	<script defer src="./src/scripts/custom_elements.js"></script>
+	<script defer src="./src/scripts/utils.js"></script>
+	<!-- endregion -->
+	<!-- region registers -->
+	<script defer type="module" src="./src/scripts/localization.js"></script>
+	<script defer type="module" src="./src/scripts/registers/actions.js"></script>
+	<script defer type="module" src="./src/scripts/registers/settings.js"></script>
+	<!-- endregion -->
 </head>
 <body>
-    <div id="title-bar-container">
-      <div id="title-bar-icon-button" class="title-bar-button">
-        <svg
-          id="app-icon"
-          viewBox="0 0 4.2333332 4.233333"
-          version="1.1"
-          xmlns="http://www.w3.org/2000/svg">
-          <defs id="defs">
-            <mask id="pin-mask">
-              <circle
-              style="fill:#ffffff;fill-opacity:1;stroke-width:0.105022" id="path1" cy="2.422591" cx="1.5875" r="1.5875" mask="url(#pin-mask)"
-              />
-              <path
-              style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.065;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal" d="M 2.0057275,1.2701635 2.769547,1.9155934 2.2558772,2.1361457 1.8019323,3.0606952 1.4964045,2.8025232 0.77406254,3.5024271 1.3425802,2.6746921 1.0375827,2.4158927 1.8739674,1.8134307 Z" id="path3"
-              />
-            </mask>
-          </defs>
-          <g
-            id="layer1"
-            transform="translate(0,-0.38124753)">
-            <circle
-            style="fill-opacity:1;stroke-width:0;"
-            id="path1"
-            cy="2.422591"
-            cx="1.5875"
-            r="1.5875"
-            mask="url(#pin-mask)"
-            />
-            <path
-            style="fill-opacity:0;stroke-width:0.264583;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
-            d="M 1.1658202,3.8033854 C 1.4304036,3.9108719 2.4275535,4.106774 2.7863932,4.0018225 3.385479,3.8266049 3.4007325,2.8092253 3.8199218,2.8277343 4.4005486,2.8533715 3.7868489,3.646289 3.7868489,3.646289"
-            id="path2"
-            />
-          </g>
-        </svg>
-      </div>
-      <div id="title-bar-menu-button" class="title-bar-button">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26" height="26px" width="26px">
-          <path style=" stroke-width: 2px; stroke-linecap: round; fill: none;" d="M 5 20 L 21 20"></path>
-          <path style=" stroke-width: 2px; stroke-linecap: round; fill: none;" d="M 5 13 L 21 13"></path>
-          <path style=" stroke-width: 2px; stroke-linecap: round; fill: none;" d="M 5 6 L 21 6"></path>
-        </svg>
-      </div>
-      <div id="title-bar-settings-button" class="title-bar-button" onclick="{var event = new Event('action');event.action = 'action.app.viewport.settings';event.context = 'default';document.dispatchEvent(event)}">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26" height="26px" width="26px" xmlns:bx="https://boxy-svg.com">
-          <ellipse style=" stroke-width: 4px; fill: none;" cx="13" cy="13" rx="5" ry="5"></ellipse>
-          <path d="M 11 19 L 14.98 19 L 14.22 21.34 L 11.76 21.34 L 11 19 Z" style=" stroke-width: 2px; stroke-linejoin: round; stroke-linecap: round;"></path>
-          <path d="M 11 7 L 14.98 7 L 14.22 4.66 L 11.76 4.66 L 11 7 Z" style=" stroke-width: 2; stroke-linejoin: round; stroke-linecap: round;"></path>
-          <path d="M 4.81 15.41 L 8.79 15.41 L 8.03 17.75 L 5.57 17.75 L 4.81 15.41 Z" style=" stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; transform-box: fill-box; transform-origin: 50% 50%;" transform="matrix(0.5, 0.866025, -0.866025, 0.5, -0.000001, 0)"></path>
-          <path d="M 17.23 10.58 L 21.21 10.58 L 20.45 8.24 L 17.99 8.24 L 17.23 10.58 Z" style=" stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; transform-box: fill-box; transform-origin: 50% 50%;" transform="matrix(0.5, 0.866025, -0.866025, 0.5, -0.000001, 0.000001)"></path>
-          <path d="M 4.81 8.25 L 8.79 8.25 L 8.03 10.58 L 5.57 10.58 L 4.81 8.25 Z" style=" stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; transform-origin: 6.8px 9.41px;" transform="matrix(-0.5, 0.866025, -0.866025, -0.5, -0.000001, 0)"></path>
-          <path d="M 17.23 17.75 L 21.21 17.75 L 20.45 15.41 L 17.99 15.41 L 17.23 17.75 Z" style=" stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; transform-origin: 19.22px 16.58px;" transform="matrix(-0.5, 0.866025, -0.866025, -0.5, -0.000002, 0)"></path>
-        </svg>
-      </div>
-      <div id="title-bar-label">
-        Yarnboard
-      </div>
-      <div title="Miminize window" id="button-minimize" class="title-bar-button">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26" width="26px" height="26px">
-          <path style="fill: none; stroke-linecap: round; stroke-width: 2px;" d="M 5 9 L 13.08 17 L 21 9"></path>
-        </svg>
-      </div>
-      <div title="Maximize window" id="button-maximize" class="title-bar-button">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26" width="26px" height="26px">
-          <path style="fill: none; stroke-width: 2px; stroke-linecap: round; stroke-linejoin: round;" d="M 13 3 L 4 13 L 13 22 L 22 13 L 13 3"></path>
-        </svg>
-      </div>
-      <div title="Close window" id="button-close" class="title-bar-button">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26" width="26px" height="26px">
-          <path style="fill: none; stroke-width: 2px; stroke-linecap: round; stroke-linejoin: round;" d="M 6 6 L 20 20 L 13 13 L 20 6 L 6 20"></path>
-        </svg>
-      </div>
-    </div>
-    <div id="main-body">
-        <div id="sidebar" style="display: none;"></div>
-        <div id="window-container">
-          <div id="tab-bar">
-          </div>
-          <div id="viewport">
-          </div>
-        </div>
-    </div>
-    <div id="status-bar">
-      <div id="status-bar-project-stats">
-        <div id="status-bar-project-stats-project-name">
-          No project open
-        </div>
-        <div id="status-bar-project-stats-connections-count">
-          <svg width="22" height="22" viewBox="0 0 22 22">
-              <circle cx="4" cy="4" r="2" />
-              <circle r="2" cy="18" cx="18" />
-              <path d="m 4,6 c 0,8 4,12 12,12"/>
-          </svg>
-          -/-
-        </div>
-        <div id="status-bar-project-stats-elements-count">
-          <svg width="22" height="22" viewBox="0 0 22 22">
-              <path d="M 15,4 C 15,2 14,1 12,1 10,1 9,2 9,4 H 4 v 5 c -2,0 -3,1 -3,3 0,2 1,3 3,3 v 5 h 5 c 0,-2 1,-3 3,-3 2,0 3,1 3,3 h 5 v -5 c -2,0 -3,-1 -3,-3 0,-2 1,-3 3,-3 V 4 Z"/>
-          </svg>
-          -/-
-        </div>
-        <div id="status-bar-project-stats-time">
-          <svg width="22" height="22" viewBox="0 0 22 22">
-            <circle cx="11" cy="11" r="9" />
-            <path d="m 11,5 v 6 l 3,4" />
-          </svg>
-          --:--:--
-        </div>
-      </div>
-      <div id="status-bar-app-stats">Yarnboard 0.0.1</div>
-    </div>
-    <div id="command-palette-wrapper" class="hidden">
-      <div id="command-palette-panel"></div>
-      <div id="command-palette">
-        <input type="text" id="command-palette-search" placeholder="Search…" spellcheck="false">
-        <div id="command-palette-actions-list" class="command-palette-list">
-        </div>
-        <div id="command-palette-elements-list" class="command-palette-list">
-        </div>
-      </div>
-    </div>
+	<div id="title-bar-container">
+		<div id="title-bar-icon-button" class="title-bar-button">
+			<svg
+				id="app-icon"
+				viewBox="0 0 4.2333332 4.233333"
+				version="1.1"
+				xmlns="http://www.w3.org/2000/svg">
+				<defs id="defs">
+					<mask id="pin-mask">
+						<circle
+						style="fill:#ffffff;fill-opacity:1;stroke-width:0.105022" id="path1" cy="2.422591" cx="1.5875" r="1.5875" mask="url(#pin-mask)"
+						/>
+						<path
+						style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.065;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal" d="M 2.0057275,1.2701635 2.769547,1.9155934 2.2558772,2.1361457 1.8019323,3.0606952 1.4964045,2.8025232 0.77406254,3.5024271 1.3425802,2.6746921 1.0375827,2.4158927 1.8739674,1.8134307 Z" id="path3"
+						/>
+					</mask>
+				</defs>
+				<g
+					id="layer1"
+					transform="translate(0,-0.38124753)">
+					<circle
+					style="fill-opacity:1;stroke-width:0;"
+					id="path1"
+					cy="2.422591"
+					cx="1.5875"
+					r="1.5875"
+					mask="url(#pin-mask)"
+					/>
+					<path
+					style="fill-opacity:0;stroke-width:0.264583;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+					d="M 1.1658202,3.8033854 C 1.4304036,3.9108719 2.4275535,4.106774 2.7863932,4.0018225 3.385479,3.8266049 3.4007325,2.8092253 3.8199218,2.8277343 4.4005486,2.8533715 3.7868489,3.646289 3.7868489,3.646289"
+					id="path2"
+					/>
+				</g>
+			</svg>
+		</div>
+		<div id="title-bar-menu-button" class="title-bar-button">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26" height="26px" width="26px">
+				<path style=" stroke-width: 2px; stroke-linecap: round; fill: none;" d="M 5 20 L 21 20"></path>
+				<path style=" stroke-width: 2px; stroke-linecap: round; fill: none;" d="M 5 13 L 21 13"></path>
+				<path style=" stroke-width: 2px; stroke-linecap: round; fill: none;" d="M 5 6 L 21 6"></path>
+			</svg>
+		</div>
+		<div id="title-bar-settings-button" class="title-bar-button" onclick="{var event = new Event('action');event.action = 'action.app.viewport.settings';event.context = 'default';document.dispatchEvent(event)}">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26" height="26px" width="26px" xmlns:bx="https://boxy-svg.com">
+				<ellipse style=" stroke-width: 4px; fill: none;" cx="13" cy="13" rx="5" ry="5"></ellipse>
+				<path d="M 11 19 L 14.98 19 L 14.22 21.34 L 11.76 21.34 L 11 19 Z" style=" stroke-width: 2px; stroke-linejoin: round; stroke-linecap: round;"></path>
+				<path d="M 11 7 L 14.98 7 L 14.22 4.66 L 11.76 4.66 L 11 7 Z" style=" stroke-width: 2; stroke-linejoin: round; stroke-linecap: round;"></path>
+				<path d="M 4.81 15.41 L 8.79 15.41 L 8.03 17.75 L 5.57 17.75 L 4.81 15.41 Z" style=" stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; transform-box: fill-box; transform-origin: 50% 50%;" transform="matrix(0.5, 0.866025, -0.866025, 0.5, -0.000001, 0)"></path>
+				<path d="M 17.23 10.58 L 21.21 10.58 L 20.45 8.24 L 17.99 8.24 L 17.23 10.58 Z" style=" stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; transform-box: fill-box; transform-origin: 50% 50%;" transform="matrix(0.5, 0.866025, -0.866025, 0.5, -0.000001, 0.000001)"></path>
+				<path d="M 4.81 8.25 L 8.79 8.25 L 8.03 10.58 L 5.57 10.58 L 4.81 8.25 Z" style=" stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; transform-origin: 6.8px 9.41px;" transform="matrix(-0.5, 0.866025, -0.866025, -0.5, -0.000001, 0)"></path>
+				<path d="M 17.23 17.75 L 21.21 17.75 L 20.45 15.41 L 17.99 15.41 L 17.23 17.75 Z" style=" stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; transform-origin: 19.22px 16.58px;" transform="matrix(-0.5, 0.866025, -0.866025, -0.5, -0.000002, 0)"></path>
+			</svg>
+		</div>
+		<div id="title-bar-label">
+			Yarnboard
+		</div>
+		<div title="Miminize window" id="button-minimize" class="title-bar-button">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26" width="26px" height="26px">
+				<path style="fill: none; stroke-linecap: round; stroke-width: 2px;" d="M 5 9 L 13.08 17 L 21 9"></path>
+			</svg>
+		</div>
+		<div title="Maximize window" id="button-maximize" class="title-bar-button">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26" width="26px" height="26px">
+				<path style="fill: none; stroke-width: 2px; stroke-linecap: round; stroke-linejoin: round;" d="M 13 3 L 4 13 L 13 22 L 22 13 L 13 3"></path>
+			</svg>
+		</div>
+		<div title="Close window" id="button-close" class="title-bar-button">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26" width="26px" height="26px">
+				<path style="fill: none; stroke-width: 2px; stroke-linecap: round; stroke-linejoin: round;" d="M 6 6 L 20 20 L 13 13 L 20 6 L 6 20"></path>
+			</svg>
+		</div>
+	</div>
+	<div id="main-body">
+		<div id="sidebar" style="display: none;"></div>
+		<div id="window-container">
+			<div id="tab-bar">
+			</div>
+			<div id="viewport">
+			</div>
+		</div>
+	</div>
+	<div id="status-bar">
+		<div id="status-bar-project-stats">
+			<div id="status-bar-project-stats-connections-count">
+				<svg width="22" height="22" viewBox="0 0 22 22">
+						<circle cx="4" cy="4" r="2" />
+						<circle r="2" cy="18" cx="18" />
+						<path d="m 4,6 c 0,8 4,12 12,12"/>
+				</svg>
+				-/-
+			</div>
+			<div id="status-bar-project-stats-elements-count">
+				<svg width="22" height="22" viewBox="0 0 22 22">
+						<path d="M 15,4 C 15,2 14,1 12,1 10,1 9,2 9,4 H 4 v 5 c -2,0 -3,1 -3,3 0,2 1,3 3,3 v 5 h 5 c 0,-2 1,-3 3,-3 2,0 3,1 3,3 h 5 v -5 c -2,0 -3,-1 -3,-3 0,-2 1,-3 3,-3 V 4 Z"/>
+				</svg>
+				-/-
+			</div>
+			<div id="status-bar-project-stats-time">
+				<svg width="22" height="22" viewBox="0 0 22 22">
+					<circle cx="11" cy="11" r="9" />
+					<path d="m 11,5 v 6 l 3,4" />
+				</svg>
+				--:--:--
+			</div>
+		</div>
+		<div id="status-bar-app-stats">Yarnboard 0.0.1</div>
+	</div>
+	<div id="command-palette-wrapper" class="hidden">
+		<div id="command-palette-panel"></div>
+		<div id="command-palette">
+			<input type="text" id="command-palette-search" placeholder="Search…" spellcheck="false">
+			<div id="command-palette-actions-list" class="command-palette-list">
+			</div>
+			<div id="command-palette-elements-list" class="command-palette-list">
+			</div>
+		</div>
+	</div>
 </body>
 <template id="tab-template">
-  <div class="tab-title"></div>
-  <div class="tab-button">
-    <svg width="16" height="16" viewBox="0 0 16 16" class="tab-close-button">
-      <path d="M 3,3 13,13"></path>
-      <path d="M 3,13 13,3"></path>
-    </svg>
-  </div>
+	<div class="tab-title"></div>
+	<div class="tab-button">
+		<svg width="16" height="16" viewBox="0 0 16 16" class="tab-close-button">
+			<path d="M 3,3 13,13"></path>
+			<path d="M 3,13 13,3"></path>
+		</svg>
+	</div>
 </template>
 
 </html>

@@ -12,8 +12,8 @@ new ColorSetting("setting.theme.colorthemedarkest","#0d0d0d","settings.category.
 new ColorSetting("setting.theme.colorthemedark","#333333","settings.category.theme")
 new ColorSetting("setting.theme.colorthemetextdark","#595959","settings.category.theme")
 new ColorSetting("setting.theme.colorthemetext","#a6a6a6","settings.category.theme")
-new ColorSetting("setting.theme.colorthemeacent","#1d6600","settings.category.theme")
-new ColorSetting("setting.theme.colorthemeacentbright","#33b300","settings.category.theme")
+new ColorSetting("setting.theme.colorthemeaccent","#1d6600","settings.category.theme")
+new ColorSetting("setting.theme.colorthemeaccentbright","#33b300","settings.category.theme")
 
 moduleReady("settings")
 
@@ -22,8 +22,8 @@ document.addEventListener("settingUpdated", (ev)=>{
     else if (ev.id == "setting.theme.colorthemedark") { document.documentElement.style.setProperty("--var-color-theme-dark", ev.value)}
     else if (ev.id == "setting.theme.colorthemetextdark") { document.documentElement.style.setProperty("--var-color-theme-text-dark", ev.value)}
     else if (ev.id == "setting.theme.colorthemetext") { document.documentElement.style.setProperty("--var-color-theme-text", ev.value)}
-    else if (ev.id == "setting.theme.colorthemeacent") { document.documentElement.style.setProperty("--var-color-theme-accent", ev.value)}
-    else if (ev.id == "setting.theme.colorthemeacentbright") { document.documentElement.style.setProperty("--var-color-theme-accent-bright", ev.value)}
+    else if (ev.id == "setting.theme.colorthemeaccent") { document.documentElement.style.setProperty("--var-color-theme-accent", ev.value)}
+    else if (ev.id == "setting.theme.colorthemeaccentbright") { document.documentElement.style.setProperty("--var-color-theme-accent-bright", ev.value)}
 })
 
     // --var-color-theme-darkest : #0d0d0d;

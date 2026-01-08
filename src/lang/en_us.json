@@ -32,6 +32,7 @@
     "ui.statusbar.hint.version" : "App version",
     "settings.category.general" : "General",
     "settings.category.interface" : "Interface",
+    "settings.category.theme" : "Theme",
     "setting.general.language" : "Interface language",
     "setting.general.language.description" : "Display language of the interface",
     "setting.general.username" : "Username",
@@ -45,6 +46,19 @@
     "setting.general.undoselection" : "Undo selection",
     "setting.general.undoselection.description" : "Decides whether to include selection of elements in undo history",
     "setting.interface.hidetabbar" : "Hide tab bar",
-    "setting.interface.hidetabbar.description" : "Hide tab bar when only 1 tab present to save on space. If 'OFF' tab bar will be visible with single tab. If 'ON' tab bar will be hidden if ther are less than 2 tabs open"
+    "setting.interface.hidetabbar.description" : "Hide tab bar when only 1 tab present to save on space. If 'OFF' tab bar will be visible with single tab. If 'ON' tab bar will be hidden if ther are less than 2 tabs open",
+    "setting.theme.colorthemedarkest" : "Background color",
+    "setting.theme.colorthemedarkest.description" : "App background color",
+    "setting.theme.colorthemedark" : "Border color",
+    "setting.theme.colorthemedark.description" : "App border color",
+    "setting.theme.colorthemetextdark" : "Dark text color",
+    "setting.theme.colorthemetextdark.description" : "App darker text color. Usually reserved for descriptions and less important text",
+    "setting.theme.colorthemetext" : "Text color",
+    "setting.theme.colorthemetext.description" : "App text color",
+    "setting.theme.colorthemeaccent" : "Accent color",
+    "setting.theme.colorthemeaccent.description" : "App accent color",
+    "setting.theme.colorthemeaccentbright" : "Bright accent color",
+    "setting.theme.colorthemeaccentbright.description" : "App brighter accent color. Usually reserved for highlighting and text shadows of already accented items"
+
 
 }

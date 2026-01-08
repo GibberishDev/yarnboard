@@ -1,4 +1,4 @@
-import { update } from "./settings_menu.js"
+import { updateSettingsViewport } from "./settings_menu.js"
 import { getSetting, bindSearchEvents } from "./settings_menu.js"
 
 export var openWindows = []
@@ -198,7 +198,7 @@ function openWindowViewport(id, path="") {
             case "settings" : {
                 viewportElement.innerHTML = SETTINGS_TEMPLATE
                 bindSearchEvents(document.querySelector("#settings-search"))
-                update()
+                updateSettingsViewport()
             }
         }
 
@@ -258,9 +258,15 @@ document.addEventListener("ready", (ev)=>{
 const SETTINGS_TEMPLATE = `<div id="settings-viewport">
     <div id="settings-title">Settings</div>
     <input type="text" id="settings-search" placeholder="Search…" spellcheck="false">
+    <svg id="sidebar-button-toggle" width="30px" height="30px" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="6" y="0.5" width="9.5" height="15"></rect>
+    <rect id="sidebar-vis" width="3.5" height="15" x="0.5" y="0.5"></rect>
+    </svg>
+    <input type="checkbox" id="settings-sidebar-checkbox">
     <div id="settings-sidebar">
     </div>
     <div id="settings-panel">
+
     </div>
 </div>`
 
