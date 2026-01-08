@@ -11,7 +11,7 @@ export const SETTINGS_TYPE  = Object.freeze({
     INTEGER : 2,
     FLOAT : 3,
     BOOL : 4,
-
+    COLOR : 5,
 })
 
 class Setting {
@@ -30,7 +30,7 @@ class Setting {
         event.id = this.id
         event.value = this.value
         document.dispatchEvent(event)
-        console.info("Set " + this.id + " value to \"" + value + "\"")
+        // console.info("Set " + this.id + " value to \"" + value + "\"")
     }
     get = () => {
         return self.value
@@ -60,6 +60,11 @@ export class ListSetting extends Setting {
 export class BoolSetting extends Setting {
     constructor(id, default_value, category_id="settings.category.general", value = undefined) {
         super(id, SETTINGS_TYPE.BOOL, default_value, category_id, value)
+    }
+}
+export class ColorSetting extends Setting {
+    constructor(id, default_value, category_id="settings.category.general", value = undefined) {
+        super(id, SETTINGS_TYPE.COLOR, default_value, category_id, value)
     }
 }
 export class FloatSetting extends Setting {
@@ -222,6 +227,31 @@ function boolSetting(id, value) {
     return element
 }
 
+const colorTemplate = `
+        <div class="setting-label"></div>
+        <div class="setting-description"></div>
+        <div class="color-input">
+            <div class="color-preview">
+            <div class="bg"></div>
+            <input type="text" class="hex" onblur="ui_color_hex(event)">
+            </div>
+            <div class="color-picker-range hue"><input type="range" min="0" max="360" oninput="ui_color_hue(event)"><input type="number" min="0" max="360" onblur="ui_color_hue(event)"></div>
+            <div class="color-picker-range sat"><input type="range" min="0" max="100" oninput="ui_color_sat(event)"><input type="number" min="0" max="100" onblur="ui_color_sat(event)"></div>
+            <div class="color-picker-range val"><input type="range" min="0" max="100" oninput="ui_color_val(event)"><input type="number" min="0" max="100" onblur="ui_color_val(event)"></div>
+        </div>`
+
+
+function colorSetting(id, value) {
+    var element = document.createElement("div")
+    element.classList.add("setting","type-color")
+    element.innerHTML = colorTemplate
+    element.querySelector(".setting-label").innerText = localizeString(id)
+    element.querySelector(".setting-description").innerText = localizeString(id+".description")
+    element.querySelector(".hex").id = id
+    console.log(element)
+    colorInit(value, element)
+    return element
+}
 // endregion
 
 function populate_panel() {
@@ -261,6 +291,10 @@ function populate_panel() {
                     el = boolSetting(setting.id, setting.value)
                     break
                 }
+                case SETTINGS_TYPE.COLOR : {
+                    el = colorSetting(setting.id, setting.value)
+                    break
+                }
                 default : {
                     el = stringSetting(setting.id, setting.value)
                     break
@@ -285,7 +319,10 @@ document.addEventListener("ready", (ev)=>{
 })
 
 document.addEventListener("ui_input", (ev) => {
-    registeredSettings[ev.inputdata.id].set(ev.inputdata.value)
+    if (Object.keys(registeredSettings).includes(ev.inputdata.id)) {
+        registeredSettings[ev.inputdata.id].set(ev.inputdata.value)
+    } else {
+    }
 })
 
 export function update() {

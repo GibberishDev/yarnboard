@@ -218,3 +218,7 @@ select:focus::picker-icon {
 select:open::picker-icon {
   rotate: 180deg;
 }
+
+input:focus {
+  outline: none;
+}
