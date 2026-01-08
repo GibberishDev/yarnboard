@@ -248,7 +248,6 @@ function colorSetting(id, value) {
     element.querySelector(".setting-label").innerText = localizeString(id)
     element.querySelector(".setting-description").innerText = localizeString(id+".description")
     element.querySelector(".hex").id = id
-    console.log(element)
     colorInit(value, element)
     return element
 }

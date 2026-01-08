@@ -172,13 +172,13 @@ function closeWindow(id) {
     if (openWindows.includes(id)) {
         // check if unsaved
         if (selectedIdHistory.includes(id)) {selectedIdHistory.splice(selectedIdHistory.indexOf(id),1)}
-        if (selectedID == id) {
-            // Switch to last history item
-            selectedID = ""
-        }
         openWindows.splice(openWindows.indexOf(id),1)
         closeViewport(id)
+        if (selectedID == id) {
+            selectId(selectedIdHistory[selectedIdHistory.length - 1])
+        }
         updateTabs()
+        scrollTabs()
     } else {
         console.error("ERROR: cannot close window with id " + id + " - no such window open")
     }
@@ -350,12 +350,13 @@ function reorderTabs(event, drop) {
         document.querySelectorAll(".insert-right").forEach(el=>el.classList.remove("insert-right"))
         if (dropBefore != undefined) {
             tabBar.insertBefore(dropTab, dropBefore)
-            return
-        }
-        if (dropAfter != undefined) {
+        } else if (dropAfter != undefined) {
             tabBar.insertBefore(dropTab, dropAfter.nextSibling)
-            return
         }
+        let newOrder = []
+        for (let el of document.querySelectorAll('#tab-bar .tab')) newOrder.push(el.id.replace("tab-id-",""))
+        console.log(newOrder)
+        openWindows = newOrder
     }
 }
 

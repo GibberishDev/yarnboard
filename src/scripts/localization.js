@@ -13,10 +13,10 @@ export function localizeString(code) {
     if (loadedLanguage[code] != undefined) {
         return loadedLanguage[code]
     } else if (fallbackLanguage[code] != undefined) {
-        console.warn("Localisation code does not exist in " + currentLanguage + ": " + code)
+        // console.warn("Localisation code does not exist in " + currentLanguage + ": " + code)
         return fallbackLanguage[code]
     } else {
-        console.warn("Localisation code does not exist: " + code)
+        // console.warn("Localisation code does not exist: " + code)
         return code
     }
 }
