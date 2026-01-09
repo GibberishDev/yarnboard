@@ -1,13 +1,17 @@
 import { moduleReady } from "./ready.js";
-import { BoolSetting, IntSetting, ListSetting, StringSetting, ColorSetting } from "../settings_menu.js";
+import { BoolSetting, IntSetting, ListSetting, StringSetting, ColorSetting, ButtonSetting } from "../settings_menu.js";
+import { AVALIABLE_LANGUAGES } from "../localization.js";
+import { themes } from "./themes.js";
 
-new ListSetting("setting.general.language","en_us")
+new ListSetting("setting.general.language","en_us", AVALIABLE_LANGUAGES)
 new StringSetting("setting.general.username","")
 new BoolSetting("setting.general.streamermode",false)
 new StringSetting("setting.general.streamermode.entries","username")
 new IntSetting("setting.general.undolimit",256,-1)
 new BoolSetting("setting.general.undoselection",true)
 new BoolSetting("setting.interface.hidetabbar",true,"settings.category.interface")
+new ListSetting("setting.theme.picker","Yarnboard Dark", themes, "settings.category.theme")
+new ButtonSetting("setting.theme.savepreset","action.app.theme.savepreset","settings.category.theme")
 new ColorSetting("setting.theme.colorthemedarkest","#0d0d0d","settings.category.theme")
 new ColorSetting("setting.theme.colorthemedark","#333333","settings.category.theme")
 new ColorSetting("setting.theme.colorthemetextdark","#595959","settings.category.theme")
@@ -17,14 +21,6 @@ new ColorSetting("setting.theme.colorthemeaccentbright","#33b300","settings.cate
 
 moduleReady("settings")
 
-document.addEventListener("settingUpdated", (ev)=>{
-    if (ev.id == "setting.theme.colorthemedarkest") {document.documentElement.style.setProperty("--var-color-theme-darkest", ev.value)}
-    else if (ev.id == "setting.theme.colorthemedark") { document.documentElement.style.setProperty("--var-color-theme-dark", ev.value)}
-    else if (ev.id == "setting.theme.colorthemetextdark") { document.documentElement.style.setProperty("--var-color-theme-text-dark", ev.value)}
-    else if (ev.id == "setting.theme.colorthemetext") { document.documentElement.style.setProperty("--var-color-theme-text", ev.value)}
-    else if (ev.id == "setting.theme.colorthemeaccent") { document.documentElement.style.setProperty("--var-color-theme-accent", ev.value)}
-    else if (ev.id == "setting.theme.colorthemeaccentbright") { document.documentElement.style.setProperty("--var-color-theme-accent-bright", ev.value)}
-})
 
     // --var-color-theme-darkest : #0d0d0d;
     // --var-color-theme-dark : #333333;

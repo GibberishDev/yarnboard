@@ -1,5 +1,5 @@
 import { AVALIABLE_LANGUAGES, localizeString } from "./localization.js"
-import { inputText } from "./keybinds.js"
+import { inputText, executeAction } from "./keybinds.js"
 import { fuzzySearchStringArray } from "./fuzzy_search.js"
 
 export var registeredSettings = {}
@@ -12,6 +12,7 @@ export const SETTINGS_TYPE  = Object.freeze({
     FLOAT : 3,
     BOOL : 4,
     COLOR : 5,
+    BUTTON : 6,
 })
 
 // #region setting class definitions
@@ -54,8 +55,9 @@ export class StringSetting extends Setting {
     }
 }
 export class ListSetting extends Setting {
-    constructor(id, default_value, category_id="settings.category.general", value = undefined) {
+    constructor(id, default_value, list, category_id="settings.category.general", value = undefined) {
         super(id, SETTINGS_TYPE.LIST, default_value, category_id, value)
+        this.list = list
     }
 }
 export class BoolSetting extends Setting {
@@ -66,6 +68,11 @@ export class BoolSetting extends Setting {
 export class ColorSetting extends Setting {
     constructor(id, default_value, category_id="settings.category.general", value = undefined) {
         super(id, SETTINGS_TYPE.COLOR, default_value, category_id, value)
+    }
+}
+export class ButtonSetting extends Setting {
+    constructor(id, default_value, category_id="settings.category.general", value = undefined) {
+        super(id, SETTINGS_TYPE.BUTTON, default_value, category_id, value)
     }
 }
 export class FloatSetting extends Setting {
@@ -113,7 +120,9 @@ function populate_sidebar() {
             settingElement.innerText = localizeString(Object.keys(category)[sett])
             settingElement.classList.add("settings-sidebar-subcategory")
             settingElement.dataset.id = Object.keys(category)[sett]
-            settingElement.addEventListener("click", (ev) => console.log(ev.target) /*TODO: change to scroll to element */)
+            settingElement.addEventListener("click", (ev) => {
+                document.querySelector("[data-panelid='" + ev.target.dataset.id + "']").scrollIntoView()
+            })
             categoryElement.appendChild(settingElement)
         }
         sidebar.appendChild(categoryElement)
@@ -150,7 +159,7 @@ function populate_panel() {
                     break
                 }
                 case SETTINGS_TYPE.LIST : {
-                    el = listSetting(setting.id, setting.value, AVALIABLE_LANGUAGES)
+                    el = listSetting(setting.id, setting.value, setting.list)
                     break
                 }
                 case SETTINGS_TYPE.BOOL : {
@@ -159,6 +168,10 @@ function populate_panel() {
                 }
                 case SETTINGS_TYPE.COLOR : {
                     el = colorSetting(setting.id, setting.value)
+                    break
+                }
+                case SETTINGS_TYPE.BUTTON : {
+                    el = buttonSetting(setting.id, setting.value)
                     break
                 }
                 default : {
@@ -215,6 +228,11 @@ const boolTemplate =
     <div class="checkbox-visalizer"></div>
     <input type="checkbox" onclick="ui_checkbox(event)">
 </div>`
+
+const buttonTemplate =
+`<div class="setting-label"></div>
+<div class="setting-description"></div>
+<div class="button"></div>`
 
 const colorTemplate =
 `<div class="setting-label"></div>
@@ -313,6 +331,20 @@ function colorSetting(id, value) {
     element.querySelector(".hex").id = id
     colorInit(value, element)
     return element
+}
+
+function buttonSetting(id, value) {
+    var element = document.createElement("div")
+    element.classList.add("setting","type-button")
+    element.innerHTML = buttonTemplate
+    element.querySelector(".setting-label").innerText = localizeString(id)
+    element.querySelector(".setting-description").innerText = localizeString(id+".description")
+    element.querySelector(".button").innerText = localizeString(id+".button")
+    element.querySelector(".button").id = id
+    element.querySelector(".button").addEventListener("click", ()=>{executeAction(value)})
+    element.querySelector(".button").title = "Action: " + localizeString(value)
+    return element
+
 }
 // #endregion
 

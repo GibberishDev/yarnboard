@@ -22,6 +22,7 @@
     "action.app.debug.toggleDevTools" : "Debug: Toggle developer console",
     "action.app.viewport.command_palette" : "View: Toggle command palette",
     "action.app.general.close_app": "Close application",
+    "action.app.theme.savepreset": "Save theme preset",
     "ui.titlebar.hint.minimize" : "Minimize application",
     "ui.titlebar.hint.maximize" : "Maximize application",
     "ui.titlebar.hint.close" : "Close application",
@@ -58,7 +59,10 @@
     "setting.theme.colorthemeaccent" : "Accent color",
     "setting.theme.colorthemeaccent.description" : "App accent color",
     "setting.theme.colorthemeaccentbright" : "Bright accent color",
-    "setting.theme.colorthemeaccentbright.description" : "App brighter accent color. Usually reserved for highlighting and text shadows of already accented items"
+    "setting.theme.colorthemeaccentbright.description" : "App brighter accent color. Usually reserved for highlighting and text shadows of already accented items",
+    "setting.theme.savepreset" : "Save preset",
+    "setting.theme.savepreset.description" : "Click on button below to save curently selected colors as a theme preset to use or share around",
+    "setting.theme.savepreset.button" : "Save preset..."
 
 
 }

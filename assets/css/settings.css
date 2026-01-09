@@ -227,7 +227,8 @@ select {
     grid-row: 3/4;
 }
 
-.setting.type-checkbox{
+.setting.type-checkbox,
+.setting.type-button {
     grid-template-rows: minmax(20px, auto) auto;
 }
 .setting.type-checkbox .setting-description{
@@ -356,7 +357,29 @@ select {
     cursor: ew-resize;
 }
 
-
 .color-picker-range input[type="number"] {
     width : 60px;
+}
+
+.setting.type-button .button {
+    border: 2px solid var(--var-color-theme-dark);
+    height: 30px;
+    line-height: 26px;
+    text-align: center;
+    font-size: 16px;
+    padding-left: 15px;
+    padding-right: 15px;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition-duration: var(--var-transition-duration);
+    white-space: nowrap;
+}
+.setting.type-button .button:hover {
+    border-color: var(--var-color-theme-accent);
+    color: var(--var-color-theme-accent-bright);
+}
+
+.setting.type-button .button:active {
+    border-color: var(--var-color-theme-dark);
+    color: var(--var-color-theme-accent-bright);
 }

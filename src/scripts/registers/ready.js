@@ -3,6 +3,7 @@ var modules = {
     "fallbackLanguage" : false,
     "actions" : false,
     "settings" : false,
+    "themes":false,
 }
 
 export function moduleReady(module) {
