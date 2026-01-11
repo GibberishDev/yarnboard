@@ -152,3 +152,6 @@ export function inputText(state) {
 document.addEventListener("action", (ev) => {
   registeredActions[ev.action].context[ev.context].callable()
 })
+
+
+// IDEA: develop way to display keybindings as html elements. Maybe implement different styles of display (icon, text,none and combined???)

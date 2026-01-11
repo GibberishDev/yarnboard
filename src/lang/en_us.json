@@ -62,7 +62,9 @@
     "setting.theme.colorthemeaccentbright.description" : "App brighter accent color. Usually reserved for highlighting and text shadows of already accented items",
     "setting.theme.savepreset" : "Save preset",
     "setting.theme.savepreset.description" : "Click on button below to save curently selected colors as a theme preset to use or share around",
-    "setting.theme.savepreset.button" : "Save preset..."
+    "setting.theme.savepreset.button" : "Save preset...",
+    "setting.theme.picker" : "Theme presets",
+    "setting.theme.picker.description" : "Choose one of the theme color presets"
 
 
 }

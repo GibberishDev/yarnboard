@@ -6,6 +6,7 @@
     user-select: none;
     -webkit-user-select: none;
     font-size: 16px;
+    transition-duration:var(--var-transition-duration);
 }
 
 img {
@@ -196,9 +197,11 @@ option {
 option:not(:last-child) {
     border-bottom: 1px solid var(--var-color-theme-dark);
 }
+option:focus,
 option:hover {
     background: var(--var-color-theme-accent);
     color: var(--var-color-theme-darkest);
+    outline: none;
 }
 ::picker(select) {
     appearance: base-select;

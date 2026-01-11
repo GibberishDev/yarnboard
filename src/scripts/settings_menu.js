@@ -353,6 +353,12 @@ export function bindSearchEvents(searchBarElement) {
     searchBarElement.addEventListener("focus", ()=>{inputText(true)})
     searchBarElement.addEventListener("blur", ()=>{inputText(false)})
     searchBarElement.addEventListener("input", ev=>{searchSettings(ev)})
+    searchBarElement.addEventListener("keyup", ev=>{
+        if (ev.target === document.activeElement && ev.key == "Escape"){
+            ev.target.blur()
+            inputText(false)
+        }
+    })
 }
 
 function genSearchList() {

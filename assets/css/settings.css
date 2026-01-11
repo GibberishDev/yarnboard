@@ -85,10 +85,12 @@
     overflow: hidden;
     text-overflow: ellipsis;
     cursor: pointer;
+    font-weight: normal;
 }
 .settings-sidebar-subcategory.selected,
 .settings-sidebar-subcategory:hover {
     color: var(--var-color-theme-accent-bright);
+    font-weight: bold;
 }
 .settings-sidebar-category:not(.expanded) .settings-sidebar-subcategory {
     height: 0px;
@@ -97,6 +99,7 @@
 .settings-sidebar-category:has(.selected),
 .settings-sidebar-category:has(:hover) {
     color: var(--var-color-theme-accent-bright);
+    font-weight: bold;
 }
 
 .settings-sidebar-category:has(.settings-sidebar-subcategory.selected) .settings-sidebar-subcategory:not(:last-child):not(.selected)::before,
@@ -172,15 +175,16 @@
 }
 #sidebar-button-toggle #sidebar-vis {
     fill: var(--var-color-theme-accent);
+    transition-duration: var(--var-transition-duration);
 }
 
 :has(#settings-sidebar-checkbox:checked) #sidebar-button-toggle,
 :has(#settings-sidebar-checkbox:checked) #sidebar-vis {
-    fill: none;
+    fill: transparent;
     stroke: var(--var-color-theme-dark);
 }
-:has(#settings-sidebar-checkbox:hover) #sidebar-button-toggle,
-:has(#settings-sidebar-checkbox:hover) #sidebar-vis {
+:has(#settings-sidebar-checkbox:hover) #sidebar-vis,
+:has(#settings-sidebar-checkbox:hover) #sidebar-button-toggle {
     stroke: var(--var-color-theme-accent);
 }
 

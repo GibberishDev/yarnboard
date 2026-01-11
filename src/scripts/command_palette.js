@@ -13,6 +13,12 @@ var actionsNames = {}
 searchElement.addEventListener("input", search)
 searchElement.addEventListener("focus", ()=>{inputText(true)})
 searchElement.addEventListener("blur", ()=>{inputText(false)})
+document.addEventListener("keyup", ev=>{
+    if (paletteWrapper.classList.contains("shown") && ev.key == "Escape"){
+        togglePalette()
+        inputText(false)
+    }
+})
 
 export async function togglePalette(actionList = false) {
     restartAnimations(paletteWrapper)
@@ -118,3 +124,5 @@ function sortActionsAlphabetically() {
         showElement(actionsNames[array[array.length - 1 - i]],1.0)
     }
 }
+
+// IDEA: display bind near action and allow to go to keybind asignment from palette menu
