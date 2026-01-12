@@ -11,6 +11,7 @@
 	<link rel="stylesheet" href="./assets/css/index.css">
 	<link rel="stylesheet" href="./assets/css/command_palette.css">
 	<link rel="stylesheet" href="./assets/css/settings.css">
+	<link rel="stylesheet" href="./assets/css/project.css">
 	<!-- endregion -->
 	<!-- region Scripts -->
 	<script defer type="module" src="./src/scripts/registers/ready.js"></script>
@@ -23,6 +24,7 @@
 	<script defer type="module" src="./src/scripts/theme_manager.js"></script>
 	<script defer src="./src/scripts/custom_elements.js"></script>
 	<script defer src="./src/scripts/utils.js"></script>
+	<script defer src="./src/scripts/project_viewport.js"></script>
 	<!-- endregion -->
 	<!-- region registers -->
 	<script type="module" src="./src/scripts/localization.js"></script>
@@ -106,11 +108,16 @@
 		</div>
 	</div>
 	<div id="main-body">
-		<div id="sidebar" style="display: none;"></div>
 		<div id="window-container">
 			<div id="tab-bar">
 			</div>
 			<div id="viewport">
+				<div class="project">
+					<div class="project-cover project-background"></div>
+					<canvas class="project-cover project-grid"></canvas>
+					<div class="project-cover project-elements"></div>
+					<div class="project-cover project-input"></div>
+				</div>
 			</div>
 		</div>
 	</div>

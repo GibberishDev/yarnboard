@@ -1,0 +1,40 @@
+.project {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 100%;
+    overflow: hidden;
+}
+
+.project-cover {
+    width: 100%;
+    height: 100%;
+    grid-column: 1/2;
+    grid-row: 1/2;
+    position: relative;
+}
+
+.project-background {
+    z-index: 0;
+}
+
+.project-grid {
+    z-index: 1;
+    background-size: 100px 100px;
+    background-image:
+        linear-gradient(to right,  rgb(from var(--var-color-theme-accent) r g b / 0.25) 1px, transparent 1px),
+        linear-gradient(to bottom, rgb(from var(--var-color-theme-accent) r g b / 0.25) 1px, transparent 1px);
+    transition-property: none;
+}
+
+.project-elements {
+    z-index: 2;
+}
+
+.project-input {
+    z-index: 3;
+    /* background: red; */
+    opacity: 0.1;
+    cursor: grabbing;
+}
