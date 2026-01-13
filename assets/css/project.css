@@ -23,9 +23,22 @@
     z-index: 1;
     background-size: 100px 100px;
     background-image:
-        linear-gradient(to right,  rgb(from var(--var-color-theme-accent) r g b / 0.25) 1px, transparent 1px),
-        linear-gradient(to bottom, rgb(from var(--var-color-theme-accent) r g b / 0.25) 1px, transparent 1px);
-    transition-property: none;
+        repeating-linear-gradient(to right, rgb(from var(--var-color-theme-accent) r g b / 0.25) 0%, rgb(from var(--var-color-theme-accent) r g b / 0.25) 1%, transparent 1%, transparent 100%),
+        repeating-linear-gradient(to bottom, rgb(from var(--var-color-theme-accent) r g b / 0.25) 0%, rgb(from var(--var-color-theme-accent) r g b / 0.25) 1%, transparent 1%, transparent 100%);
+    transition-property: background-image;
+    background-image:
+        repeating-linear-gradient(to right,  rgb(from var(--var-color-theme-accent) r g b / 0.25) 0%, rgb(from var(--var-color-theme-accent) r g b / 0.25) 1%, transparent 1%, transparent 100%),
+        repeating-linear-gradient(to right,  rgb(from var(--var-color-theme-accent) r g b / 0.02) 0%, rgb(from var(--var-color-theme-accent) r g b / 0.02) 1%, transparent 1%, transparent 20%),
+        repeating-linear-gradient(to bottom,  rgb(from var(--var-color-theme-accent) r g b / 0.25) 0%, rgb(from var(--var-color-theme-accent) r g b / 0.25) 1%, transparent 1%, transparent 100%),
+        repeating-linear-gradient(to bottom,  rgb(from var(--var-color-theme-accent) r g b / 0.02) 0%, rgb(from var(--var-color-theme-accent) r g b / 0.02) 1%, transparent 1%, transparent 20%);
+}
+
+.project-grid.precision {
+    background-image:
+        repeating-linear-gradient(to right,  rgb(from var(--var-color-theme-accent) r g b / 0.25) 0%, rgb(from var(--var-color-theme-accent) r g b / 0.25) 1%, transparent 1%, transparent 100%),
+        repeating-linear-gradient(to right,  rgb(from var(--var-color-theme-accent) r g b / 0.1) 0%, rgb(from var(--var-color-theme-accent) r g b / 0.1) 1%, transparent 1%, transparent 20%),
+        repeating-linear-gradient(to bottom,  rgb(from var(--var-color-theme-accent) r g b / 0.25) 0%, rgb(from var(--var-color-theme-accent) r g b / 0.25) 1%, transparent 1%, transparent 100%),
+        repeating-linear-gradient(to bottom,  rgb(from var(--var-color-theme-accent) r g b / 0.1) 0%, rgb(from var(--var-color-theme-accent) r g b / 0.1) 1%, transparent 1%, transparent 20%);
 }
 
 .project-elements {
