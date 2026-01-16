@@ -22,27 +22,22 @@
 .project-grid {
     z-index: 1;
     background-size: 100px 100px;
-    background-image:
-        repeating-linear-gradient(to right, rgb(from var(--var-color-theme-accent) r g b / 0.25) 0%, rgb(from var(--var-color-theme-accent) r g b / 0.25) 1%, transparent 1%, transparent 100%),
-        repeating-linear-gradient(to bottom, rgb(from var(--var-color-theme-accent) r g b / 0.25) 0%, rgb(from var(--var-color-theme-accent) r g b / 0.25) 1%, transparent 1%, transparent 100%);
     transition-property: background-image;
     background-image:
-        repeating-linear-gradient(to right,  rgb(from var(--var-color-theme-accent) r g b / 0.25) 0%, rgb(from var(--var-color-theme-accent) r g b / 0.25) 1%, transparent 1%, transparent 100%),
-        repeating-linear-gradient(to right,  rgb(from var(--var-color-theme-accent) r g b / 0.02) 0%, rgb(from var(--var-color-theme-accent) r g b / 0.02) 1%, transparent 1%, transparent 20%),
-        repeating-linear-gradient(to bottom,  rgb(from var(--var-color-theme-accent) r g b / 0.25) 0%, rgb(from var(--var-color-theme-accent) r g b / 0.25) 1%, transparent 1%, transparent 100%),
-        repeating-linear-gradient(to bottom,  rgb(from var(--var-color-theme-accent) r g b / 0.02) 0%, rgb(from var(--var-color-theme-accent) r g b / 0.02) 1%, transparent 1%, transparent 20%);
+        repeating-linear-gradient(to right,  rgb(from var(--var-color-theme-accent) r g b / 0.02) 0%, rgb(from var(--var-color-theme-accent) r g b / 0.02) 2%, transparent 2%, transparent 20%),
+        repeating-linear-gradient(to bottom,  rgb(from var(--var-color-theme-accent) r g b / 0.02) 0%, rgb(from var(--var-color-theme-accent) r g b / 0.02) 2%, transparent 2%, transparent 20%);
 }
 
 .project-grid.precision {
     background-image:
-        repeating-linear-gradient(to right,  rgb(from var(--var-color-theme-accent) r g b / 0.25) 0%, rgb(from var(--var-color-theme-accent) r g b / 0.25) 1%, transparent 1%, transparent 100%),
-        repeating-linear-gradient(to right,  rgb(from var(--var-color-theme-accent) r g b / 0.1) 0%, rgb(from var(--var-color-theme-accent) r g b / 0.1) 1%, transparent 1%, transparent 20%),
-        repeating-linear-gradient(to bottom,  rgb(from var(--var-color-theme-accent) r g b / 0.25) 0%, rgb(from var(--var-color-theme-accent) r g b / 0.25) 1%, transparent 1%, transparent 100%),
-        repeating-linear-gradient(to bottom,  rgb(from var(--var-color-theme-accent) r g b / 0.1) 0%, rgb(from var(--var-color-theme-accent) r g b / 0.1) 1%, transparent 1%, transparent 20%);
+        repeating-linear-gradient(to right,  rgb(from var(--var-color-theme-accent) r g b / 0.1) 0%, rgb(from var(--var-color-theme-accent) r g b / 0.1) 2%, transparent 2%, transparent 20%),
+        repeating-linear-gradient(to bottom,  rgb(from var(--var-color-theme-accent) r g b / 0.1) 0%, rgb(from var(--var-color-theme-accent) r g b / 0.1) 2%, transparent 2%, transparent 20%);
 }
 
 .project-elements {
     z-index: 2;
+    transition-property: none;
+    transform-origin: 0 0 ;
 }
 
 .project-input {
@@ -50,4 +45,21 @@
     /* background: red; */
     opacity: 0.1;
     cursor: grabbing;
+}
+
+.project-hud {
+    display: grid;
+    grid-template-columns: min-content auto min-content;
+    grid-template-rows: min-content auto min-content;
+}
+
+.viewport-stats-container {
+    color: var(--var-color-theme-text-dark);
+    grid-row: 3/4;
+    grid-column: 3/4;
+    padding-right: 15px;
+    padding-bottom: 11px;
+    line-height: 18px;
+    opacity: 0.5;
+    width: 300px;
 }
