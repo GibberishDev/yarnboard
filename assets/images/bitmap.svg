@@ -1,0 +1,29 @@
+<svg
+   width="16" height="16"
+   viewBox="0 0 15.613941 15.61394"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <g
+     id="layer2"
+     style="display:inline"
+     transform="translate(-0.38605937)">
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+       d="M 4,1 1,12 12,15 15,4 Z"
+       id="path3" />
+    <path
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+       d="M 4.5,2 14,4.5 12.5,10 3,7.5 Z"
+       id="path4" />
+    <path
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.5;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+       d="m 2.1887365,9.2537976 0.8441768,1.5929114 1.592911,-0.844177 0.8441769,1.592911 1.592911,-0.844177 0.8441769,1.592911 L 9.5,11.5 l 0.844177,1.592911 1.592911,-0.844177"
+       id="path5" />
+  </g>
+  <g transform="translate(-0.38605937)">
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+       d="m 12.5,0.5 h 1 v 2 h 2 v 1 h -2 v 2 h -1 v -2 h -2 v -1 h 2 z"
+       id="path2" />
+  </g>
+</svg>

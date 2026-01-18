@@ -51,6 +51,8 @@
     display: grid;
     grid-template-columns: min-content auto min-content;
     grid-template-rows: min-content auto min-content;
+    z-index: 4;
+    pointer-events: none;
 }
 
 .viewport-stats-container {

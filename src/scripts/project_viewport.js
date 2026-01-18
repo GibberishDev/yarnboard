@@ -1,51 +1,34 @@
-var inputElement = document.querySelector(".project-cover.project-input")
-var gridElement = document.querySelector(".project-cover.project-grid")
-var elementsElement = document.querySelector(".project-cover.project-elements")
-var statsPos = document.querySelector(".viewport-position")
-var statsScale = document.querySelector(".viewport-scale")
+var inputElement = undefined
+var gridElement = undefined
+var elementsElement = undefined
+var statsPos = undefined
+var statsScale = undefined
+var grabbing = false
+var viewportId = ""
 
-var viewport = {
-    transforms: {
-        zoomLevel: 0,
-        scale : 1.0,
-        offset : {
-            x: 0,
-            y: 0
-        },
-        mouseOffset : {
-            x: 0,
-            y: 0
-        },
-        size: {
-            x: 0,
-            y: 0
-        },
-        pos: {
-            x: 0,
-            y: 0
-        }
+var viewport = {}
+
+const transforms = {
+    zoomLevel: 0,
+    scale : 1.0,
+    offset : {
+        x: 0,
+        y: 0
+    },
+    mouseOffset : {
+        x: 0,
+        y: 0
+    },
+    size: {
+        x: 0,
+        y: 0
+    },
+    pos: {
+        x: 0,
+        y: 0
     }
 }
 
-inputElement = document.querySelector(".project-cover.project-input")
-
-var grabbing = false
-
-inputElement.addEventListener("wheel", (ev) => {
-    if (ev.deltaY > 0) {
-        zoom(ev, -1)
-    }
-    if (ev.deltaY < 0) {
-        zoom(ev, 1)
-    }
-
-})
-inputElement.addEventListener("mousedown", (ev) => {
-    if (ev.button == 1) {
-        grabbing = true
-        // gridElement.style.transitionProperty = "background-image"
-    }
-})
 document.addEventListener("mouseup", (ev) => {
     if (ev.button == 1) {
         grabbing = false
@@ -53,39 +36,24 @@ document.addEventListener("mouseup", (ev) => {
     }
 })
 
-inputElement.addEventListener("mousemove", (ev)=>{
-    let rect = inputElement.getBoundingClientRect()
-    viewport.transforms.size.x = rect.width
-    viewport.transforms.size.y = rect.height
-    viewport.transforms.pos.x = rect.x
-    viewport.transforms.pos.y = rect.y
-    viewport.transforms.mouseOffset.x = ev.offsetX
-    viewport.transforms.mouseOffset.y = ev.offsetY
-    if (grabbing) {
-        viewport.transforms.offset.x += ev.movementX
-        viewport.transforms.offset.y += ev.movementY
-    }
-    updateViewport()
-})
-
 function updateViewport() {
     // console.log(viewport.transforms.scale)
     // updateBackground()
     updateElements()
     updateGrid()
-    statsScale.textContent = "zoom: " + (viewport.transforms.scale * 100).toFixed(3) + "%"
-    statsPos.textContent = "X:" + parseInt((-viewport.transforms.offset.x + viewport.transforms.mouseOffset.x) * 1/viewport.transforms.scale) + " Y:" + parseInt((-viewport.transforms.offset.y + viewport.transforms.mouseOffset.y) * 1/viewport.transforms.scale)
+    statsScale.textContent = "zoom: " + (viewport[viewportId].transforms.scale * 100).toFixed(3) + "%"
+    statsPos.textContent = "X:" + parseInt((-viewport[viewportId].transforms.offset.x + viewport[viewportId].transforms.mouseOffset.x) * 1/viewport[viewportId].transforms.scale) + " Y:" + parseInt((-viewport[viewportId].transforms.offset.y + viewport[viewportId].transforms.mouseOffset.y) * 1/viewport[viewportId].transforms.scale)
 }
 
 function updateElements() {
-    elementsElement.style.translate = viewport.transforms.offset.x + "px " + viewport.transforms.offset.y + "px"
-    elementsElement.style.scale = viewport.transforms.scale
+    console.log(viewportId)
+    elementsElement.style.translate = viewport[viewportId].transforms.offset.x + "px " + viewport[viewportId].transforms.offset.y + "px"
+    elementsElement.style.scale = viewport[viewportId].transforms.scale
 }
 
 function updateGrid() {
-    gridElement.style.backgroundPosition = viewport.transforms.offset.x + "px " + viewport.transforms.offset.y + "px"
-    gridElement.style.backgroundSize = wrapCellSize(viewport.transforms.scale) * 100 + "px " + wrapCellSize(viewport.transforms.scale) * 100 + "px"
-    console.log(wrapCellSize(viewport.transforms.scale))
+    gridElement.style.backgroundPosition = viewport[viewportId].transforms.offset.x + "px " + viewport[viewportId].transforms.offset.y + "px"
+    gridElement.style.backgroundSize = wrapCellSize(viewport[viewportId].transforms.scale) * 100 + "px " + wrapCellSize(viewport[viewportId].transforms.scale) * 100 + "px"
 }
 function wrapCellSize(scale, min = 1, max = 5) {
   const mod = (a, b) => ((a % b) + b) % b;
@@ -93,21 +61,81 @@ function wrapCellSize(scale, min = 1, max = 5) {
 }
 
 function zoom(ev, factor) {
-    if ((!(viewport.transforms.zoomLevel < 25) && factor > 0) || (!(viewport.transforms.zoomLevel > -100) && factor < 0)) {
+    if ((!(viewport[viewportId].transforms.zoomLevel < 50) && factor > 0) || (!(viewport[viewportId].transforms.zoomLevel > -50) && factor < 0)) {
         return
     }
-    viewport.transforms.zoomLevel += factor
-    let newScale = Math.pow(1.1,viewport.transforms.zoomLevel)
-    viewport.transforms.scale = newScale
+    viewport[viewportId].transforms.zoomLevel += factor
+    let newScale = Math.pow(1.1,viewport[viewportId].transforms.zoomLevel)
+    viewport[viewportId].transforms.scale = newScale
     var mousePos = {
         x: ev.layerX,
         y: ev.layerY
     }
     var newOffset = {
-        x: mousePos.x - (mousePos.x - viewport.transforms.offset.x) * Math.pow(1.1,factor),
-        y: mousePos.y - (mousePos.y - viewport.transforms.offset.y) * Math.pow(1.1,factor)
+        x: mousePos.x - (mousePos.x - viewport[viewportId].transforms.offset.x) * Math.pow(1.1,factor),
+        y: mousePos.y - (mousePos.y - viewport[viewportId].transforms.offset.y) * Math.pow(1.1,factor)
     }
-    viewport.transforms.offset = newOffset
+    viewport[viewportId].transforms.offset = newOffset
     updateViewport()
 }
 
+export function bindEvents(viewportElement) {
+    console.log(viewportElement)
+    inputElement = viewportElement.querySelector(".project-cover.project-input")
+    gridElement = viewportElement.querySelector(".project-cover.project-grid")
+    elementsElement = viewportElement.querySelector(".project-cover.project-elements")
+    statsPos = viewportElement.querySelector(".viewport-position")
+    statsScale = viewportElement.querySelector(".viewport-scale")
+
+    inputElement.addEventListener("wheel", wheelEvent)
+    inputElement.addEventListener("mousedown", mouseDownEvent)
+    inputElement.addEventListener("mousemove", mouseMoveEvent)
+    console.log(elementsElement)
+
+    // if viewport
+}
+
+export function unbindEvents(viewportElement) {
+    console.log(viewportElement)
+    viewportElement.querySelector(".project-cover.project-input").removeEventListener("wheel", wheelEvent)
+    viewportElement.querySelector(".project-cover.project-input").removeEventListener("mousedown", mouseDownEvent)
+    viewportElement.querySelector(".project-cover.project-input").removeEventListener("mousemove", mouseMoveEvent)
+
+}
+function wheelEvent(ev) {
+    if (ev.deltaY > 0) {
+        zoom(ev, -1)
+    } else {
+        zoom(ev, 1)
+    }
+}
+function mouseDownEvent(ev) {
+    if (ev.button == 1) {
+        grabbing = true
+    }
+}
+function mouseMoveEvent(ev) {
+    let rect = inputElement.getBoundingClientRect()
+    viewport[viewportId].transforms.size.x = rect.width
+    viewport[viewportId].transforms.size.y = rect.height
+    viewport[viewportId].transforms.pos.x = rect.x
+    viewport[viewportId].transforms.pos.y = rect.y
+    viewport[viewportId].transforms.mouseOffset.x = ev.offsetX
+    viewport[viewportId].transforms.mouseOffset.y = ev.offsetY
+    if (grabbing) {
+        viewport[viewportId].transforms.offset.x += ev.movementX
+        viewport[viewportId].transforms.offset.y += ev.movementY
+    }
+    updateViewport()
+
+}
+
+export function projectViewportId(id) {
+    viewportId = id
+    if (Object.keys(viewport).includes(id)) {
+        return
+    }
+    // TODO: project save data loading
+    viewport[id] = {"transforms":{}}
+    viewport[id]["transforms"] = structuredClone(transforms)
+}

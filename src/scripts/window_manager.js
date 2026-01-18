@@ -1,5 +1,6 @@
 import { updateSettingsViewport } from "./settings_menu.js"
 import { getSetting, bindSearchEvents } from "./settings_menu.js"
+import { bindEvents, unbindEvents, projectViewportId } from "./project_viewport.js"
 
 export var openWindows = []
 var openWindowsLastTime = ""
@@ -184,6 +185,22 @@ function closeWindow(id) {
     }
 }
 
+const projectTemplate = `
+<div class="project">
+    <div class="project-cover project-background"></div>
+    <div class="project-cover project-grid"></div>
+    <div class="project-cover project-elements">
+        <div style="position: absolute; left: 0px; top: 0px; color: var(--var-color-theme-text);">New Project</div>
+    </div>
+    <div class="project-cover project-input"></div>
+    <div class="project-cover project-hud">
+        <div class="viewport-stats-container">
+            <div class="viewport-position"></div>
+            <div class="viewport-scale"></div>
+        </div>
+    </div>
+</div>`
+
 function openWindowViewport(id, path="") {
     if (appWindowIds.includes(id)) {
         var viewportElement = document.createElement("div")
@@ -211,6 +228,7 @@ function openWindowViewport(id, path="") {
         })
         viewportElement.classList.add("current-viewport")
         document.querySelector("#viewport").appendChild(viewportElement)
+        viewportElement.innerHTML = projectTemplate
         if (path!= "") {
             return
         } else {
@@ -245,10 +263,17 @@ function selectId(id) {
     } else {
         selectedIdHistory.push(id)
     }
+    if (isUUID(selectedID)) {
+        unbindEvents(document.querySelector("#viewport-id-" + selectedID))
+    }
     selectedID = id
     updateTabs()
     updateViewports()
     scrollToTab(id)
+    if (isUUID(id)) {
+        projectViewportId(id)
+        bindEvents(document.querySelector("#viewport-id-" + id))
+    }
 }
 
 document.addEventListener("ready", (ev)=>{
