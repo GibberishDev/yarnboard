@@ -2,6 +2,7 @@ import {BindAction} from "../keybinds.js"
 import {togglePalette} from "../command_palette.js"
 import {moduleReady} from "./ready.js"
 import {openSettings, uuidv4, createWindow, closeCurrent} from "../window_manager.js"
+import { resetView } from "../project_viewport.js"
 
 
 function newProject() {
@@ -19,6 +20,7 @@ new BindAction("action.viewport.selection.lock_axis_y" , ()=> {alert("lock_axis_
 new BindAction("action.viewport.selection.select_all" , ()=> {alert("select_all");window.yarnboardAPI.fixFocus()} , ["board"] , 'control+a')
 new BindAction("action.viewport.selection.deselect_all" , ()=> {alert("deselct_all");window.yarnboardAPI.fixFocus()} , ["board"] , 'control+shift+a')
 new BindAction("action.viewport.selection.invert" , ()=> {alert("invert_selection");window.yarnboardAPI.fixFocus()} , ["board"] , 'control+shift+i')
+new BindAction("action.viewport.view.reset" , resetView, ["board"] , 'numpaddecimal')
 new BindAction("action.app.project.new" , ()=> {newProject()} , [] , 'control+n')
 new BindAction("action.app.project.open" , ()=> {alert("open");window.yarnboardAPI.fixFocus()} , [] , 'control+o')
 new BindAction("action.app.project.save" , ()=> {alert("save");window.yarnboardAPI.fixFocus()} , [] , 'control+s')

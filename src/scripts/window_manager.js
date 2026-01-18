@@ -176,6 +176,7 @@ function closeWindow(id) {
         openWindows.splice(openWindows.indexOf(id),1)
         closeViewport(id)
         if (selectedID == id) {
+            console.log(selectedIdHistory[selectedIdHistory.length - 1])
             selectId(selectedIdHistory[selectedIdHistory.length - 1])
         }
         updateTabs()
@@ -263,10 +264,10 @@ function selectId(id) {
     } else {
         selectedIdHistory.push(id)
     }
+    selectedID = id
     if (isUUID(selectedID)) {
         unbindEvents(document.querySelector("#viewport-id-" + selectedID))
     }
-    selectedID = id
     updateTabs()
     updateViewports()
     scrollToTab(id)

@@ -81,16 +81,15 @@ window.onfocus = ()=>{
 document.addEventListener("keydown", (ev) => {
   if (Object.keys(modifiers).includes(ev.key)) {
     modifiers[ev.key] = true
-  } else {
-    modifiers["Control"] = ev.ctrlKey
-    modifiers["Alt"] = ev.altKey
-    modifiers["Shift"] = ev.shiftKey
-    modifiers["Meta"] = ev.metaKey
-    lastPressedKey = ev.code
-    var accelerator = constructAccelerator()
-    checkBinds(accelerator)
-    if (accelerator == "control+p") ev.preventDefault()
   }
+  modifiers["Control"] = ev.ctrlKey
+  modifiers["Alt"] = ev.altKey
+  modifiers["Shift"] = ev.shiftKey
+  modifiers["Meta"] = ev.metaKey
+  lastPressedKey = ev.code
+  var accelerator = constructAccelerator()
+  checkBinds(accelerator)
+  if (accelerator == "control+p") ev.preventDefault()
 })
 document.addEventListener("keyup", (ev) => {
   if (Object.keys(modifiers).includes(ev.key)) {
@@ -110,9 +109,12 @@ function constructAccelerator() {
 
 function checkBinds(accelerator) {
   if (Object.keys(listeningAccelerators).includes(accelerator)) {
+    let keybindEvent = new KeyboardEvent("bind",{bubbles:true})
     if (Object.keys(listeningAccelerators[accelerator].context).includes(currentInputContext)) {
-      let keybindEvent = new KeyboardEvent("bind",{bubbles:true})
-      keybindEvent.bind = listeningAccelerators[accelerator].context
+      keybindEvent.bind = listeningAccelerators[accelerator].context[currentInputContext]
+      document.activeElement.dispatchEvent(keybindEvent)
+    } else if (Object.keys(listeningAccelerators[accelerator].context).toString() == "default") {
+      keybindEvent.bind = listeningAccelerators[accelerator].context["default"]
       document.activeElement.dispatchEvent(keybindEvent)
     }
   }
@@ -124,20 +126,26 @@ function updateBinds() {
     if (listeningAccelerators[registeredActions[action].currentBind] == undefined) {
       listeningAccelerators[registeredActions[action].currentBind] = { context:{} }
     }
-    let ctx = Object.keys(registeredActions[action]["context"])[0]
-    listeningAccelerators[registeredActions[action].currentBind]["context"][ctx] = registeredActions[action].context[ctx]
+    let ctxList = Object.keys(registeredActions[action]["context"])
+    ctxList.forEach((ctx)=>{
+      listeningAccelerators[registeredActions[action].currentBind]["context"][ctx] = registeredActions[action].context[ctx]
+    })
   })
 }
 
 document.addEventListener("bind", (ev) => {
-  ev.bind[currentInputContext].callable()
+  ev.bind.callable()
 })
 if (navigator.userAgent.includes("yarnboard-electron")) {
   window.yarnboardAPI.bindAccelerator((event, accelerator) => checkBinds(accelerator))
 }
 
 export function executeAction(id) {
-  registeredActions[id].context[currentInputContext].callable()
+  if (Object.keys(registeredActions[id].context).includes(currentInputContext)) {
+    registeredActions[id].context[currentInputContext].callable()
+  } else if (Object.keys(registeredActions[id].context).includes("default")){
+    registeredActions[id].context["default"].callable()
+  }
 }
 
 export function inputText(state) {

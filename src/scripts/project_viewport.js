@@ -1,3 +1,5 @@
+import { setContext } from "./keybinds.js"
+
 var inputElement = undefined
 var gridElement = undefined
 var elementsElement = undefined
@@ -37,16 +39,14 @@ document.addEventListener("mouseup", (ev) => {
 })
 
 function updateViewport() {
-    // console.log(viewport.transforms.scale)
     // updateBackground()
     updateElements()
     updateGrid()
-    statsScale.textContent = "zoom: " + (viewport[viewportId].transforms.scale * 100).toFixed(3) + "%"
     statsPos.textContent = "X:" + parseInt((-viewport[viewportId].transforms.offset.x + viewport[viewportId].transforms.mouseOffset.x) * 1/viewport[viewportId].transforms.scale) + " Y:" + parseInt((-viewport[viewportId].transforms.offset.y + viewport[viewportId].transforms.mouseOffset.y) * 1/viewport[viewportId].transforms.scale)
+    statsScale.textContent = "zoom: " + (viewport[viewportId].transforms.scale * 100).toFixed(3) + "%"
 }
 
 function updateElements() {
-    console.log(viewportId)
     elementsElement.style.translate = viewport[viewportId].transforms.offset.x + "px " + viewport[viewportId].transforms.offset.y + "px"
     elementsElement.style.scale = viewport[viewportId].transforms.scale
 }
@@ -80,7 +80,6 @@ function zoom(ev, factor) {
 }
 
 export function bindEvents(viewportElement) {
-    console.log(viewportElement)
     inputElement = viewportElement.querySelector(".project-cover.project-input")
     gridElement = viewportElement.querySelector(".project-cover.project-grid")
     elementsElement = viewportElement.querySelector(".project-cover.project-elements")
@@ -90,17 +89,16 @@ export function bindEvents(viewportElement) {
     inputElement.addEventListener("wheel", wheelEvent)
     inputElement.addEventListener("mousedown", mouseDownEvent)
     inputElement.addEventListener("mousemove", mouseMoveEvent)
-    console.log(elementsElement)
 
+    setContext("board")
     // if viewport
 }
 
 export function unbindEvents(viewportElement) {
-    console.log(viewportElement)
     viewportElement.querySelector(".project-cover.project-input").removeEventListener("wheel", wheelEvent)
     viewportElement.querySelector(".project-cover.project-input").removeEventListener("mousedown", mouseDownEvent)
     viewportElement.querySelector(".project-cover.project-input").removeEventListener("mousemove", mouseMoveEvent)
-
+    setContext("default")
 }
 function wheelEvent(ev) {
     if (ev.deltaY > 0) {
@@ -137,5 +135,23 @@ export function projectViewportId(id) {
     }
     // TODO: project save data loading
     viewport[id] = {"transforms":{}}
-    viewport[id]["transforms"] = structuredClone(transforms)
+    viewport[id].transforms = structuredClone(transforms)
+}
+
+export function getScale() {
+    return viewport[viewportId].transforms.scale
+}
+export function getScreenRect() {
+    let rect = {
+        x: -viewport[viewportId].transforms.offset.x / getScale(),
+        y: -viewport[viewportId].transforms.offset.y / getScale(),
+        w: inputElement.getBoundingClientRect().width / getScale(),
+        h: inputElement.getBoundingClientRect().height / getScale(),
+    }
+    return rect
+}
+
+export function resetView() {
+    viewport[viewportId].transforms = structuredClone(transforms)
+    updateViewport()
 }
