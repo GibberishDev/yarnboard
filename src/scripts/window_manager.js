@@ -176,7 +176,6 @@ function closeWindow(id) {
         openWindows.splice(openWindows.indexOf(id),1)
         closeViewport(id)
         if (selectedID == id) {
-            console.log(selectedIdHistory[selectedIdHistory.length - 1])
             selectId(selectedIdHistory[selectedIdHistory.length - 1])
         }
         updateTabs()

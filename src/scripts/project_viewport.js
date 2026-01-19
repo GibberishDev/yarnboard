@@ -24,10 +24,6 @@ const transforms = {
     size: {
         x: 0,
         y: 0
-    },
-    pos: {
-        x: 0,
-        y: 0
     }
 }
 
@@ -116,8 +112,6 @@ function mouseMoveEvent(ev) {
     let rect = inputElement.getBoundingClientRect()
     viewport[viewportId].transforms.size.x = rect.width
     viewport[viewportId].transforms.size.y = rect.height
-    viewport[viewportId].transforms.pos.x = rect.x
-    viewport[viewportId].transforms.pos.y = rect.y
     viewport[viewportId].transforms.mouseOffset.x = ev.offsetX
     viewport[viewportId].transforms.mouseOffset.y = ev.offsetY
     if (grabbing) {
