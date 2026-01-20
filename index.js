@@ -17,7 +17,7 @@ function createWindow() {
     fullscreenable : false,
     roundedCorners : false,
     webPreferences : {
-      nodeIntegration: true,
+      nodeIntegration: false,
       contextIsolation: true,
       autoplayPolicy: 'no-user-gesture-required',
       preload: PATH.join(__dirname,"preload.js"),

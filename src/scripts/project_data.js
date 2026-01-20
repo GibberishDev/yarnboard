@@ -1,9 +1,16 @@
 import { uuidv4 } from "./window_manager.js"
 
+export var loadedData = {}
+
 class ProjectData {
-    constructor(id, viewportTransforms) {
+    constructor(id, viewportTransforms, elementsData={}, connectionsData={}, projectSettings = new ProjectSettings, projectStats=new ProjectStats) {
         this.id = id
         this.viewportTransforms = viewportTransforms
+        this.elementsData = elementsData
+        this.connectionsData = connectionsData
+        this.projectSettings = projectSettings
+        this.projectStats = projectStats
+        loadedData[id] = this
     }
 }
 
@@ -17,4 +24,20 @@ class ProjectViewportTransforms {
     }
 }
 
-console.log(JSON.stringify(new ProjectData(uuidv4(), new ProjectViewportTransforms())))
+class ProjectSettings {
+    constructor (displayName="New Project") {
+        this.displayName = displayName
+    }
+}
+
+class ProjectStats {
+    constructor (authors=[], elementCount=0, connectionsCount=0, elapsedTime=0) {
+        this.authors = authors
+        this.elementCount = elementCount
+        this.connectionsCount = connectionsCount
+        this.elapsedTime = elapsedTime
+    }
+}
+
+
+console.log(new ProjectData(uuidv4(), new ProjectViewportTransforms()))

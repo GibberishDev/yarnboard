@@ -22,16 +22,16 @@
 .project-grid {
     z-index: 1;
     background-size: 100px 100px;
-    transition-property: background-image;
+    transition-property: opacity;
+    transition-duration: calc(var(--var-transition-duration) * 2);
     background-image:
-        repeating-linear-gradient(to right,  rgb(from var(--var-color-theme-accent) r g b / 0.02) 0%, rgb(from var(--var-color-theme-accent) r g b / 0.02) 2%, transparent 2%, transparent 20%),
-        repeating-linear-gradient(to bottom,  rgb(from var(--var-color-theme-accent) r g b / 0.02) 0%, rgb(from var(--var-color-theme-accent) r g b / 0.02) 2%, transparent 2%, transparent 20%);
+        repeating-linear-gradient(to right,  rgb(from var(--var-color-theme-accent) r g b / 0.2) 0%, rgb(from var(--var-color-theme-accent) r g b / 0.2) 2%, transparent 2%, transparent 20%),
+        repeating-linear-gradient(to bottom,  rgb(from var(--var-color-theme-accent) r g b / 0.2) 0%, rgb(from var(--var-color-theme-accent) r g b / 0.2) 2%, transparent 2%, transparent 20%);
+    opacity: 0;
 }
 
-.project-grid.precision {
-    background-image:
-        repeating-linear-gradient(to right,  rgb(from var(--var-color-theme-accent) r g b / 0.1) 0%, rgb(from var(--var-color-theme-accent) r g b / 0.1) 2%, transparent 2%, transparent 20%),
-        repeating-linear-gradient(to bottom,  rgb(from var(--var-color-theme-accent) r g b / 0.1) 0%, rgb(from var(--var-color-theme-accent) r g b / 0.1) 2%, transparent 2%, transparent 20%);
+.project-grid.precission {
+    opacity: 1;
 }
 
 .project-elements {
