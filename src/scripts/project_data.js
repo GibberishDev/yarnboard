@@ -12,6 +12,15 @@ class ProjectData {
         this.projectStats = projectStats
         loadedData[id] = this
     }
+    loaddData(jsonString) {
+        // Validate json keys and values
+        
+    }
+    exportData() {
+        let jsontext = JSON.stringify(this, null, 4)
+        // call for save path if aaliable in window_manager.js
+        // save file using text and file path via preload
+    }
 }
 
 class ProjectViewportTransforms {
@@ -39,5 +48,4 @@ class ProjectStats {
     }
 }
 
-
-console.log(new ProjectData(uuidv4(), new ProjectViewportTransforms()))
+new ProjectData(uuidv4(), new ProjectViewportTransforms()).exportData()
