@@ -400,3 +400,4 @@ document.addEventListener("settingUpdated", (ev) => {
 export function closeCurrent() {
     closeWindow(selectedID)
 }
+

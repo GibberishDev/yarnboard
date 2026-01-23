@@ -1,4 +1,5 @@
 const { app, BrowserWindow, ipcMain, globalShortcut, Menu, MenuItem } = require('electron')
+const fs = require('fs')
 const electron = require('electron')
 const PATH = require('path')
 
@@ -50,7 +51,7 @@ function createWindow() {
 app.whenReady().then(() => {
   mainWindow = createWindow()
   disableDefaultSortcuts()
-  // mainWindow.webContents.toggleDevTools()
+  mainWindow.webContents.toggleDevTools()
 })
 
 app.on('window-all-closed', () => {
@@ -71,12 +72,6 @@ function determine_screen_with_pointer_center() {
     let screen_center = {x: screen_data.bounds.x + screen_data.bounds.width/2.0, y: screen_data.bounds.y + screen_data.bounds.height/2.0}
     return screen_center
 }
-
-ipcMain.on('toggle-maximize', toggleMaximize)
-ipcMain.on('minimize', minimize)
-ipcMain.on('close', close)
-ipcMain.on('devTools', devTools)
-ipcMain.on('fixFocus', fixFocus)
 
 function toggleMaximize() {
   if (mainWindow.isMaximized()) {
@@ -127,3 +122,26 @@ function enableDefaultSortcuts() {
   globalShortcut.unregister("CommandOrControl+M") //minimize app. Why is this even default bind on ctrl m wtf
 }
 // npm install @jitsi/robotjs for set mouse position
+
+// #region file saving
+
+function saveTextFile(event, path, filename, textContents) {
+  console.log(event)
+  if (!fs.existsSync(path)) {
+    fs.mkdir(path,function (err) {if (err) throw err})
+  }
+  fs.writeFile(path + filename, textContents, function (err) {if (err) throw err})
+}
+
+// #endregion
+
+// #region ipc event listeners
+
+ipcMain.on('toggle-maximize', toggleMaximize)
+ipcMain.on('minimize', minimize)
+ipcMain.on('close', close)
+ipcMain.on('devTools', devTools)
+ipcMain.on('fixFocus', fixFocus)
+ipcMain.on('saveText', (ev, data)=>saveTextFile(ev, data[0], data[1], data[2]))
+
+// #endregion

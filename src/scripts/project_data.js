@@ -3,7 +3,7 @@ import { uuidv4 } from "./window_manager.js"
 export var loadedData = {}
 
 class ProjectData {
-    constructor(id, viewportTransforms, elementsData={}, connectionsData={}, projectSettings = new ProjectSettings, projectStats=new ProjectStats) {
+    constructor(id, viewportTransforms=new ProjectViewportTransforms, elementsData={}, connectionsData={}, projectSettings = new ProjectSettings, projectStats=new ProjectStats) {
         this.id = id
         this.viewportTransforms = viewportTransforms
         this.elementsData = elementsData
@@ -12,12 +12,13 @@ class ProjectData {
         this.projectStats = projectStats
         loadedData[id] = this
     }
-    loaddData(jsonString) {
+    loadData(jsonString) {
         // Validate json keys and values
         
     }
     exportData() {
-        let jsontext = JSON.stringify(this, null, 4)
+        let jsontext = JSON.stringify(this, null, 2)
+        return jsontext
         // call for save path if aaliable in window_manager.js
         // save file using text and file path via preload
     }
@@ -48,4 +49,3 @@ class ProjectStats {
     }
 }
 
-new ProjectData(uuidv4(), new ProjectViewportTransforms()).exportData()
