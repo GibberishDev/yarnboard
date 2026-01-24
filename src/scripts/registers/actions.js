@@ -31,7 +31,7 @@ new BindAction("action.app.viewport.command_palette" , () => {togglePalette(true
 new BindAction("action.app.general.close_app" , () => {window.yarnboardAPI.close()} , [] , 'alt+f4')
 new BindAction("action.app.theme.savepreset" , () => {alert("save_theme");window.yarnboardAPI.fixFocus()} , [] , '')
 
-if (navigator.userAgent.includes("yarnboard-electron")) {
+if (navigator.userAgent.includes("yarnboard")) {
     new BindAction("action.app.debug.toggleDevTools", ()=>{window.yarnboardAPI.devTools()}, [], 'f12')
 }
 

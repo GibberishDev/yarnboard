@@ -136,7 +136,7 @@ function updateBinds() {
 document.addEventListener("bind", (ev) => {
   ev.bind.callable()
 })
-if (navigator.userAgent.includes("yarnboard-electron")) {
+if (navigator.userAgent.includes("yarnboard")) {
   window.yarnboardAPI.bindAccelerator((event, accelerator) => checkBinds(accelerator))
 }
 

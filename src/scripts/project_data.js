@@ -49,3 +49,4 @@ class ProjectStats {
     }
 }
 
+window.yarnboardAPI.saveText("./", "test.yarnboard", "test")

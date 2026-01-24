@@ -8,8 +8,11 @@ contextBridge.exposeInMainWorld('yarnboardAPI', {
     devTools : () => ipcRenderer.send('devTools'),
     fixFocus : () => ipcRenderer.send('fixFocus'),
     saveText : (path, name, text) => ipcRenderer.send('saveText',[path, name, text]),
+    saveAppSettings: (data) => ipcRenderer.send('saveAppSettings', data),
+    loadAppSettings: () => ipcRenderer.send('loadAppSettings'),
 
     bindAccelerator : (accelerator) => ipcRenderer.on('bindAccelerator', accelerator),
+    loadSettings : (settingsObject) => ipcRenderer.on('loadSettings', settingsObject),
 })
 
 

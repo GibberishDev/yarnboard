@@ -6,7 +6,7 @@ let maximizeButton = document.querySelector("#button-maximize")
 let closeButton = document.querySelector("#button-close")
 
 let userAgent = navigator.userAgent
-if (userAgent.includes("yarnboard-electron") == false) { //Not an application and runs on web
+if (userAgent.includes("yarnboard") == false) { //Not an application and runs on web
 //     minimizeButton.remove()
 //     maximizeButton.remove()
 //     closeButton.remove()

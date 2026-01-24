@@ -1,10 +1,12 @@
 import { AVALIABLE_LANGUAGES, localizeString } from "./localization.js"
 import { inputText, executeAction } from "./keybinds.js"
 import { fuzzySearchStringArray } from "./fuzzy_search.js"
+import { openWindows } from "./window_manager.js"
 
 export var registeredSettings = {}
 var settingsList = {}
 var searchList = {}
+var settingsLoaded = false
 export const SETTINGS_TYPE  = Object.freeze({
     STRING : 0,
     LIST : 1,
@@ -32,6 +34,7 @@ class Setting {
         event.id = this.id
         event.value = this.value
         document.dispatchEvent(event)
+        saveSettingsToDisk()
         // console.info("Set " + this.id + " value to \"" + value + "\"")
     }
     get = () => {
@@ -190,8 +193,10 @@ function populate_panel() {
 }
 
 export function updateSettingsViewport() {
-    populate_sidebar()
-    populate_panel()
+    if (openWindows.includes("settings")) {
+        populate_sidebar()
+        populate_panel()
+    }
 }
 // #endregion
 
@@ -395,8 +400,37 @@ function searchSettings(event) {
 }
 // #endregion
 
+// #region saving/loading settings to/from disk
+
+function loadSettingsFromDisk(data) {
+    data = JSON.parse(data)
+    for (let setting in data) {
+        if (Object.keys(registeredSettings).includes(setting)) registeredSettings[setting].set(data[setting])
+    }
+    settingsLoaded = true
+    saveSettingsToDisk()
+}
+
+function saveSettingsToDisk() {
+    if (!settingsLoaded) {return}
+    var data = {}
+    for (let setting in registeredSettings) {
+        if (registeredSettings[setting].type != SETTINGS_TYPE.BUTTON){
+            data[setting] = registeredSettings[setting].value
+        }
+    }
+    window.yarnboardAPI.saveAppSettings(JSON.stringify(data, null, 2))
+}
+
+// #endregion
+
 export function getSetting(id) {return registeredSettings[id].value}
 
 document.addEventListener("ui_input", (ev) => {if (Object.keys(registeredSettings).includes(ev.inputdata.id)) registeredSettings[ev.inputdata.id].set(ev.inputdata.value)})
 document.addEventListener("locale_changed", (ev) => {updateSettingsViewport()})
-document.addEventListener("ready", (ev) => {generate_list()})
+document.addEventListener("ready", (ev) => {
+    generate_list()
+    window.yarnboardAPI.loadAppSettings()
+})
+
+window.yarnboardAPI.loadSettings((event, data) => loadSettingsFromDisk(data))

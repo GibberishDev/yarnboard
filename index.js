@@ -7,6 +7,7 @@ let mainWindow;
 
 function createWindow() {
   const win = new BrowserWindow({
+    title: "Yarnboard",
     width : 960,
     height : 540,
     minWidth : 360,
@@ -47,6 +48,8 @@ function createWindow() {
   
   return win
 }
+
+app.setPath("sessionData", app.getPath('temp'))
 
 app.whenReady().then(() => {
   mainWindow = createWindow()
@@ -125,12 +128,39 @@ function enableDefaultSortcuts() {
 
 // #region file saving
 
-function saveTextFile(event, path, filename, textContents) {
-  console.log(event)
+function saveTextFile(path, filename, textContents) {
   if (!fs.existsSync(path)) {
-    fs.mkdir(path,function (err) {if (err) throw err})
+    fs.mkdir(path,function (err) {if (err) {
+      if (err.code == "EPERM") {
+        console.log("ERROR: cannot save in " + path + ". Missing admin priviledges")
+        return
+      }
+      throw err
+    }})
   }
-  fs.writeFile(path + filename, textContents, function (err) {if (err) throw err})
+  fs.writeFile(path + filename, textContents, function (err) {if (err) {
+      if (err.code == "EPERM") {
+        console.log("ERROR: cannot save in " + path + ". Missing admin priviledges")
+        return
+      }
+      throw err
+    }})
+}
+
+function saveAppSettings(data) {
+  let userPath = app.getPath("userData")
+  fs.writeFile(PATH.join(userPath, "settings.json"), data, function (err) {if (err) {
+      if (err.code == "EPERM") {
+        console.log("ERROR: cannot save in " + path + ". Missing admin priviledges")
+        return
+      }
+      throw err
+    }})
+}
+
+function loadAppSettings() {
+  let userPath = app.getPath("userData")
+  mainWindow.webContents.send("loadSettings", fs.readFileSync(PATH.join(userPath, "settings.json"),"utf-8"))
 }
 
 // #endregion
@@ -142,6 +172,8 @@ ipcMain.on('minimize', minimize)
 ipcMain.on('close', close)
 ipcMain.on('devTools', devTools)
 ipcMain.on('fixFocus', fixFocus)
-ipcMain.on('saveText', (ev, data)=>saveTextFile(ev, data[0], data[1], data[2]))
+ipcMain.on('saveText', (_ev, data)=>saveTextFile(data[0], data[1], data[2]))
+ipcMain.on('saveAppSettings', (_ev, data)=>saveAppSettings(data))
+ipcMain.on('loadAppSettings', loadAppSettings)
 
 // #endregion
