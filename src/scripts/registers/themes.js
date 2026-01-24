@@ -17,9 +17,4 @@ for (let item in registeredThemes) {
 }
 
 moduleReady("themes")
-
-document.addEventListener("ready",()=>{
-    registeredThemes["theme.default_dark"].apply()
-})
-    
     

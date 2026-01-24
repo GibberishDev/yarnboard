@@ -20,11 +20,3 @@ new ColorSetting("setting.theme.colorthemeaccent","#1d6600","settings.category.t
 new ColorSetting("setting.theme.colorthemeaccentbright","#33b300","settings.category.theme")
 
 moduleReady("settings")
-
-
-    // --var-color-theme-darkest : #0d0d0d;
-    // --var-color-theme-dark : #333333;
-    // --var-color-theme-text-dark : #595959;
-    // --var-color-theme-text : #a6a6a6;
-    // --var-color-theme-accent : #1d6600;
-    // --var-color-theme-accent-bright : #33b300;

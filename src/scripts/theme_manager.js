@@ -13,7 +13,7 @@ export class Theme {
         this.name = name
         registeredThemes[id] = this
     }
-    apply = () => {
+    apply() {
         registeredSettings["setting.theme.colorthemedarkest"].set(this.bg)
         registeredSettings["setting.theme.colorthemedark"].set(this.border)
         registeredSettings["setting.theme.colorthemetextdark"].set(this.textDark)

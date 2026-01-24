@@ -430,7 +430,11 @@ document.addEventListener("ui_input", (ev) => {if (Object.keys(registeredSetting
 document.addEventListener("locale_changed", (ev) => {updateSettingsViewport()})
 document.addEventListener("ready", (ev) => {
     generate_list()
-    window.yarnboardAPI.loadAppSettings()
+    if (navigator.userAgent.includes("yarnboard")) {
+        window.yarnboardAPI.loadAppSettings()
+    }
 })
 
-window.yarnboardAPI.loadSettings((event, data) => loadSettingsFromDisk(data))
+if (navigator.userAgent.includes("yarnboard")) {
+    window.yarnboardAPI.loadSettings((event, data) => loadSettingsFromDisk(data))
+}

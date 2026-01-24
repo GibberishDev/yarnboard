@@ -48,5 +48,3 @@ class ProjectStats {
         this.elapsedTime = elapsedTime
     }
 }
-
-window.yarnboardAPI.saveText("./", "test.yarnboard", "test")
