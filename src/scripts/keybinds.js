@@ -14,6 +14,7 @@ var previousInputContext = "default"
 
 export function setContext(newContext) {
   currentInputContext = newContext
+  document.querySelector("#status-bar-context").textContent = newContext
 }
 
 export class BindAction {
@@ -151,9 +152,9 @@ export function executeAction(id) {
 export function inputText(state) {
   if (state) {
     previousInputContext = currentInputContext
-    currentInputContext = "text_input"
+    setContext("text_input")
   } else {
-    currentInputContext = previousInputContext
+    setContext(previousInputContext)
   }
 }
 

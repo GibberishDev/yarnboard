@@ -1,5 +1,5 @@
 import { AVALIABLE_LANGUAGES, localizeString } from "./localization.js"
-import { inputText, executeAction } from "./keybinds.js"
+import { inputText, executeAction, setContext } from "./keybinds.js"
 import { fuzzySearchStringArray } from "./fuzzy_search.js"
 import { openWindows } from "./window_manager.js"
 
@@ -334,6 +334,8 @@ function colorSetting(id, value) {
     element.querySelector(".setting-label").innerText = localizeString(id)
     element.querySelector(".setting-description").innerText = localizeString(id+".description")
     element.querySelector(".hex").id = id
+    element.querySelector(".hex").addEventListener("focus", ()=>{inputText(true)})
+    element.querySelector(".hex").addEventListener("blur", ()=>{inputText(false)})
     colorInit(value, element)
     return element
 }

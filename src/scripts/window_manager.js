@@ -1,6 +1,7 @@
 import { updateSettingsViewport } from "./settings_menu.js"
 import { getSetting, bindSearchEvents } from "./settings_menu.js"
 import { bindEvents, unbindEvents, projectViewportId } from "./project_viewport.js"
+import { setContext } from "./keybinds.js"
 
 export var openWindows = []
 var openWindowsLastTime = ""
@@ -297,6 +298,7 @@ const SETTINGS_TEMPLATE = `<div id="settings-viewport">
 
 
 export function openSettings() {
+    setContext("settings")
     if (openWindows.includes("settings")) {
         selectId("settings")
     } else {
