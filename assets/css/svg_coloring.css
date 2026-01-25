@@ -3,28 +3,28 @@
 .svg-photo-element.plus {stroke: var(--var-color-theme-darkest);fill: var(--var-color-theme-dark);}
 .svg-photo-element.inner-rect {stroke: none; fill: var(--var-color-theme-dark);}
 .svg-photo-element.outer-rect {stroke: var(--var-color-theme-dark); fill: var(--var-color-theme-darkest);}
-.svg-photo-element:hover .svg-photo-element.line {stroke: var(--var-color-theme-accent-bright);fill: none;}
-.svg-photo-element:hover .svg-photo-element.plus {stroke: var(--var-color-theme-darkest);fill: var(--var-color-theme-accent-bright);}
-.svg-photo-element:hover .svg-photo-element.inner-rect {stroke: none; fill: var(--var-color-theme-accent-bright);}
-.svg-photo-element:hover .svg-photo-element.outer-rect {stroke: var(--var-color-theme-accent-bright); fill: var(--var-color-theme-darkest);}
+.svg-photo-element.highlight .svg-photo-element.line {stroke: var(--var-color-theme-accent-bright);fill: none;}
+.svg-photo-element.highlight .svg-photo-element.plus {stroke: var(--var-color-theme-darkest);fill: var(--var-color-theme-accent-bright);}
+.svg-photo-element.highlight .svg-photo-element.inner-rect {stroke: none; fill: var(--var-color-theme-accent-bright);}
+.svg-photo-element.highlight .svg-photo-element.outer-rect {stroke: var(--var-color-theme-accent-bright); fill: var(--var-color-theme-darkest);}
 /* #endregion */
 
 /* #region Picture element icon */
 .svg-picture-element.plus {stroke: var(--var-color-theme-darkest);fill: var(--var-color-theme-dark);}
 .svg-picture-element.inner-rect {stroke: none; fill: var(--var-color-theme-dark);}
 .svg-picture-element.outer-rect {stroke: var(--var-color-theme-dark); fill: var(--var-color-theme-darkest);}
-.svg-picture-element:hover .svg-picture-element.plus {stroke: var(--var-color-theme-darkest);fill: var(--var-color-theme-accent-bright);}
-.svg-picture-element:hover .svg-picture-element.inner-rect {stroke: none; fill: var(--var-color-theme-accent-bright);}
-.svg-picture-element:hover .svg-picture-element.outer-rect {stroke: var(--var-color-theme-accent-bright); fill: var(--var-color-theme-darkest);}
+.svg-picture-element.highlight .svg-picture-element.plus {stroke: var(--var-color-theme-darkest);fill: var(--var-color-theme-accent-bright);}
+.svg-picture-element.highlight .svg-picture-element.inner-rect {stroke: none; fill: var(--var-color-theme-accent-bright);}
+.svg-picture-element.highlight .svg-picture-element.outer-rect {stroke: var(--var-color-theme-accent-bright); fill: var(--var-color-theme-darkest);}
 /* #endregion */
 
 /* #region Text element icon */
 .svg-text-element.line {stroke: var(--var-color-theme-dark);fill: none;}
 .svg-text-element.plus {stroke: var(--var-color-theme-darkest);fill: var(--var-color-theme-dark);}
 .svg-text-element.outer-rect {stroke: var(--var-color-theme-dark); fill: var(--var-color-theme-darkest);}
-.svg-text-element:hover .svg-text-element.line {stroke: var(--var-color-theme-accent-bright);fill: none;}
-.svg-text-element:hover .svg-text-element.plus {stroke: var(--var-color-theme-darkest);fill: var(--var-color-theme-accent-bright);}
-.svg-text-element:hover .svg-text-element.outer-rect {stroke: var(--var-color-theme-accent-bright); fill: var(--var-color-theme-darkest);}
+.svg-text-element.highlight .svg-text-element.line {stroke: var(--var-color-theme-accent-bright);fill: none;}
+.svg-text-element.highlight .svg-text-element.plus {stroke: var(--var-color-theme-darkest);fill: var(--var-color-theme-accent-bright);}
+.svg-text-element.highlight .svg-text-element.outer-rect {stroke: var(--var-color-theme-accent-bright); fill: var(--var-color-theme-darkest);}
 /* #endregion */
 
 /* #region Note element icon */
@@ -33,23 +33,23 @@
 .svg-note-element.plus {stroke: var(--var-color-theme-darkest);fill: var(--var-color-theme-dark);}
 .svg-note-element.outer-rect {stroke: var(--var-color-theme-dark); fill: var(--var-color-theme-darkest);}
 .svg-note-element.shade {stroke: none; fill: var(--var-color-theme-dark);}
-.svg-note-element:hover .svg-note-element.line {stroke: var(--var-color-theme-accent-bright)}
-.svg-note-element:hover .svg-note-element.dot {fill: var(--var-color-theme-accent-bright);}
-.svg-note-element:hover .svg-note-element.plus {stroke: var(--var-color-theme-darkest);fill: var(--var-color-theme-accent-bright);}
-.svg-note-element:hover .svg-note-element.outer-rect {stroke: var(--var-color-theme-accent-bright); fill: var(--var-color-theme-darkest);}
-.svg-note-element:hover .svg-note-element.shade {stroke: none; fill: var(--var-color-theme-accent-bright);}
+.svg-note-element.highlight .svg-note-element.line {stroke: var(--var-color-theme-accent-bright)}
+.svg-note-element.highlight .svg-note-element.dot {fill: var(--var-color-theme-accent-bright);}
+.svg-note-element.highlight .svg-note-element.plus {stroke: var(--var-color-theme-darkest);fill: var(--var-color-theme-accent-bright);}
+.svg-note-element.highlight .svg-note-element.outer-rect {stroke: var(--var-color-theme-accent-bright); fill: var(--var-color-theme-darkest);}
+.svg-note-element.highlight .svg-note-element.shade {stroke: none; fill: var(--var-color-theme-accent-bright);}
 /* #endregion */
 
 /* #region Audio element icon */
 .svg-audio-element.plus {stroke: var(--var-color-theme-darkest);fill: var(--var-color-theme-dark);}
 .svg-audio-element.note {stroke: var(--var-color-theme-dark); fill: var(--var-color-theme-darkest);}
-.svg-audio-element:hover .svg-audio-element.plus {stroke: var(--var-color-theme-darkest);fill: var(--var-color-theme-accent-bright);}
-.svg-audio-element:hover .svg-audio-element.note {stroke: var(--var-color-theme-accent-bright); fill: var(--var-color-theme-darkest);}
+.svg-audio-element.highlight .svg-audio-element.plus {stroke: var(--var-color-theme-darkest);fill: var(--var-color-theme-accent-bright);}
+.svg-audio-element.highlight .svg-audio-element.note {stroke: var(--var-color-theme-accent-bright); fill: var(--var-color-theme-darkest);}
 /* #endregion */
 
 /* #region Video element icon */
 .svg-video-element.plus {stroke: var(--var-color-theme-darkest);fill: var(--var-color-theme-dark);}
 .svg-video-element.triangle {stroke: var(--var-color-theme-dark); fill: var(--var-color-theme-darkest);}
-.svg-video-element:hover .svg-video-element.plus {stroke: var(--var-color-theme-darkest);fill: var(--var-color-theme-accent-bright);}
-.svg-video-element:hover .svg-video-element.triangle {stroke: var(--var-color-theme-accent-bright); fill: var(--var-color-theme-darkest);}
+.svg-video-element.highlight .svg-video-element.plus {stroke: var(--var-color-theme-darkest);fill: var(--var-color-theme-accent-bright);}
+.svg-video-element.highlight .svg-video-element.triangle {stroke: var(--var-color-theme-accent-bright); fill: var(--var-color-theme-darkest);}
 /* #endregion */
