@@ -23,7 +23,22 @@
     flex-direction: column;
     background: var(--var-color-theme-darkest);
     border: 2px solid var(--var-color-theme-dark);
+    box-sizing: border-box;
+    animation: appear calc(var(--var-transition-duration) * 2.0) ease-in-out 0ms forwards;
 }
+
+@keyframes appear {
+    0% {
+        box-shadow: 0 0 0 0 var(--var-color-theme-accent);
+    }
+    50% {
+        box-shadow: 0 0 5px 5px var(--var-color-theme-accent-bright);
+    }
+    100% {
+        box-shadow: 0 0 0 0 var(--var-color-theme-accent);
+    }
+}
+
 .popup-menu:hover {
     border-color: var(--var-color-theme-accent);
 }

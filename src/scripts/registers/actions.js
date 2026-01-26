@@ -3,6 +3,7 @@ import {togglePalette} from "../command_palette.js"
 import {moduleReady} from "./ready.js"
 import {openSettings, uuidv4, createWindow, closeCurrent} from "../window_manager.js"
 import { resetView } from "../project_viewport.js"
+import { registeredPopups } from "../popup_menu.js"
 
 
 function newProject() {
@@ -30,9 +31,29 @@ new BindAction("action.app.viewport.settings" , openSettings , [] , 'control+com
 new BindAction("action.app.viewport.command_palette" , () => {togglePalette(true)} , [] , 'control+p')
 new BindAction("action.app.general.close_app" , () => {window.yarnboardAPI.close()} , [] , 'alt+f4')
 new BindAction("action.app.theme.savepreset" , () => {alert("save_theme");window.yarnboardAPI.fixFocus()} , [] , '')
+new BindAction("action.app.viewport.main_popup" , (ev) => {openMainPopup(ev)} , [] , 'alt+altleft')
+
 
 if (navigator.userAgent.includes("yarnboard")) {
     new BindAction("action.app.debug.toggleDevTools", ()=>{window.yarnboardAPI.devTools()}, [], 'f12')
+}
+
+function openMainPopup(event) {
+    var rect = {}
+    if (event == undefined) {
+        event = {}
+        if (document.querySelector("#title-bar-menu-button") != undefined) {
+            event.source = document.querySelector("#title-bar-menu-button")
+            rect = event.source.getBoundingClientRect()
+        } else {
+            rect = {
+                x:0,y:0,width:0,height:0
+            }
+        }
+    } else {
+        rect = event.source.getBoundingClientRect()
+    }
+    registeredPopups["popup.app.main"].show({x:rect.x,y:6+rect.y+rect.height})
 }
 
 moduleReady("actions")

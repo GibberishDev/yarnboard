@@ -109,6 +109,7 @@ function constructAccelerator() {
 }
 
 function checkBinds(accelerator) {
+  console.log(accelerator)
   if (Object.keys(listeningAccelerators).includes(accelerator)) {
     let keybindEvent = new KeyboardEvent("bind",{bubbles:true})
     if (Object.keys(listeningAccelerators[accelerator].context).includes(currentInputContext)) {
@@ -159,8 +160,8 @@ export function inputText(state) {
 }
 
 document.addEventListener("action", (ev) => {
-  registeredActions[ev.action].context[ev.context].callable()
+  registeredActions[ev.action].context[ev.context].callable(ev)
 })
 
-
+// FIXME: held down binds execute their action repeatedly. implment distinguishing mechanism
 // IDEA: develop way to display keybindings as html elements. Maybe implement different styles of display (icon, text,none and combined???)

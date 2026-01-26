@@ -13,9 +13,9 @@ const menuEntryTemplate = `<div class="popup-menu-entry-icon"></div>
 <div class="popup-menu-entry-dropdown"></div>`
 
 export class PopupMenu {
-    constructor(id, menuItems = []) {
+    constructor(id, PopupMenuItems = []) {
         this.id = id
-        this.menuItems = menuItems
+        this.PopupMenuItems = PopupMenuItems
         this.childMenu = undefined
         registeredPopups[id] = this
     }
@@ -26,7 +26,6 @@ export class PopupMenu {
             setTimeout(()=>{this.show(pos)}, 1)
             return
         }
-        console.log("showing popup:", this.id)
         let popupWrapper = document.createElement("div")
         popupWrapper.dataset.popupId = this.id
         popupWrapper.classList.add("popup-menu-wrapper")
@@ -34,7 +33,7 @@ export class PopupMenu {
         let menu = document.createElement("div")
         panel.classList.add("popup-menu-panel")
         menu.classList.add("popup-menu")
-        this.menuItems.forEach((entry)=>{
+        this.PopupMenuItems.forEach((entry)=>{
             if (entry == "divider") {
                 let dividerElement = document.createElement("div")
                 dividerElement.classList.add("popup-menu-divider")
@@ -88,7 +87,6 @@ function checkHoveredEntry(ev, element, entry) {
 
 function checkUnhoveredEntry(ev, element, entry, menu) {
     let elements = document.elementsFromPoint(mousePos.x, mousePos.y)
-    console.log(!elements.includes(registeredPopups[entry.action.id].popupElement))
     if (!elements.includes(element) && elements.includes(menu)) {
         entry.execute(element, false)
     }
@@ -104,8 +102,8 @@ function removeOnOutsideClick(event, popupMenu) {
     }
 }
 
-export class menuItem {
-    constructor(action, title = "menuitem.title.default", icon = "") {
+export class PopupMenuItem {
+    constructor(action, title = "PopupMenuItem.title.default", icon = "") {
         this.action = action
         this.submenu = false
         if (action instanceof PopupMenu) {
@@ -130,29 +128,9 @@ export class menuItem {
     }
 }
 
-new PopupMenu("test-popup-submenu", [
-    "divider",
-    new menuItem("action.app.project.new","popupitem.file.newproject")
-])
-new PopupMenu("test-popup-submenu2", [
-    "divider",
-    new menuItem("action.app.project.new","popupitem.file.newproject")
-])
-
-new PopupMenu("test-popup",[
-    new menuItem("action.app.project.new","popupitem.file.newproject"),
-    "divider",
-    new menuItem("action.app.project.new","popupitem.file.newproject"),
-    new menuItem(registeredPopups["test-popup-submenu"],"submenu"),
-    new menuItem(registeredPopups["test-popup-submenu2"],"submenu2"),
-    new menuItem("action.app.project.new","popupitem.file.newproject")
-])
 document.addEventListener("mousemove", (ev)=>{
     mousePos.x = ev.clientX
     mousePos.y = ev.clientY
-})
-document.addEventListener("ready", (ev) => {
-    registeredPopups["test-popup"].show({x:50,y:30})
 })
 /*
 <div class="popup-menu-wrapper">

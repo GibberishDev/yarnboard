@@ -35,6 +35,7 @@
 	<script type="module" src="./src/scripts/registers/actions.js"></script>
 	<script type="module" src="./src/scripts/registers/settings.js"></script>
 	<script type="module" src="./src/scripts/registers/themes.js"></script>
+	<script type="module" src="./src/scripts/registers/popup_menus.js"></script>
 	<!-- endregion -->
 </head>
 <body>
@@ -74,14 +75,14 @@
 				</g>
 			</svg>
 		</div>
-		<div id="title-bar-menu-button" class="title-bar-button">
+		<div id="title-bar-menu-button" class="title-bar-button" onclick="{var event = new Event('action');event.action = 'action.app.viewport.main_popup';event.context = 'default';event.source=this;document.dispatchEvent(event)}">
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26" height="26px" width="26px">
 				<path style=" stroke-width: 2px; stroke-linecap: round; fill: none;" d="M 5 20 L 21 20"></path>
 				<path style=" stroke-width: 2px; stroke-linecap: round; fill: none;" d="M 5 13 L 21 13"></path>
 				<path style=" stroke-width: 2px; stroke-linecap: round; fill: none;" d="M 5 6 L 21 6"></path>
 			</svg>
 		</div>
-		<div id="title-bar-settings-button" class="title-bar-button" onclick="{var event = new Event('action');event.action = 'action.app.viewport.settings';event.context = 'default';document.dispatchEvent(event)}">
+		<!-- <div id="title-bar-settings-button" class="title-bar-button" onclick="{var event = new Event('action');event.action = 'action.app.viewport.settings';event.context = 'default';document.dispatchEvent(event)}">
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26" height="26px" width="26px" xmlns:bx="https://boxy-svg.com">
 				<ellipse style=" stroke-width: 4px; fill: none;" cx="13" cy="13" rx="5" ry="5"></ellipse>
 				<path d="M 11 19 L 14.98 19 L 14.22 21.34 L 11.76 21.34 L 11 19 Z" style=" stroke-width: 2px; stroke-linejoin: round; stroke-linecap: round;"></path>
@@ -91,7 +92,7 @@
 				<path d="M 4.81 8.25 L 8.79 8.25 L 8.03 10.58 L 5.57 10.58 L 4.81 8.25 Z" style=" stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; transform-origin: 6.8px 9.41px;" transform="matrix(-0.5, 0.866025, -0.866025, -0.5, -0.000001, 0)"></path>
 				<path d="M 17.23 17.75 L 21.21 17.75 L 20.45 15.41 L 17.99 15.41 L 17.23 17.75 Z" style=" stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; transform-origin: 19.22px 16.58px;" transform="matrix(-0.5, 0.866025, -0.866025, -0.5, -0.000002, 0)"></path>
 			</svg>
-		</div>
+		</div> -->
 		<div id="title-bar-label">
 			Yarnboard v0.0.1
 		</div>
