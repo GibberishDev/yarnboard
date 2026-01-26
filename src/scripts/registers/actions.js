@@ -31,7 +31,7 @@ new BindAction("action.app.viewport.settings" , openSettings , [] , 'control+com
 new BindAction("action.app.viewport.command_palette" , () => {togglePalette(true)} , [] , 'control+p')
 new BindAction("action.app.general.close_app" , () => {window.yarnboardAPI.close()} , [] , 'alt+f4')
 new BindAction("action.app.theme.savepreset" , () => {alert("save_theme");window.yarnboardAPI.fixFocus()} , [] , '')
-new BindAction("action.app.viewport.main_popup" , (ev) => {openMainPopup(ev)} , [] , 'alt+altleft')
+new BindAction("action.app.viewport.main_popup" , (ev) => {openMainPopup(ev)} , [] , 'altleft', true, false)
 
 
 if (navigator.userAgent.includes("yarnboard")) {
@@ -42,8 +42,8 @@ function openMainPopup(event) {
     var rect = {}
     if (event == undefined) {
         event = {}
-        if (document.querySelector("#title-bar-menu-button") != undefined) {
-            event.source = document.querySelector("#title-bar-menu-button")
+        if (document.querySelector("#title-bar-icon-button") != undefined) {
+            event.source = document.querySelector("#title-bar-icon-button")
             rect = event.source.getBoundingClientRect()
         } else {
             rect = {
@@ -53,7 +53,7 @@ function openMainPopup(event) {
     } else {
         rect = event.source.getBoundingClientRect()
     }
-    registeredPopups["popup.app.main"].show({x:rect.x,y:6+rect.y+rect.height})
+    registeredPopups["popup.app.main"].show({x:rect.x,y:2+rect.y+rect.height})
 }
 
 moduleReady("actions")

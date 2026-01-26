@@ -38,6 +38,12 @@
     border: 2px solid var(--var-color-theme-dark);
     box-sizing: border-box;
     height: 100%;
+    overflow: hidden;
+}
+#title-bar-label .text-container {
+    width: 100dvw;
+    position: absolute;
+    left: 0;
 }
 
 .title-bar-button {

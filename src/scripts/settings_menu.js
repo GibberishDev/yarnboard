@@ -336,6 +336,10 @@ function colorSetting(id, value) {
     element.querySelector(".hex").id = id
     element.querySelector(".hex").addEventListener("focus", ()=>{inputText(true)})
     element.querySelector(".hex").addEventListener("blur", ()=>{inputText(false)})
+    element.querySelectorAll(".color-picker-range").forEach((el)=>{
+        el.querySelector("input[type='number']").addEventListener("focus", ()=>{inputText(true)})
+        el.querySelector("input[type='number']").addEventListener("blur", ()=>{inputText(false)})
+    })
     colorInit(value, element)
     return element
 }

@@ -117,7 +117,7 @@ export class PopupMenuItem {
             if (element != undefined) {
                 if (show) {
                     let rect = element.getBoundingClientRect()
-                    registeredPopups[this.action.id].show( {x: 2 + rect.x + rect.width, y: rect.y})
+                    registeredPopups[this.action.id].show( {x: 2 + rect.x + rect.width, y: rect.y - 2})
                 } else {
                     registeredPopups[this.action.id].hide()
                 }

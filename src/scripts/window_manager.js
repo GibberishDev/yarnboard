@@ -388,7 +388,6 @@ function reorderTabs(event, drop) {
         }
         let newOrder = []
         for (let el of document.querySelectorAll('#tab-bar .tab')) newOrder.push(el.id.replace("tab-id-",""))
-        console.log(newOrder)
         openWindows = newOrder
     }
 }

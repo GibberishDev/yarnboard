@@ -18,12 +18,14 @@ export function setContext(newContext) {
 }
 
 export class BindAction {
-  constructor(id, callable, context=[], defaultBind = '', currentBind = '') {
+  constructor(id, callable, context=[], defaultBind = '', realeaseKeyAction=false, holdAction=false) {
     this.id = id
     this.callable = callable
     this.context = context
     this.defaultBind = defaultBind
-    this.currentBind = currentBind
+    this.currentBind = defaultBind
+    this.realeaseKeyAction = realeaseKeyAction
+    this.holdAction = holdAction
     if (this.currentBind == "") {
       this.currentBind = this.defaultBind
     }
@@ -80,8 +82,15 @@ window.onfocus = ()=>{
   }
 }
 document.addEventListener("keydown", (ev) => {
+  determineBind(ev, true)
+})
+document.addEventListener("keyup", (ev) => {
+  determineBind(ev, false)
+})
+
+function determineBind(ev, keyDown) {
   if (Object.keys(modifiers).includes(ev.key)) {
-    modifiers[ev.key] = true
+    modifiers[ev.key] = keyDown
   }
   modifiers["Control"] = ev.ctrlKey
   modifiers["Alt"] = ev.altKey
@@ -89,14 +98,9 @@ document.addEventListener("keydown", (ev) => {
   modifiers["Meta"] = ev.metaKey
   lastPressedKey = ev.code
   var accelerator = constructAccelerator()
-  checkBinds(accelerator)
-  if (accelerator == "control+p") ev.preventDefault()
-})
-document.addEventListener("keyup", (ev) => {
-  if (Object.keys(modifiers).includes(ev.key)) {
-    modifiers[ev.key] = false
-  }
-})
+  checkBinds(accelerator, ev.repeat, keyDown)
+
+}
 
 function constructAccelerator() {
   var accelerator = ""
@@ -105,20 +109,38 @@ function constructAccelerator() {
   if (modifiers.Shift) {accelerator += "shift+"} 
   if (modifiers.Meta) {accelerator += "meta+"}
   accelerator += lastPressedKey.replace("Key","")
+  var exceptions = [
+    "alt+AltLeft",
+    "control+ControlLeft",
+    "shift+ShiftLeft",
+    "alt+AltRight",
+    "control+ControlRight",
+    "shift+ShiftRight",
+    "meta+MetaLeft"
+  ]
+  if (exceptions.includes(accelerator)) accelerator = lastPressedKey.replace("Key","")
   return accelerator.toLowerCase()
 }
 
-function checkBinds(accelerator) {
-  console.log(accelerator)
+function checkBinds(accelerator, isHold, isKeyDown) {
   if (Object.keys(listeningAccelerators).includes(accelerator)) {
+    let bind = listeningAccelerators[accelerator]
     let keybindEvent = new KeyboardEvent("bind",{bubbles:true})
-    if (Object.keys(listeningAccelerators[accelerator].context).includes(currentInputContext)) {
-      keybindEvent.bind = listeningAccelerators[accelerator].context[currentInputContext]
-      document.activeElement.dispatchEvent(keybindEvent)
+    let ctx = ""
+    if (Object.keys(bind.context).includes(currentInputContext)) {
+      ctx = currentInputContext
     } else if (Object.keys(listeningAccelerators[accelerator].context).toString() == "default") {
-      keybindEvent.bind = listeningAccelerators[accelerator].context["default"]
-      document.activeElement.dispatchEvent(keybindEvent)
+      ctx = "default"
+    } else {
+      return
     }
+    let contextBind = bind.context[ctx]
+    if (isHold == contextBind.holdAction && isKeyDown != contextBind.realeaseKeyAction) {
+      keybindEvent.bind = contextBind
+    } else {
+      return
+    }
+    document.activeElement.dispatchEvent(keybindEvent)
   }
 }
 
@@ -163,5 +185,4 @@ document.addEventListener("action", (ev) => {
   registeredActions[ev.action].context[ev.context].callable(ev)
 })
 
-// FIXME: held down binds execute their action repeatedly. implment distinguishing mechanism
 // IDEA: develop way to display keybindings as html elements. Maybe implement different styles of display (icon, text,none and combined???)

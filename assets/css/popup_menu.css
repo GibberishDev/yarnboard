@@ -32,7 +32,7 @@
         box-shadow: 0 0 0 0 var(--var-color-theme-accent);
     }
     50% {
-        box-shadow: 0 0 5px 5px var(--var-color-theme-accent-bright);
+        box-shadow: 0 0 2px 2px var(--var-color-theme-accent-bright);
     }
     100% {
         box-shadow: 0 0 0 0 var(--var-color-theme-accent);
