@@ -1,4 +1,4 @@
-import { BindAction, executeAction } from "./keybinds.js"
+import { executeAction, registeredActions } from "./keybinds.js"
 import { localizeString } from "./localization.js"
 import { registeredIcons } from "./icon_manager.js"
 
@@ -20,8 +20,8 @@ export class PopupMenu {
         this.childMenu = undefined
         registeredPopups[id] = this
     }
-
-    show(pos={x:0,y:0}) {
+    // FIXME: keep track of opened popup trees and close and open them accordingly. Rn its super easy to close parent when clicking child or opening several children at once. fkn rewrite this shiet
+    show(pos={x:0,y:0},isChild=false,parent=undefined) {
         if (this.popupElement != undefined) {
             this.hide()
             setTimeout(()=>{this.show(pos)}, 1)
@@ -48,13 +48,17 @@ export class PopupMenu {
                     entryElement.querySelector(".popup-menu-entry-icon").appendChild(iconElement)
                 }
                 entryElement.querySelector(".popup-menu-entry-text").innerText = localizeString(entry.title)
-                // TODO: call binds manager to get action bind
                 if (entry.submenu) {
+                    entry.parent = popupWrapper
                     entryElement.querySelector(".popup-menu-entry-dropdown").innerText = ">"
-                    entryElement.addEventListener("mousedown", (ev)=>{entry.execute(entryElement, true)})
+                    entryElement.addEventListener("mousedown", (ev)=>{entry.execute(entryElement, true, popupWrapper)})
                     entryElement.addEventListener("mouseover", (ev)=>{setTimeout(()=>{checkHoveredEntry(ev,entryElement, entry)},250)})
                     popupWrapper.addEventListener("mouseover", (ev)=>{setTimeout(()=>{checkUnhoveredEntry(ev,entryElement, entry, popupWrapper)},250)})
                 } else {
+                    if (Object.keys(registeredActions).includes(entry.action) && registeredActions[entry.action].currentBind != "") {
+                        // TODO: exchange for fancy getter so its formatted
+                        entryElement.querySelector(".popup-menu-entry-bind").innerText = registeredActions[entry.action].currentBind
+                    }
                     entryElement.addEventListener("mousedown", (ev)=>{
                         entry.execute()
                         document.body.removeChild(popupWrapper)
@@ -64,12 +68,27 @@ export class PopupMenu {
                 menu.appendChild(entryElement)
             }
         })
-        this.popupElement = popupWrapper
-        document.body.appendChild(this.popupElement)
+        if (this.PopupMenuItems.length == 0) {
+            let entryElement = document.createElement("div")
+            entryElement.classList.add("popup-menu-entry")
+            entryElement.innerHTML = menuEntryTemplate
+            entryElement.querySelector(".popup-menu-entry-text").innerText = localizeString("popup.emptylist")
+            entryElement.addEventListener("mousedown", (ev)=>{
+                document.body.removeChild(popupWrapper)
+                this.popupElement = undefined
+            }, {once:true})
+            menu.appendChild(entryElement)
+        }
         popupWrapper.appendChild(panel)
         popupWrapper.appendChild(menu)
         popupWrapper.style.left = String(pos.x) + "px"
         popupWrapper.style.top = String(pos.y) + "px"
+        this.popupElement = popupWrapper
+        if (isChild && parent!=undefined) {
+            parent.appendChild(this.popupElement)
+        } else {
+            document.body.appendChild(this.popupElement)
+        }
         setTimeout(
         ()=>{document.addEventListener("mousedown", (ev)=>{removeOnOutsideClick(ev, this)}, {once:true})},
         1)
@@ -116,12 +135,12 @@ export class PopupMenuItem {
         this.title = title
         this.icon = icon
     }
-    execute(element = undefined, show = true) {
+    execute(element = undefined, show = true, parent=undefined) {
         if (this.action instanceof PopupMenu) {
             if (element != undefined) {
                 if (show) {
                     let rect = element.getBoundingClientRect()
-                    registeredPopups[this.action.id].show( {x: 2 + rect.x + rect.width, y: rect.y - 2})
+                    registeredPopups[this.action.id].show( {x: 2 + rect.x + rect.width, y: rect.y - 2},true, parent)
                 } else {
                     registeredPopups[this.action.id].hide()
                 }

@@ -14,7 +14,6 @@ export class Icon {
         iconElement.setAttribute("width", width);
         iconElement.setAttribute("height", height);
         if (highlightParentElement!=undefined) {
-            console.log(highlightParentElement)
             highlightParentElement.addEventListener("mouseover", ()=>{iconElement.classList.add("highlight")})
             highlightParentElement.addEventListener("mouseout", ()=>{iconElement.classList.remove("highlight")})
         } else {

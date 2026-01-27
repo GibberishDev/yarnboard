@@ -1,6 +1,8 @@
 import { Icon } from "../icon_manager.js"
 import { moduleReady } from "./ready.js"
 
+// #region templates
+
 const appIconTemplate = `<svg class="svg-app-icon" width="26" height="26" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" data-id="icon.app.icon">
  <defs id="defs">
   <mask id="pin-mask">
@@ -14,12 +16,12 @@ const appIconTemplate = `<svg class="svg-app-icon" width="26" height="26" viewBo
  </g>
 </svg>
 `
-
 const AudioElementIconTemplate = `
         <svg class="svg-audio-element icon" width="26" height="26" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg">
                     <path class="svg-audio-element note"style="paint-order:stroke fill"d="m 14.5,12.5 v -11 h -11 v 9 c 0,0 -2,0 -2,2 0,2 2,2 2,2 0,0 2,0 2,-2 v -9 h 7 v 7 c 0,0 -2,0 -2,2 0,2 2,2 2,2 0,0 2,0 2,-2 z"/>
                     <path class="svg-audio-element plus"style="paint-order:stroke fill"d="m 13.5,0.5 v 2 h 2 v 1 h -2 v 2 h -1 v -2 h -2 v -1 h 2 v -2 z"/>
                 </svg>`
+
 const PhotoElementIconTemplate = `<svg class="svg-photo-element icon" width="26" height="26" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg">
     <rect class="svg-photo-element outer-rect" style="paint-order:stroke fill"width="13"height="13"x="1.5"y="1.5"/>
     <rect class="svg-photo-element inner-rect" width="11" height="7" x="2.5" y="2.5"/>
@@ -27,12 +29,14 @@ const PhotoElementIconTemplate = `<svg class="svg-photo-element icon" width="26"
     <path class="svg-photo-element line" style="stroke-linecap:square;paint-order:stroke fill" d="m 4.5,13 h 7"/>
     <path class="svg-photo-element plus" style="paint-order:stroke fill" d="m 13.5,0.5 v 2 h 2 v 1 h -2 v 2 h -1 v -2 h -2 v -1 h 2 v -2 z"/>
 </svg>`
+
 const PictureElementIconTemplate = `
 <svg class="svg-picture-element icon" width="26" height="26" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg">
     <rect class="svg-picture-element outer-rect" style="paint-order:stroke fill"width="13"height="13"x="1.5"y="1.5"/>
     <rect class="svg-picture-element inner-rect" width="11"height="11"x="2.5"y="2.5"/>
     <path class="svg-picture-element plus" style="paint-order:stroke fill" d="m 13.5,0.5 v 2 h 2 v 1 h -2 v 2 h -1 v -2 h -2 v -1 h 2 v -2 z"/>
 </svg>`
+
 const TextElementIconTemplate = `
 <svg class="svg-text-element icon" width="26" height="26" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg">
     <rect class="svg-text-element outer-rect" style="paint-order:stroke fill"width="13"height="13"x="1.5"y="1.5"/>
@@ -48,6 +52,7 @@ const TextElementIconTemplate = `
     <path class="svg-text-element line" style="stroke-linecap:square;paint-order:stroke fill" d="M 3,9 H 13"/>
     <path class="svg-text-element plus" style="paint-order:stroke fill" d="m 13.5,0.5 v 2 h 2 v 1 h -2 v 2 h -1 v -2 h -2 v -1 h 2 v -2 z"/>
 </svg>`
+
 const NoteElementIconTemplate = `
 <svg class="svg-note-element icon" width="26" height="26" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg">
     <rect class="svg-note-element outer-rect" style="paint-order:stroke fill"width="13"height="13"x="1.5"y="1.5"/>
@@ -57,11 +62,13 @@ const NoteElementIconTemplate = `
     <circle class="svg-note-element dot"cx="13"cy="11"r="0.5"/>
     <path class="svg-note-element plus"style="paint-order:stroke fill" d="m 13.5,0.5 v 2 h 2 v 1 h -2 v 2 h -1 v -2 h -2 v -1 h 2 v -2 z"/>
 </svg>`
+
 const videoElementIconTemplate = `
 <svg class="svg-video-element icon" width="16" height="16" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg">
     <path class="svg-video-element plus"style="paint-order:stroke fill" d="m 13.5,0.5 v 2 h 2 v 1 h -2 v 2 h -1 v -2 h -2 v -1 h 2 v -2 z"/>
     <path class="svg-video-element triangle"style="stroke-width:1;stroke-linejoin:round;paint-order:stroke fill;"d="m 1.5,1.5 13,6.5 -13,6.5 z"/>
 </svg>`
+
 const newProjectIconTemplate =`<svg class="svg-new-project" width="32" height="32" version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
     <g stroke-miterlimit="2">
         <path class="svg-new-project rect" d="m25 29v-26h-14l-4 4v22z" stroke-width="2" style="paint-order:stroke markers fill"/>
@@ -73,6 +80,35 @@ const newProjectIconTemplate =`<svg class="svg-new-project" width="32" height="3
     </g>
 </svg>`
 
+const openProjectIconTemplate = `<svg class="svg-open-project" width="32" height="32" version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <path class="svg-open-project rect" d="m4 6h4c4 0 4 4 8 4h12v16h-24z" stroke-linecap="round" stroke-miterlimit="2" stroke-width="2" style="paint-order:stroke markers fill"/>
+  <path class="svg-open-project shade" d="m3 10h13v-1c-4 0-4-4-8-4h-5z" style="paint-order:stroke markers fill"/>
+</svg>`
+
+const openRecentIconTemplate = `<svg class="svg-open-recent" width="32" height="32" version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+ <path  class="svg-open-recent rect" d="m4 6h4c4 0 4 4 8 4h12v16h-24z" stroke-linecap="round" stroke-miterlimit="2" stroke-width="2" style="paint-order:stroke markers fill"/>
+ <path class="svg-open-recent shade" d="m3 10h13v-1c-4 0-4-4-8-4h-5z" style="paint-order:stroke markers fill"/>
+ <circle class="svg-open-recent clock" cx="16" cy="18" r="6" fill="none" stroke-linecap="round" stroke-miterlimit="2" style="paint-order:stroke markers fill"/>
+ <path class="svg-open-recent clock" d="m16 14v4l2 2" fill="none" stroke-linecap="round" stroke-miterlimit="2" style="paint-order:stroke markers fill"/>
+</svg>`
+
+const saveProjectIconTemplate = `<svg class="svg-save-project" width="128" height="128" version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <path class="svg-save-project rect" d="m4 4h20l4 4v20h-24z" stroke-linecap="round" stroke-miterlimit="2" stroke-width="2" style="paint-order:stroke markers fill"/>
+  <circle class="svg-save-project circle" cx="16" cy="16" r="4" style="paint-order:stroke markers fill"/>
+  <path class="svg-save-project cover" d="m9.5 3 12 1e-7v8h-12z" style="paint-order:stroke markers fill"/>
+  <path class="svg-save-project window" d="m20 9h-3v-5h3z" style="paint-order:stroke markers fill"/>
+</svg>`
+
+const saveAsIconTemplate = `<svg class="svg-save-as" width="128" height="128" version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <path class="svg-save-as rect" d="m4 4h20l4 4v20h-24z" stroke-linecap="round" stroke-miterlimit="2" stroke-width="2" style="paint-order:stroke markers fill"/>
+  <circle class="svg-save-as circle" cx="16" cy="16" r="4" style="paint-order:stroke markers fill"/>
+  <path class="svg-save-as cover"  d="m9.5 3 12 1e-7v8h-12z" style="paint-order:stroke markers fill"/>
+  <path class="svg-save-as window" d="m20 9h-3v-5h3z" style="paint-order:stroke markers fill"/>
+  <path class="svg-save-as pencil" d="m19 30 1-3 8-8 2 2-8 8z" stroke-linecap="square" stroke-miterlimit="3" style="paint-order:stroke markers fill"/>
+  <path class="svg-save-as pencil-tip" d="m18 31 1.5-2.5 1 1z" style="paint-order:stroke markers fill"/>
+</svg>`
+
+// #endregion
 
 new Icon("icon.app.icon",appIconTemplate)
 new Icon("icon.element.video",videoElementIconTemplate)
@@ -82,5 +118,9 @@ new Icon("icon.element.picture",PictureElementIconTemplate)
 new Icon("icon.element.photo",PhotoElementIconTemplate)
 new Icon("icon.element.audio",AudioElementIconTemplate)
 new Icon("icon.popup.newproject",newProjectIconTemplate)
+new Icon("icon.popup.openproject",openProjectIconTemplate)
+new Icon("icon.popup.openrecent",openRecentIconTemplate)
+new Icon("icon.popup.saveproject",saveProjectIconTemplate)
+new Icon("icon.popup.saveas",saveAsIconTemplate)
 
 moduleReady("icons")

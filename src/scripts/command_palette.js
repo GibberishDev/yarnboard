@@ -56,6 +56,7 @@ function hideOnOutsideClick(event) {
 function populateActionsList() {
     let actionsList = Object.keys(registeredActions)
     for (let i=0;i<actionsList.length;i++) {
+        if (registeredActions[actionsList[i]].hidden) continue
         let id = actionsList[i]
         let element = document.createElement("div")
         element.classList.add("command-palette-item")

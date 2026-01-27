@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg width="32" height="32" version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <path d="m4 4h20l4 4v20h-24z" stroke="#fff" stroke-linecap="round" stroke-miterlimit="2" stroke-width="2" style="paint-order:stroke markers fill"/>
+  <circle cx="16" cy="16" r="4" fill="#fff" style="paint-order:stroke markers fill"/>
+  <path d="m9.5 3 12 1e-7v8h-12z" fill="#fff" style="paint-order:stroke markers fill"/>
+  <path d="m20 9h-3v-5h3z" style="paint-order:stroke markers fill"/>
+</svg>

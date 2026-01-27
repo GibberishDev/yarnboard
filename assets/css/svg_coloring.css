@@ -69,3 +69,43 @@
 .svg-new-project.highlight .svg-new-project.cross{stroke: var(--var-color-theme-accent-bright);fill: var(--var-color-theme-darkest);}
 .svg-new-project.highlight .svg-new-project.line{stroke: var(--var-color-theme-accent-bright);fill: none;}
 /* #endregion */
+
+/* #region Open project icon */
+.svg-open-project.rect {stroke: var(--var-color-theme-dark);fill: var(--var-color-theme-darkest);}
+.svg-open-project.shade {stroke: none;fill: var(--var-color-theme-dark);}
+.svg-open-project.highlight .svg-open-project.rect{stroke: var(--var-color-theme-accent-bright);}
+.svg-open-project.highlight .svg-open-project.shade{fill: var(--var-color-theme-accent-bright);}
+/* #endregion */
+
+/* #region Open recent icon */
+.svg-open-recent.rect {stroke: var(--var-color-theme-dark);fill: var(--var-color-theme-darkest);}
+.svg-open-recent.shade {stroke: none;fill: var(--var-color-theme-dark);}
+.svg-open-recent.clock {stroke: var(--var-color-theme-dark);fill: none;}
+.svg-open-recent.highlight .svg-open-recent.rect,
+.svg-open-recent.highlight .svg-open-recent.clock{stroke: var(--var-color-theme-accent-bright);}
+.svg-open-recent.highlight .svg-open-recent.shade{fill: var(--var-color-theme-accent-bright);}
+/* #endregion */
+
+/* #region Save project icon */
+.svg-save-project.rect,
+.svg-save-project.window {stroke: var(--var-color-theme-dark);fill: var(--var-color-theme-darkest);}
+.svg-save-project.circle,
+.svg-save-project.cover {stroke: none;fill: var(--var-color-theme-dark);}
+.svg-save-project.highlight .svg-save-project.rect {stroke: var(--var-color-theme-accent-bright);}
+.svg-save-project.highlight .svg-save-project.circle,
+.svg-save-project.highlight .svg-save-project.cover {fill: var(--var-color-theme-accent-bright);}
+/* #endregion */
+
+/* #region Save as icon */
+.svg-save-as.rect,
+.svg-save-as.pencil,
+.svg-save-as.window {stroke: var(--var-color-theme-dark);fill: var(--var-color-theme-darkest);}
+.svg-save-as.circle,
+.svg-save-as.cover,
+.svg-save-as.pencil-tip {stroke: none;fill: var(--var-color-theme-dark);}
+.svg-save-as.highlight .svg-save-as.rect,
+.svg-save-as.highlight .svg-save-as.pencil{stroke: var(--var-color-theme-accent-bright);}
+.svg-save-as.highlight .svg-save-as.circle,
+.svg-save-as.highlight .svg-save-as.cover,
+.svg-save-as.highlight .svg-save-as.pencil-tip {fill: var(--var-color-theme-accent-bright);}
+/* #endregion */

@@ -31,7 +31,7 @@ new BindAction("action.app.viewport.settings" , openSettings , [] , 'control+com
 new BindAction("action.app.viewport.command_palette" , () => {togglePalette(true)} , [] , 'control+p')
 new BindAction("action.app.general.close_app" , () => {window.yarnboardAPI.close()} , [] , 'alt+f4')
 new BindAction("action.app.theme.savepreset" , () => {alert("save_theme");window.yarnboardAPI.fixFocus()} , [] , '')
-new BindAction("action.app.viewport.main_popup" , (ev) => {openMainPopup(ev)} , [] , 'altleft', true, false)
+new BindAction("action.app.viewport.main_popup" , (ev) => {openMainPopup(ev)} , [] , 'altleft', true, false, true)
 
 
 if (navigator.userAgent.includes("yarnboard")) {

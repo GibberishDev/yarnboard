@@ -82,6 +82,7 @@
 }
 .popup-menu-divider {
     height: 0px;
+    min-width: 120px;
     border-bottom: 2px solid rgb(from var(--var-color-theme-dark) r g b / 0.5);
     margin-bottom: 4px;
     margin-top: 4px;

@@ -64,7 +64,24 @@
     "setting.theme.savepreset.description" : "Click on button below to save curently selected colors as a theme preset to use or share around",
     "setting.theme.savepreset.button" : "Save preset...",
     "setting.theme.picker" : "Theme presets",
-    "setting.theme.picker.description" : "Choose one of the theme color presets"
+    "setting.theme.picker.description" : "Choose one of the theme color presets",
+    "popup.title.file": "File",
+    "popup.title.edit": "Edit",
+    "popup.title.view": "View",
+    "popupmenu.title.newproject": "New project",
+    "popupmenu.title.open": "Open project",
+    "popupmenu.title.open_recent": "Open recent project",
+    "popupmenu.title.save": "Save project",
+    "popupmenu.title.save_as": "Save project as...",
+    "popupmenu.title.undo": "Undo",
+    "popupmenu.title.redo": "Redo",
+    "popupmenu.title.openundo_history_recent": "Undo history",
+    "popupmenu.title.settings": "Open settings",
+    "popupmenu.title.command_aplette": "Open command palette",
+    "popupmenu.title.close_viewport": "Close current viewport",
+    "popup.emptylist": "No elements to display >.<",
+    "action.viewport.view.reset": "Reset view",
+    "action.app.viewport.main_popup": "Yarnboard main popup. How tf ya see this ?????"
 
 
 }

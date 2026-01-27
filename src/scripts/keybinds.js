@@ -18,7 +18,7 @@ export function setContext(newContext) {
 }
 
 export class BindAction {
-  constructor(id, callable, context=[], defaultBind = '', realeaseKeyAction=false, holdAction=false) {
+  constructor(id, callable, context=[], defaultBind = '', realeaseKeyAction=false, holdAction=false, hidden=false) {
     this.id = id
     this.callable = callable
     this.context = context
@@ -26,9 +26,7 @@ export class BindAction {
     this.currentBind = defaultBind
     this.realeaseKeyAction = realeaseKeyAction
     this.holdAction = holdAction
-    if (this.currentBind == "") {
-      this.currentBind = this.defaultBind
-    }
+    this.hidden = hidden
     if (registeredActions[id] == undefined) {
       registeredActions[id] = {}
     }
@@ -43,6 +41,7 @@ export class BindAction {
       })
     }
     registeredActions[id]["currentBind"] = this.currentBind
+    registeredActions[id]["hidden"] = this.hidden
     updateBinds()
   }
   getBind() {

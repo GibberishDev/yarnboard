@@ -1,4 +1,5 @@
 import { moduleReady } from "./registers/ready.js"
+export var badCodes = []
 
 export const AVALIABLE_LANGUAGES = [ //HACK: either update each time new language added or read file system for lang files
     "en_us",
@@ -16,7 +17,10 @@ export function localizeString(code) {
         // console.warn("Localisation code does not exist in " + currentLanguage + ": " + code)
         return fallbackLanguage[code]
     } else {
-        // console.warn("Localisation code does not exist: " + code)
+        if (!badCodes.includes(code)) {
+            console.warn("Localisation code does not exist: " + code)
+            badCodes.push(code)
+        }
         return code
     }
 }
