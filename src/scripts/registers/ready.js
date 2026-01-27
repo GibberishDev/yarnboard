@@ -5,6 +5,7 @@ var modules = {
     "settings" : false,
     "themes":false,
     "popup":false,
+    "icons":false,
 }
 
 export function moduleReady(module) {

@@ -27,6 +27,7 @@
 	<script defer type="module" src="./src/scripts/project_viewport.js"></script>
 	<script defer type="module" src="./src/scripts/project_data.js"></script>
 	<script defer type="module" src="./src/scripts/popup_menu.js"></script>
+	<script defer type="module" src="./src/scripts/icon_manager.js"></script>
 	<script defer src="./src/scripts/custom_elements.js"></script>
 	<script defer src="./src/scripts/utils.js"></script>
 	<!-- endregion -->
@@ -36,44 +37,22 @@
 	<script type="module" src="./src/scripts/registers/settings.js"></script>
 	<script type="module" src="./src/scripts/registers/themes.js"></script>
 	<script type="module" src="./src/scripts/registers/popup_menus.js"></script>
+	<script type="module" src="./src/scripts/registers/icons.js"></script>
 	<!-- endregion -->
 </head>
 <body>
 	<div id="title-bar-container">
 		<div id="title-bar-icon-button" class="title-bar-button" onclick="{var event = new Event('action');event.action = 'action.app.viewport.main_popup';event.context = 'default';event.source=this;document.dispatchEvent(event)}">
-			<svg
-				id="app-icon"
-				viewBox="0 0 4.2333332 4.233333"
-				version="1.1"
-				xmlns="http://www.w3.org/2000/svg">
-				<defs id="defs">
-					<mask id="pin-mask">
-						<circle
-						style="fill:#ffffff;fill-opacity:1;stroke-width:0.105022" id="path1" cy="2.422591" cx="1.5875" r="1.5875" mask="url(#pin-mask)"
-						/>
-						<path
-						style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.065;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal" d="M 2.0057275,1.2701635 2.769547,1.9155934 2.2558772,2.1361457 1.8019323,3.0606952 1.4964045,2.8025232 0.77406254,3.5024271 1.3425802,2.6746921 1.0375827,2.4158927 1.8739674,1.8134307 Z" id="path3"
-						/>
-					</mask>
-				</defs>
-				<g
-					id="layer1"
-					transform="translate(0,-0.38124753)">
-					<circle
-					style="fill-opacity:1;stroke-width:0;"
-					id="path1"
-					cy="2.422591"
-					cx="1.5875"
-					r="1.5875"
-					mask="url(#pin-mask)"
-					/>
-					<path
-					style="fill-opacity:0;stroke-width:0.264583;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
-					d="M 1.1658202,3.8033854 C 1.4304036,3.9108719 2.4275535,4.106774 2.7863932,4.0018225 3.385479,3.8266049 3.4007325,2.8092253 3.8199218,2.8277343 4.4005486,2.8533715 3.7868489,3.646289 3.7868489,3.646289"
-					id="path2"
-					/>
-				</g>
-			</svg>
+			<script>
+				let parent = document.currentScript.parentNode
+				document.addEventListener("ready",()=>{
+					import("./src/scripts/icon_manager.js").then((script)=>{
+						icon = script.registeredIcons["icon.app.icon"].getElement(26,26,parent)
+						parent.innerHTML = ""
+						parent.appendChild(icon)
+					})
+				})
+			</script>
 		</div>
 		<!-- <div id="title-bar-menu-button" class="title-bar-button">
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26" height="26px" width="26px">
@@ -117,7 +96,6 @@
 			<div id="tab-bar">
 			</div>
 			<div id="viewport">
-				
 			</div>
 		</div>
 	</div>

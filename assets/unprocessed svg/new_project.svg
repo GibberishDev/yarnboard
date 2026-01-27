@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg width="32" height="32" version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+ <g stroke="#000" stroke-miterlimit="2">
+  <g fill="#fff">
+   <path d="m25 29v-26h-14l-4 4v22z" stroke-width="2" style="paint-order:stroke markers fill"/>
+   <rect x="16" y="7" width="6" height="6" stroke-width="2" style="paint-order:stroke markers fill"/>
+   <rect x="9" y="18" width="6" height="9" stroke-width="2" style="paint-order:stroke markers fill"/>
+  </g>
+  <path d="m19 8c-1 5-7 11-7 11" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width=".5" style="paint-order:stroke markers fill"/>
+  <path d="m7 7h4v-4z" fill="#fff" stroke-width="2" style="paint-order:stroke markers fill"/>
+  <path d="m31 5v2h-4v4h-2v-4h-4v-2h4v-4h2v4z" fill="#fff" stroke-width="2" style="paint-order:stroke markers fill"/>
+ </g>
+</svg>

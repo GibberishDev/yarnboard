@@ -53,3 +53,19 @@
 .svg-video-element.highlight .svg-video-element.plus {stroke: var(--var-color-theme-darkest);fill: var(--var-color-theme-accent-bright);}
 .svg-video-element.highlight .svg-video-element.triangle {stroke: var(--var-color-theme-accent-bright); fill: var(--var-color-theme-darkest);}
 /* #endregion */
+
+/* #region App icon */
+.svg-app-icon.yarn {stroke: none;fill: var(--var-color-theme-dark);}
+.svg-app-icon.strand {stroke: var(--var-color-theme-dark); fill: none;}
+.svg-app-icon.highlight .svg-app-icon.yarn {stroke: none;fill: var(--var-color-theme-accent-bright);}
+.svg-app-icon.highlight .svg-app-icon.strand {stroke: var(--var-color-theme-accent-bright); fill: none;}
+/* #endregion */
+
+/* #region New project icon */
+.svg-new-project.rect,
+.svg-new-project.cross{stroke: var(--var-color-theme-dark);fill: var(--var-color-theme-darkest);}
+.svg-new-project.line {stroke: var(--var-color-theme-dark);fill: none;}
+.svg-new-project.highlight .svg-new-project.rect,
+.svg-new-project.highlight .svg-new-project.cross{stroke: var(--var-color-theme-accent-bright);fill: var(--var-color-theme-darkest);}
+.svg-new-project.highlight .svg-new-project.line{stroke: var(--var-color-theme-accent-bright);fill: none;}
+/* #endregion */

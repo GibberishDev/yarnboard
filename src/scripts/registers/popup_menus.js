@@ -2,7 +2,7 @@ import { PopupMenu, PopupMenuItem, registeredPopups } from "../popup_menu.js";
 import { moduleReady } from "./ready.js";
 
 new PopupMenu("popup.app.file",[
-    new PopupMenuItem("action.app.project.new", "popupmenu.title.newproject"),
+    new PopupMenuItem("action.app.project.new", "popupmenu.title.newproject", "icon.popup.newproject"),
     new PopupMenuItem("action.app.project.open", "popupmenu.title.open"),
     new PopupMenuItem("action.app.project.open_recent", "popupmenu.title.open_recent"),
     new PopupMenuItem("action.app.project.save", "popupmenu.title.save"),
