@@ -8,6 +8,6 @@ function restartAnimations(element) {
 
 Array.prototype.remove = function(element) {
     if (this.includes(element)) {
-        this.splice(this.indexOf(element),1)
+        return this.splice(this.indexOf(element),1)
     }
 }
