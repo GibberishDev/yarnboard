@@ -99,6 +99,7 @@ export class PopupMenu {
         } else {
             element.addEventListener("click", (_ev)=>{entry.execute()})
         }
+        element.addEventListener("mouseover", (_ev)=>{setTimeout(()=>{checkHoveredEntry(this,element,entry)},250)})
         
     }
 
@@ -150,7 +151,15 @@ export class PopupMenu {
     }
 }
 
-function checkHoveredEntry(entryElement, entry) {
+function checkHoveredEntry(parentPopup, entryElement, entry) {
+    console.log("hover")
+    let elements = document.elementsFromPoint(mousePos.x, mousePos.y)
+    if (elements.includes(entryElement)) {
+        parentPopup.hideOtherSubmenus("")
+        if (entry.submenu) entry.showSubmenu(parentPopup, entryElement)
+        
+        
+    }
 
 }
 
