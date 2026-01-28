@@ -53,7 +53,7 @@ function openMainPopup(event) {
     } else {
         rect = event.source.getBoundingClientRect()
     }
-    registeredPopups["popup.app.main"].show({x:rect.x,y:2+rect.y+rect.height})
+    registeredPopups["popup.app.main"].toggle({x:rect.x,y:2+rect.y+rect.height})
 }
 
 moduleReady("actions")
