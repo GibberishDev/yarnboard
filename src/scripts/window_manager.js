@@ -173,8 +173,8 @@ export function createWindow(id) {
 function closeWindow(id) {
     if (openWindows.includes(id)) {
         // check if unsaved
-        if (selectedIdHistory.includes(id)) {selectedIdHistory.splice(selectedIdHistory.indexOf(id),1)}
-        openWindows.splice(openWindows.indexOf(id),1)
+        if (selectedIdHistory.includes(id)) {selectedIdHistory.remove(id)}
+        openWindows.remove(id)
         closeViewport(id)
         if (selectedID == id) {
             selectId(selectedIdHistory[selectedIdHistory.length - 1])
@@ -260,7 +260,7 @@ function closeViewport(id) {
 
 function selectId(id) {
     if (selectedIdHistory.includes(id)) {
-        selectedIdHistory.push(selectedIdHistory.splice(selectedIdHistory.indexOf(id), 1)[0])
+        selectedIdHistory.push(selectedIdHistory.remove(id)[0])
     } else {
         selectedIdHistory.push(id)
     }

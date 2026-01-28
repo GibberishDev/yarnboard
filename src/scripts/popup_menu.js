@@ -14,21 +14,26 @@ const menuEntryTemplate = `<div class="popup-menu-entry-icon"></div>
 <div class="popup-menu-entry-bind"></div>
 <div class="popup-menu-entry-dropdown"></div>`
 
+const popupButtons = [
+    "#title-bar-icon-button",
+]
+
 export class PopupMenu {
     constructor(id, PopupMenuItems = []) {
         this.id = id
         this.PopupMenuItems = PopupMenuItems
         this.childPopupElement = undefined
         this.parentPopupElement = undefined
+        this.popupElement = undefined
+
         registeredPopups[id] = this
     }
-    // FIXME: keep track of opened popup trees and close and open them accordingly. Rn its super easy to close parent when clicking child or opening several children at once. fkn rewrite this shiet
     
     getChildren() {
         var result = []
-        if (this.childPopupElement != undefined) {
-            result.push(this.childPopupElement)
-            let childrenOfChildren = registeredPopups[childPopupElement.dataset.popupId].getChildren()
+        if (this.childPopupElement) {
+            result.push(this.childPopupElement.dataset.id)
+            let childrenOfChildren = registeredPopups[this.childPopupElement.dataset.id].getChildren()
             childrenOfChildren.forEach((el)=>{result.push(el)})
         }
         return result
@@ -74,11 +79,13 @@ export class PopupMenu {
                 entryElement.querySelector(".popup-menu-entry-dropdown").innerText = ">"
             } else { // meaning its bind action
                 // TODO: exchange for getting bind elements with styling
-                let bindText = registeredActions[entry.action].currentBind
-                if (bindText != "") entryElement.querySelector(".popup-menu-entry-bind").innerText = bindText
+                if (Object.keys(registeredActions).includes(entry.action)) {
+                    let bindText = registeredActions[entry.action].currentBind
+                    if (bindText != "") entryElement.querySelector(".popup-menu-entry-bind").innerText = bindText
+                }
             }
 
-            this.bindEntryEvents(entryElement)
+            this.bindEntryEvents(entry, entryElement)
 
             menu.appendChild(entryElement)
         }}
@@ -86,12 +93,16 @@ export class PopupMenu {
         return element
     }
 
-    bindEntryEvents(element) {
-        return
+    bindEntryEvents(entry, element) {
+        if (entry.submenu) {
+            element.addEventListener("click", (_ev)=>{entry.showSubmenu(this, element)})
+        } else {
+            element.addEventListener("click", (_ev)=>{entry.execute()})
+        }
+        
     }
 
-
-    show(pos={x:0,y:0},isChild=false,parent=undefined) {
+    show(pos={x:0,y:0}) {
         if (openPopups.includes(this.id)) {
             return /*TODO: change to move and check for off screen cases*/
         } else {
@@ -101,118 +112,46 @@ export class PopupMenu {
             this.popupElement.style.left = pos.x + "px"
             this.popupElement.style.top = pos.y + "px"
         }
-
-
-
-
-        // if (this.popupElement != undefined) {
-        //     this.hide()
-        //     setTimeout(()=>{this.show(pos)}, 1)
-        //     return
-        // }
-        // let popupWrapper = document.createElement("div")
-        // popupWrapper.dataset.popupId = this.id
-        // popupWrapper.classList.add("popup-menu-wrapper")
-        // let menu = document.createElement("div")
-        // menu.classList.add("popup-menu")
-        // this.PopupMenuItems.forEach((entry)=>{
-        //     if (entry == "divider") {
-        //         let dividerElement = document.createElement("div")
-        //         dividerElement.classList.add("popup-menu-divider")
-        //         menu.appendChild(dividerElement)
-        //     } else {
-        //         let entryElement = document.createElement("div")
-        //         entryElement.classList.add("popup-menu-entry")
-        //         entryElement.innerHTML = menuEntryTemplate
-        //         if (entry.icon != "") {
-        //             let iconElement = registeredIcons[entry.icon].getElement(26,26,entryElement)
-        //             entryElement.querySelector(".popup-menu-entry-icon").appendChild(iconElement)
-        //         }
-        //         entryElement.querySelector(".popup-menu-entry-text").innerText = localizeString(entry.title)
-        //         if (entry.submenu) {
-        //             entry.parent = popupWrapper
-        //             entryElement.querySelector(".popup-menu-entry-dropdown").innerText = ">"
-        //             entryElement.addEventListener("mousedown", (ev)=>{entry.execute(entryElement, true, popupWrapper)})
-        //             entryElement.addEventListener("mouseover", (ev)=>{setTimeout(()=>{checkHoveredEntry(ev,entryElement, entry)},250)})
-        //             popupWrapper.addEventListener("mouseover", (ev)=>{setTimeout(()=>{checkUnhoveredEntry(ev,entryElement, entry, popupWrapper)},250)})
-        //         } else {
-        //             if (Object.keys(registeredActions).includes(entry.action) && registeredActions[entry.action].currentBind != "") {
-        //                 // TODO: exchange for fancy getter so its formatted
-        //                 entryElement.querySelector(".popup-menu-entry-bind").innerText = registeredActions[entry.action].currentBind
-        //             }
-        //             entryElement.addEventListener("mousedown", (ev)=>{
-        //                 entry.execute()
-        //                 document.body.removeChild(popupWrapper)
-        //                 this.popupElement = undefined
-        //             }, {once:true})
-        //         }
-        //         menu.appendChild(entryElement)
-        //     }
-        // })
-        // if (this.PopupMenuItems.length == 0) {
-        //     let entryElement = document.createElement("div")
-        //     entryElement.classList.add("popup-menu-entry")
-        //     entryElement.innerHTML = menuEntryTemplate
-        //     entryElement.querySelector(".popup-menu-entry-text").innerText = localizeString("popup.emptylist")
-        //     entryElement.addEventListener("mousedown", (ev)=>{
-        //         document.body.removeChild(popupWrapper)
-        //         this.popupElement = undefined
-        //     }, {once:true})
-        //     menu.appendChild(entryElement)
-        // }
-        // popupWrapper.appendChild(panel)
-        // popupWrapper.appendChild(menu)
-        // popupWrapper.style.left = String(pos.x) + "px"
-        // popupWrapper.style.top = String(pos.y) + "px"
-        // this.popupElement = popupWrapper
-        // if (isChild && parent!=undefined) {
-        //     parent.appendChild(this.popupElement)
-        // } else {
-        //     document.body.appendChild(this.popupElement)
-        // }
-        // setTimeout(
-        // ()=>{document.addEventListener("mousedown", (ev)=>{removeOnOutsideClick(ev, this)}, {once:true})},
-        // 1)
     }
 
     hide() {
-        if (Array.from(document.body.children).includes(this.popupElement)) document.body.removeChild(this.popupElement)
-        if (openPopups.includes(this.id)) openPopups.splice(openPopups.indexOf(this.id))
+        if (Array.from(document.body.children).includes(this.popupElement)) {
+            document.body.removeChild(this.popupElement)
+        }
+        this.childPopupElement = undefined
+        this.parentPopupElement = undefined
         this.popupElement = undefined
     }
 
     toggle(pos={x:0,y:0}) {
         if (openPopups.includes(this.id)) {
             this.hide()
+            openPopups.remove(this.id)
         } else {
             this.show(pos)
         }
     }
 
-}
+    setParent(parent) {
+        this.parentPopupElement = parent.popupElement
+        parent.childPopupElement = this.popupElement
+    }
 
-function checkHoveredEntry(ev, element, entry) {
-    let elements = document.elementsFromPoint(mousePos.x, mousePos.y)
-    if (elements.includes(element)) {
-        entry.execute(element, true)
-    } 
-}
-
-function checkUnhoveredEntry(ev, element, entry, menu) {
-    let elements = document.elementsFromPoint(mousePos.x, mousePos.y)
-    if (!elements.includes(element) && elements.includes(menu)) {
-        entry.execute(element, false)
+    hideOtherSubmenus(newSubmenuId) {
+        if (this.childPopupElement) {
+            if (newSubmenuId != this.childPopupElement.dataset.id) {
+                this.getChildren().forEach((childId)=>{
+                    registeredPopups[childId].hide()
+                    this.childPopupElement = undefined
+                    openPopups.remove(childId)
+                })
+            }
+        }
     }
 }
 
-function removeOnOutsideClick(event, popupMenu) {
-    if (popupMenu.popupElement == undefined) return
-    let elements = document.elementsFromPoint(event.clientX, event.clientY)
-    if (!elements.includes(popupMenu.popupElement)) {
-        popupMenu.hide()
-    } else {
-        document.addEventListener("mousedown", (ev)=>{removeOnOutsideClick(ev, popupMenu)}, {once:true})
-    }
+function checkHoveredEntry(entryElement, entry) {
+
 }
 
 export class PopupMenuItem {
@@ -225,34 +164,41 @@ export class PopupMenuItem {
         this.title = title
         this.icon = icon
     }
-    execute(element = undefined, show = true, parent=undefined) {
+    execute() {
+        executeAction(this.action)
+        hideAllMenuPopups()
+    }
+
+    showSubmenu(parentPopup, entryElement) {
         if (this.submenu) {
-            if (element != undefined) {
-                if (show) {
-                    let rect = element.getBoundingClientRect()
-                    registeredPopups[this.action.id].show( {x: 2 + rect.x + rect.width, y: rect.y - 2},true, parent)
-                } else {
-                    registeredPopups[this.action.id].hide()
-                }
-            }
-        } else {
-            executeAction(this.action)
+            let rect = entryElement.getBoundingClientRect()
+            parentPopup.hideOtherSubmenus(this.action.id)
+            registeredPopups[this.action.id].show({x: 4 + rect.x + rect.width, y: rect.y - 2})
+            registeredPopups[this.action.id].setParent(parentPopup)
         }
+
     }
 }
+
 
 document.addEventListener("mousemove", (event)=>{
     mousePos.x = event.clientX
     mousePos.y = event.clientY
 })
-
 document.addEventListener("mousedown", (event)=>{
     let elements = document.elementsFromPoint(event.clientX, event.clientY)
     for (let el of openPopups) {
         if (elements.includes(registeredPopups[el].popupElement)) return
     }
-    for (let el of openPopups) {
-        registeredPopups[el].hide()
+    for (let el of popupButtons) {
+        if (elements.includes(document.querySelector(el))) return
     }
-    openPopups = []
+    hideAllMenuPopups()
 })
+
+export function hideAllMenuPopups() {
+    openPopups.forEach((el)=>{
+        registeredPopups[el].hide()
+    })
+    openPopups = []
+}
