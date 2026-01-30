@@ -1,4 +1,5 @@
 import { setContext } from "./keybinds.js"
+import { registeredPopups } from "./popup_menu.js"
 
 var inputElement = undefined
 var gridElement = undefined
@@ -84,7 +85,9 @@ export function bindEvents(viewportElement) {
 
     inputElement.addEventListener("wheel", wheelEvent)
     inputElement.addEventListener("mousedown", mouseDownEvent)
+    inputElement.addEventListener("mouseup", mouseUpEvent)
     inputElement.addEventListener("mousemove", mouseMoveEvent)
+    inputElement.addEventListener("click", mouseClickEvent)
 
     setContext("board")
     // if viewport
@@ -93,7 +96,9 @@ export function bindEvents(viewportElement) {
 export function unbindEvents(viewportElement) {
     viewportElement.querySelector(".project-cover.project-input").removeEventListener("wheel", wheelEvent)
     viewportElement.querySelector(".project-cover.project-input").removeEventListener("mousedown", mouseDownEvent)
+    viewportElement.querySelector(".project-cover.project-input").removeEventListener("mouseup", mouseUpEvent)
     viewportElement.querySelector(".project-cover.project-input").removeEventListener("mousemove", mouseMoveEvent)
+    viewportElement.querySelector(".project-cover.project-input").removeEventListener("click", mouseClickEvent)
     setContext("default")
 }
 function wheelEvent(ev) {
@@ -108,6 +113,12 @@ function mouseDownEvent(ev) {
         grabbing = true
     }
 }
+function mouseUpEvent(ev) {
+    if (ev.which == 3) {
+        // test if clicked on any of the elements or connections or selection is active
+        registeredPopups["popup.project.addelement"].show({x:ev.clientX,y:ev.clientY})
+    }
+}
 function mouseMoveEvent(ev) {
     let rect = inputElement.getBoundingClientRect()
     viewport[viewportId].transforms.size.x = rect.width
@@ -120,6 +131,9 @@ function mouseMoveEvent(ev) {
     }
     updateViewport()
 
+}
+function mouseClickEvent(ev) {
+    // console.log(ev)
 }
 
 export function projectViewportId(id) {

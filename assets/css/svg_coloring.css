@@ -42,9 +42,9 @@
 
 /* #region Audio element icon */
 .svg-audio-element.plus {stroke: var(--var-color-theme-darkest);fill: var(--var-color-theme-dark);}
-.svg-audio-element.note {stroke: var(--var-color-theme-dark); fill: var(--var-color-theme-darkest);}
+.svg-audio-element.note {stroke: var(--var-color-theme-dark); fill: none;}
 .svg-audio-element.highlight .svg-audio-element.plus {stroke: var(--var-color-theme-darkest);fill: var(--var-color-theme-accent-bright);}
-.svg-audio-element.highlight .svg-audio-element.note {stroke: var(--var-color-theme-accent-bright); fill: var(--var-color-theme-darkest);}
+.svg-audio-element.highlight .svg-audio-element.note {stroke: var(--var-color-theme-accent-bright); fill: none;}
 /* #endregion */
 
 /* #region Video element icon */

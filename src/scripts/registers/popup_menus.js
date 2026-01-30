@@ -28,4 +28,13 @@ new PopupMenu("popup.app.main",[
     new PopupMenuItem(registeredPopups["popup.app.view"], "popup.title.view")
 ])
 
+new PopupMenu("popup.project.addelement", [
+    new PopupMenuItem("action.project.elementadd.picture", "popupmenu.title.element_add_picture", "icon.element.picture"),
+    new PopupMenuItem("action.project.elementadd.photo", "popupmenu.title.element_add_photo", "icon.element.photo"),
+    new PopupMenuItem("action.project.elementadd.text", "popupmenu.title.element_add_text", "icon.element.text"),
+    new PopupMenuItem("action.project.elementadd.note", "popupmenu.title.element_add_note", "icon.element.note"),
+    new PopupMenuItem("action.project.elementadd.video", "popupmenu.title.element_add_video", "icon.element.video"),
+    new PopupMenuItem("action.project.elementadd.aduio", "popupmenu.title.element_add_audio", "icon.element.audio"),
+])
+
 moduleReady("popup")

@@ -17,10 +17,10 @@ const appIconTemplate = `<svg class="svg-app-icon" width="26" height="26" viewBo
 </svg>
 `
 const AudioElementIconTemplate = `
-        <svg class="svg-audio-element icon" width="26" height="26" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                    <path class="svg-audio-element note"style="paint-order:stroke fill"d="m 14.5,12.5 v -11 h -11 v 9 c 0,0 -2,0 -2,2 0,2 2,2 2,2 0,0 2,0 2,-2 v -9 h 7 v 7 c 0,0 -2,0 -2,2 0,2 2,2 2,2 0,0 2,0 2,-2 z"/>
-                    <path class="svg-audio-element plus"style="paint-order:stroke fill"d="m 13.5,0.5 v 2 h 2 v 1 h -2 v 2 h -1 v -2 h -2 v -1 h 2 v -2 z"/>
-                </svg>`
+    <svg class="svg-audio-element icon" width="26" height="26" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <path class="svg-audio-element note" d="m1.3 8c0.56 0 0.5-1.5 1.1-1.5 0.56 0 0.56 4.5 1.1 4.5 0.56 0 0.56-7.5 1.1-7.5 0.56 0 0.56 9 1.1 9 0.62 0 0.48-11 1.1-10 0.48 0.012 0.56 12 1.1 12 0.32 0 0.61-12 1.1-12 0.56 0 0.63 10 1.1 10 0.27 0 0.56-9 1.1-9s0.55 7.5 1.1 7.5c0.32 0 0.56-4.5 1.1-4.5s0.65 1.5 1.1 1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width=".5" style="paint-order:stroke markers fill"/>
+        <path class="svg-audio-element plus" d="m16 2.5h-2v-2h-1v2h-2v1h2v2h1v-2h2z" style="paint-order:stroke markers fill"/>
+    </svg>`
 
 const PhotoElementIconTemplate = `<svg class="svg-photo-element icon" width="26" height="26" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg">
     <rect class="svg-photo-element outer-rect" style="paint-order:stroke fill"width="13"height="13"x="1.5"y="1.5"/>

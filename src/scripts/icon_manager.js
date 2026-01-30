@@ -9,17 +9,17 @@ export class Icon {
     getElement(width, height, highlightParentElement=undefined){
         let iconElement = document.createElement("div")
         iconElement.innerHTML = this.svg
-        iconElement = iconElement.firstChild
-        iconElement.dataset.id = this.id
-        iconElement.setAttribute("width", width);
-        iconElement.setAttribute("height", height);
+        let svgElement = iconElement.querySelector("svg")
+        svgElement.dataset.id = this.id
+        svgElement.setAttribute("width", width);
+        svgElement.setAttribute("height", height);
         if (highlightParentElement!=undefined) {
-            highlightParentElement.addEventListener("mouseover", ()=>{iconElement.classList.add("highlight")})
-            highlightParentElement.addEventListener("mouseout", ()=>{iconElement.classList.remove("highlight")})
+            highlightParentElement.addEventListener("mouseover", ()=>{svgElement.classList.add("highlight")})
+            highlightParentElement.addEventListener("mouseout", ()=>{svgElement.classList.remove("highlight")})
         } else {
-            iconElement.addEventListener("mouseover", ()=>{iconElement.classList.add("highlight")})
-            iconElement.addEventListener("mouseout", ()=>{iconElement.classList.remove("highlight")})
+            svgElement.addEventListener("mouseover", ()=>{svgElement.classList.add("highlight")})
+            svgElement.addEventListener("mouseout", ()=>{svgElement.classList.remove("highlight")})
         }
-        return iconElement
+        return svgElement
     }
 }

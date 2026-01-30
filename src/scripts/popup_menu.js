@@ -152,7 +152,6 @@ export class PopupMenu {
 }
 
 function checkHoveredEntry(parentPopup, entryElement, entry) {
-    console.log("hover")
     let elements = document.elementsFromPoint(mousePos.x, mousePos.y)
     if (elements.includes(entryElement)) {
         parentPopup.hideOtherSubmenus("")
