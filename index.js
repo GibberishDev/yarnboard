@@ -2,8 +2,12 @@ const { app, BrowserWindow, ipcMain, globalShortcut, Menu, MenuItem } = require(
 const fs = require('fs')
 const electron = require('electron')
 const PATH = require('path')
+const robot = require('@jitsi/robotjs')
+const { uIOhook, UiohookKey } = require('uiohook-napi')
 
 let mainWindow;
+
+var mouseTracking = false
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -33,7 +37,10 @@ function createWindow() {
   win.setPosition(position.x, position.y)
 //   win.maximize()
   win.loadFile('index.html')
-  .then(() => {disableDefaultSortcuts()})
+  .then(() => {
+    disableDefaultSortcuts()
+    win.webContents.send("setWindowBounds", win.getContentBounds())
+  })
   
 
   win.webContents.on( //Disable alt+f4 to enable proper project closing sequence and ability to rebind alt+f4
@@ -55,7 +62,26 @@ app.whenReady().then(() => {
   mainWindow = createWindow()
   disableDefaultSortcuts()
   mainWindow.webContents.toggleDevTools()
+
+  mainWindow.on('show', ()=>{
+    mainWindow.webContents.send("setWindowBounds", mainWindow.getContentBounds())
+  })
+  mainWindow.on('move', ()=>{
+    mainWindow.webContents.send("setWindowBounds", mainWindow.getContentBounds())
+  })
+  mainWindow.on('maximize', ()=>{
+    mainWindow.webContents.send("setWindowBounds", mainWindow.getContentBounds())
+  })
+  mainWindow.on('restore', ()=>{
+    mainWindow.webContents.send("setWindowBounds", mainWindow.getContentBounds())
+  })
+  mainWindow.on('unmaximize', ()=>{
+    mainWindow.webContents.send("setWindowBounds", mainWindow.getContentBounds())
+  })
+  uIOhook.start()
 })
+
+uIOhook.on('mousemove', (ev)=>{mainWindow.webContents.send("getMouseScreenPos", {x:ev.x,y:ev.y})})
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit()
@@ -124,7 +150,6 @@ function enableDefaultSortcuts() {
   globalShortcut.unregister("Alt+F4") //close app
   globalShortcut.unregister("CommandOrControl+M") //minimize app. Why is this even default bind on ctrl m wtf
 }
-// npm install @jitsi/robotjs for set mouse position
 
 // #region file saving
 
@@ -163,6 +188,12 @@ function loadAppSettings() {
   mainWindow.webContents.send("loadSettings", fs.readFileSync(PATH.join(userPath, "settings.json"),"utf-8"))
 }
 
+function setMousePosition(pos={x:0,y:0}) {
+  uIOhook.stop()
+  robot.moveMouse(pos.x,pos.y)
+  setTimeout(()=>uIOhook.start(), 10)
+}
+
 // #endregion
 
 // #region ipc event listeners
@@ -175,5 +206,9 @@ ipcMain.on('fixFocus', fixFocus)
 ipcMain.on('saveText', (_ev, data)=>saveTextFile(data[0], data[1], data[2]))
 ipcMain.on('saveAppSettings', (_ev, data)=>saveAppSettings(data))
 ipcMain.on('loadAppSettings', loadAppSettings)
+// ipcMain.on('startMouseTrack', ()=>{uIOhook.start();mouseTracking = true})
+// ipcMain.on('stopMouseTrack', ()=>{uIOhook.stop();mouseTracking = false})
+ipcMain.on('setMouseScreenPos', (_ev,pos)=>{setMousePosition(pos)})
+
 
 // #endregion

@@ -1,5 +1,6 @@
 import { setContext } from "./keybinds.js"
 import { registeredPopups } from "./popup_menu.js"
+import { windowBounds, mousePos } from "./electron_info.js"
 
 var inputElement = undefined
 var gridElement = undefined
@@ -8,6 +9,7 @@ var statsPos = undefined
 var statsScale = undefined
 var grabbing = false
 var viewportId = ""
+var mouseLock = true
 
 var viewport = {}
 
@@ -31,6 +33,7 @@ const transforms = {
 document.addEventListener("mouseup", (ev) => {
     if (ev.button == 1) {
         grabbing = false
+        yarnboardAPI.stopMouseTrack()
         // gridElement.style.transitionProperty = "background-image, background-position, background-size"
     }
 })
@@ -111,6 +114,7 @@ function wheelEvent(ev) {
 function mouseDownEvent(ev) {
     if (ev.button == 1) {
         grabbing = true
+        yarnboardAPI.startMouseTrack()
     }
 }
 function mouseUpEvent(ev) {
@@ -120,17 +124,8 @@ function mouseUpEvent(ev) {
     }
 }
 function mouseMoveEvent(ev) {
-    let rect = inputElement.getBoundingClientRect()
-    viewport[viewportId].transforms.size.x = rect.width
-    viewport[viewportId].transforms.size.y = rect.height
     viewport[viewportId].transforms.mouseOffset.x = ev.offsetX
     viewport[viewportId].transforms.mouseOffset.y = ev.offsetY
-    if (grabbing) {
-        viewport[viewportId].transforms.offset.x += ev.movementX
-        viewport[viewportId].transforms.offset.y += ev.movementY
-    }
-    updateViewport()
-
 }
 function mouseClickEvent(ev) {
     // console.log(ev)
@@ -162,4 +157,47 @@ export function getScreenRect() {
 export function resetView() {
     viewport[viewportId].transforms = structuredClone(transforms)
     updateViewport()
+}
+
+document.addEventListener("appMouseMove", appMouseMoveEvent)
+function appMouseMoveEvent() {
+    if (grabbing) {
+        let rect = inputElement.getBoundingClientRect()
+        var newMousePos = { x: mousePos.x, y: mousePos.y, mvX: mousePos.mvX, mvY: mousePos.mvY}
+        let newRect = {
+            x:rect.x + windowBounds.x, //left
+            x2:rect.x + rect.width + windowBounds.x, //right
+            y:rect.y + windowBounds.y, //top
+            y2:rect.y + rect.height + windowBounds.y //bottom
+        }
+        if (newRect.x > mousePos.x) {
+            newMousePos.mvX = newRect.x - mousePos.x
+            newMousePos.x = newRect.x2 - newMousePos.mvX - 2
+            yarnboardAPI.setMouseScreenPos({x:newMousePos.x,y:newMousePos.y})
+        } else if (newRect.x2 < mousePos.x) {
+            newMousePos.mvX = newRect.x2 - mousePos.x
+            newMousePos.x = newRect.x - newMousePos.mvX + 2
+            yarnboardAPI.setMouseScreenPos({x:newMousePos.x,y:newMousePos.y})
+        }
+        if (newRect.y > mousePos.y) {
+            newMousePos.mvY = newRect.y - mousePos.y
+            newMousePos.y = newRect.y2 - newMousePos.mvY - 2
+            yarnboardAPI.setMouseScreenPos({x:newMousePos.x,y:newMousePos.y})
+        } else if (newRect.y2 < mousePos.y) {
+            newMousePos.mvY = newRect.y2 - mousePos.y
+            newMousePos.y = newRect.y - newMousePos.mvY + 2
+            yarnboardAPI.setMouseScreenPos({x:newMousePos.x,y:newMousePos.y})
+        }
+            mousePos.x = newMousePos.x
+            mousePos.y = newMousePos.y
+            mousePos.mvX = newMousePos.mvX
+            mousePos.mvY = newMousePos.mvY
+        viewport[viewportId].transforms.size.x = rect.width
+        viewport[viewportId].transforms.size.y = rect.height
+        // viewport[viewportId].transforms.mouseOffset.x = ev.offsetX
+        // viewport[viewportId].transforms.mouseOffset.y = ev.offsetY
+        viewport[viewportId].transforms.offset.x += mousePos.mvX
+        viewport[viewportId].transforms.offset.y += mousePos.mvY
+        updateViewport()
+    }
 }
