@@ -78,7 +78,6 @@ app.whenReady().then(() => {
   mainWindow.on('unmaximize', ()=>{
     mainWindow.webContents.send("setWindowBounds", mainWindow.getContentBounds())
   })
-  uIOhook.start()
 })
 
 uIOhook.on('mousemove', (ev)=>{mainWindow.webContents.send("getMouseScreenPos", {x:ev.x,y:ev.y})})
@@ -189,9 +188,14 @@ function loadAppSettings() {
 }
 
 function setMousePosition(pos={x:0,y:0}) {
-  uIOhook.stop()
+  if (mouseTracking) {
+    uIOhook.stop()
+  }
   robot.moveMouse(pos.x,pos.y)
-  setTimeout(()=>uIOhook.start(), 10)
+  if (mouseTracking) {
+    uIOhook.start()
+  mainWindow.webContents.send('setMouseTrackingJustStarted')
+  }
 }
 
 // #endregion
@@ -206,9 +210,19 @@ ipcMain.on('fixFocus', fixFocus)
 ipcMain.on('saveText', (_ev, data)=>saveTextFile(data[0], data[1], data[2]))
 ipcMain.on('saveAppSettings', (_ev, data)=>saveAppSettings(data))
 ipcMain.on('loadAppSettings', loadAppSettings)
-// ipcMain.on('startMouseTrack', ()=>{uIOhook.start();mouseTracking = true})
-// ipcMain.on('stopMouseTrack', ()=>{uIOhook.stop();mouseTracking = false})
+ipcMain.on('startMouseTrack', startMouseTracking)
+ipcMain.on('stopMouseTrack', stopMouseTracking)
 ipcMain.on('setMouseScreenPos', (_ev,pos)=>{setMousePosition(pos)})
 
 
 // #endregion
+
+function startMouseTracking() {
+  uIOhook.start()
+  mouseTracking = true
+  mainWindow.webContents.send('setMouseTrackingJustStarted', true)
+}
+function stopMouseTracking() {
+  uIOhook.stop()
+  mouseTracking = false
+}

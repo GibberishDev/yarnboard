@@ -170,32 +170,37 @@ function appMouseMoveEvent() {
             y:rect.y + windowBounds.y, //top
             y2:rect.y + rect.height + windowBounds.y //bottom
         }
+        var wrapped = false
         if (newRect.x > mousePos.x) {
-            newMousePos.mvX = newRect.x - mousePos.x
-            newMousePos.x = newRect.x2 - newMousePos.mvX - 2
+            newMousePos.mvX = newRect.x - mousePos.x - 2
+            newMousePos.x = newRect.x2 - 10
             yarnboardAPI.setMouseScreenPos({x:newMousePos.x,y:newMousePos.y})
+            wrapped = true
         } else if (newRect.x2 < mousePos.x) {
-            newMousePos.mvX = newRect.x2 - mousePos.x
-            newMousePos.x = newRect.x - newMousePos.mvX + 2
+            newMousePos.mvX = newRect.x2 - mousePos.x + 2
+            newMousePos.x = newRect.x + 10
             yarnboardAPI.setMouseScreenPos({x:newMousePos.x,y:newMousePos.y})
+            wrapped = true
         }
         if (newRect.y > mousePos.y) {
-            newMousePos.mvY = newRect.y - mousePos.y
-            newMousePos.y = newRect.y2 - newMousePos.mvY - 2
+            newMousePos.mvY = newRect.y - mousePos.y - 2
+            newMousePos.y = newRect.y2 - 10
             yarnboardAPI.setMouseScreenPos({x:newMousePos.x,y:newMousePos.y})
+            wrapped = true
         } else if (newRect.y2 < mousePos.y) {
-            newMousePos.mvY = newRect.y2 - mousePos.y
-            newMousePos.y = newRect.y - newMousePos.mvY + 2
+            newMousePos.mvY = newRect.y2 - mousePos.y + 2
+            newMousePos.y = newRect.y + 10
             yarnboardAPI.setMouseScreenPos({x:newMousePos.x,y:newMousePos.y})
+            wrapped = true
         }
+        if (wrapped) {
             mousePos.x = newMousePos.x
             mousePos.y = newMousePos.y
             mousePos.mvX = newMousePos.mvX
             mousePos.mvY = newMousePos.mvY
+        }
         viewport[viewportId].transforms.size.x = rect.width
         viewport[viewportId].transforms.size.y = rect.height
-        // viewport[viewportId].transforms.mouseOffset.x = ev.offsetX
-        // viewport[viewportId].transforms.mouseOffset.y = ev.offsetY
         viewport[viewportId].transforms.offset.x += mousePos.mvX
         viewport[viewportId].transforms.offset.y += mousePos.mvY
         updateViewport()
