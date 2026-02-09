@@ -12,7 +12,7 @@
     "make": "electron-forge make"
   },
   "devDependencies": {
-    "@electron-forge/cli": "^7.6.1",
+    "@electron-forge/cli": "^7.10.2",
     "@electron-forge/maker-deb": "^7.10.2",
     "@electron-forge/maker-rpm": "^7.10.2",
     "@electron-forge/maker-squirrel": "^7.10.2",
@@ -24,8 +24,6 @@
   },
   "dependencies": {
     "@electron/build-tools": "^2.1.1",
-    "@jitsi/robotjs": "^0.6.21",
-    "electron-squirrel-startup": "^1.0.1",
-    "uiohook-napi": "^1.5.4"
+    "electron-squirrel-startup": "^1.0.1"
   }
 }

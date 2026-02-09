@@ -10,14 +10,9 @@ contextBridge.exposeInMainWorld('yarnboardAPI', {
     saveText : (path, name, text) => ipcRenderer.send('saveText',[path, name, text]),
     saveAppSettings: (data) => ipcRenderer.send('saveAppSettings', data),
     loadAppSettings: () => ipcRenderer.send('loadAppSettings'),
-    startMouseTrack: () => ipcRenderer.send('startMouseTrack'),
-    stopMouseTrack: () => ipcRenderer.send('stopMouseTrack'),
-    setMouseScreenPos : (pos) => ipcRenderer.send('setMouseScreenPos', pos),
 
     bindAccelerator : (accelerator) => ipcRenderer.on('bindAccelerator', accelerator),
     loadSettings : (settingsObject) => ipcRenderer.on('loadSettings', settingsObject),
-    setWindowBounds : (bounds) => ipcRenderer.on('setWindowBounds', bounds),
-    getMouseScreenPos : (pos) => ipcRenderer.on('getMouseScreenPos', pos),
 })
 
 
