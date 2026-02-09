@@ -18,7 +18,6 @@ contextBridge.exposeInMainWorld('yarnboardAPI', {
     loadSettings : (settingsObject) => ipcRenderer.on('loadSettings', settingsObject),
     setWindowBounds : (bounds) => ipcRenderer.on('setWindowBounds', bounds),
     getMouseScreenPos : (pos) => ipcRenderer.on('getMouseScreenPos', pos),
-    setMouseTrackingJustStarted : (data) => ipcRenderer.on('setMouseTrackingJustStarted',data),
 })
 
 
