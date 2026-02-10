@@ -31,6 +31,7 @@ const transforms = {
 document.addEventListener("mouseup", (ev) => {
     if (ev.button == 1) {
         grabbing = false
+        document.exitPointerLock()
         // gridElement.style.transitionProperty = "background-image, background-position, background-size"
     }
 })
@@ -111,6 +112,7 @@ function wheelEvent(ev) {
 function mouseDownEvent(ev) {
     if (ev.button == 1) {
         grabbing = true
+        inputElement.requestPointerLock()
     }
 }
 function mouseUpEvent(ev) {
