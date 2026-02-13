@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "@electron/build-tools": "^2.1.1",
+    "@jitsi/robotjs": "^0.6.21",
     "electron-squirrel-startup": "^1.0.1"
   }
 }
