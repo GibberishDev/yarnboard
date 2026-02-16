@@ -108,6 +108,15 @@ const saveAsIconTemplate = `<svg class="svg-save-as" width="128" height="128" ve
   <path class="svg-save-as pencil-tip" d="m18 31 1.5-2.5 1 1z" style="paint-order:stroke markers fill"/>
 </svg>`
 
+const viewPanIconTemplate = `<svg width="48" height="48" version="1.1" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+ <g fill="#fff" stroke="#000" stroke-linecap="square" stroke-miterlimit="2" stroke-width=".5">
+  <path d="m9 32-8-8 8-8z" style="paint-order:stroke markers fill"/>
+  <path d="m16 10 8-8 8 8z" style="paint-order:stroke markers fill"/>
+  <path d="m38 16 8 8-8 7z" style="paint-order:stroke markers fill"/>
+  <path d="m32 38-8 8-8-8z" style="paint-order:stroke markers fill"/>
+  <path d="m24 16c-6.9 0-12 8-12 8s4.9 8 12 8c6.9 0 12-8 12-8s-4.9-8-12-8zm0.15 4a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4z" stroke-width=".5" style="paint-order:stroke markers fill"/>
+ </g>
+</svg>`
 // #endregion
 
 new Icon("icon.app.icon",appIconTemplate)
@@ -122,5 +131,6 @@ new Icon("icon.popup.openproject",openProjectIconTemplate)
 new Icon("icon.popup.openrecent",openRecentIconTemplate)
 new Icon("icon.popup.saveproject",saveProjectIconTemplate)
 new Icon("icon.popup.saveas",saveAsIconTemplate)
+new Icon("icon.pointer.view.pan",viewPanIconTemplate)
 
 moduleReady("icons")

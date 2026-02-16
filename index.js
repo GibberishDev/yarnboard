@@ -2,6 +2,7 @@ const { app, BrowserWindow, ipcMain, globalShortcut, Menu, MenuItem } = require(
 const fs = require('fs')
 const electron = require('electron')
 const PATH = require('path')
+const robot = require('@jitsi/robotjs')
 
 let mainWindow;
 
@@ -124,7 +125,6 @@ function enableDefaultSortcuts() {
   globalShortcut.unregister("Alt+F4") //close app
   globalShortcut.unregister("CommandOrControl+M") //minimize app. Why is this even default bind on ctrl m wtf
 }
-// npm install @jitsi/robotjs for set mouse position
 
 // #region file saving
 
@@ -163,6 +163,11 @@ function loadAppSettings() {
   mainWindow.webContents.send("loadSettings", fs.readFileSync(PATH.join(userPath, "settings.json"),"utf-8"))
 }
 
+function setMousePosition(pos={x:0,y:0}) {
+  let winRect = mainWindow.getContentBounds()
+  robot.moveMouse(pos.x + winRect.x,pos.y + winRect.y)
+}
+
 // #endregion
 
 // #region ipc event listeners
@@ -175,5 +180,6 @@ ipcMain.on('fixFocus', fixFocus)
 ipcMain.on('saveText', (_ev, data)=>saveTextFile(data[0], data[1], data[2]))
 ipcMain.on('saveAppSettings', (_ev, data)=>saveAppSettings(data))
 ipcMain.on('loadAppSettings', loadAppSettings)
+ipcMain.on('setMouseScreenPos', (_ev,pos)=>{setMousePosition(pos)})
 
 // #endregion

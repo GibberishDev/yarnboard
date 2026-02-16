@@ -1,9 +1,11 @@
 import { setContext } from "./keybinds.js"
 import { registeredPopups } from "./popup_menu.js"
+import { registeredIcons } from "./icon_manager.js"
 
 var inputElement = undefined
 var gridElement = undefined
 var elementsElement = undefined
+var pointerElement = undefined
 var statsPos = undefined
 var statsScale = undefined
 var grabbing = false
@@ -30,8 +32,12 @@ const transforms = {
 
 document.addEventListener("mouseup", (ev) => {
     if (ev.button == 1) {
+        if (grabbing) {
+            SetCursorPos()
+            document.exitPointerLock()
+            pointerElement.innerHTML = ""
+        }
         grabbing = false
-        document.exitPointerLock()
         // gridElement.style.transitionProperty = "background-image, background-position, background-size"
     }
 })
@@ -59,7 +65,7 @@ function wrapCellSize(scale, min = 1, max = 5) {
 }
 
 function zoom(ev, factor) {
-    if ((!(viewport[viewportId].transforms.zoomLevel < 50) && factor > 0) || (!(viewport[viewportId].transforms.zoomLevel > -50) && factor < 0)) {
+    if ((!(viewport[viewportId].transforms.zoomLevel < 75) && factor > 0) || (!(viewport[viewportId].transforms.zoomLevel > -50) && factor < 0)) {
         return
     }
     viewport[viewportId].transforms.zoomLevel += factor
@@ -83,6 +89,7 @@ export function bindEvents(viewportElement) {
     elementsElement = viewportElement.querySelector(".project-cover.project-elements")
     statsPos = viewportElement.querySelector(".viewport-position")
     statsScale = viewportElement.querySelector(".viewport-scale")
+    pointerElement = viewportElement.querySelector(".viewport-pointer-image")
 
     inputElement.addEventListener("wheel", wheelEvent)
     inputElement.addEventListener("mousedown", mouseDownEvent)
@@ -112,7 +119,10 @@ function wheelEvent(ev) {
 function mouseDownEvent(ev) {
     if (ev.button == 1) {
         grabbing = true
+        totalPointerMovement = {x:0,y:0}
+        startingPointerPosition = {x:ev.layerX,y:ev.layerY}
         inputElement.requestPointerLock()
+        pointerElement.appendChild(registeredIcons["icon.pointer.view.pan"].getElement(30,30,pointerElement))
     }
 }
 function mouseUpEvent(ev) {
@@ -128,8 +138,7 @@ function mouseMoveEvent(ev) {
     viewport[viewportId].transforms.mouseOffset.x = ev.offsetX
     viewport[viewportId].transforms.mouseOffset.y = ev.offsetY
     if (grabbing) {
-        viewport[viewportId].transforms.offset.x += ev.movementX
-        viewport[viewportId].transforms.offset.y += ev.movementY
+        processLockedPointer(ev)
     }
     updateViewport()
 
@@ -165,3 +174,62 @@ export function resetView() {
     viewport[viewportId].transforms = structuredClone(transforms)
     updateViewport()
 }
+
+
+
+// #region: locked pointer tracking
+
+var totalPointerMovement = {x:0,y:0}
+var startingPointerPosition = {x:0,y:0}
+
+function processLockedPointer(event) {
+    viewport[viewportId].transforms.offset.x += event.movementX
+    viewport[viewportId].transforms.offset.y += event.movementY
+    totalPointerMovement.x += event.movementX
+    totalPointerMovement.y += event.movementY
+    moveLockedPointerImage()
+}
+
+function moveLockedPointerImage() {
+    var newPos = {
+        x: startingPointerPosition.x + totalPointerMovement.x,
+        y: startingPointerPosition.y + totalPointerMovement.y
+    }
+    let projectRect = inputElement.getBoundingClientRect()
+    if (newPos.x > (projectRect.width)) {
+        newPos.x = newPos.x%projectRect.width
+    } else if (newPos.x < 0) {
+        newPos.x = projectRect.width+(newPos.x%projectRect.width)
+    }
+    if (newPos.y > (projectRect.height)) {
+        newPos.y = newPos.y%projectRect.height
+    } else if (newPos.y < 0) {
+        newPos.y = projectRect.height+(newPos.y%projectRect.height)
+    }
+    pointerElement.style.left = (newPos.x - 15)+"px"
+    pointerElement.style.top = (newPos.y - 15)+"px"
+}
+
+function SetCursorPos() {
+    var newPos = {
+        x: startingPointerPosition.x + totalPointerMovement.x,
+        y: startingPointerPosition.y + totalPointerMovement.y
+    }
+    let projectRect = inputElement.getBoundingClientRect()
+    if (newPos.x > (projectRect.width)) {
+        newPos.x = newPos.x%projectRect.width
+    } else if (newPos.x < 0) {
+        newPos.x = projectRect.width+(newPos.x%projectRect.width)
+    }
+    if (newPos.y > (projectRect.height)) {
+        newPos.y = newPos.y%projectRect.height
+    } else if (newPos.y < 0) {
+        newPos.y = projectRect.height+(newPos.y%projectRect.height)
+    }
+    window.yarnboardAPI.setMouseScreenPos({
+        x:newPos.x+projectRect.x,
+        y:newPos.y+projectRect.y
+    })
+}
+
+//  #endregion

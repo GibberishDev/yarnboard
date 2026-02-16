@@ -2,12 +2,10 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 <svg width="48" height="48" version="1.1" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
  <g fill="#fff" stroke="#000" stroke-linecap="square" stroke-miterlimit="2" stroke-width=".5">
-  <g>
-   <path d="m18 22c-0.5 0.5-1.5 2-1.5 2s1 1.5 1.5 2h-9v6l-8-8 8-8v6z" style="paint-order:stroke markers fill"/>
-   <path d="m26 20s-0.5-0.5-2-0.5-2 0.5-2 0.5v-10h-6l8-8 8 8h-6z" style="paint-order:stroke markers fill"/>
-   <path d="m30 26c0.5-0.5 1.5-2 1.5-2s-1-1.5-1.5-2h8v-6l8 8-8 7v-5z" style="paint-order:stroke markers fill"/>
-   <path d="m22 28s0.5 0.5 2 0.5 2-0.5 2-0.5v10h6l-8 8-8-8h6z" style="paint-order:stroke markers fill"/>
-  </g>
-  <path d="m24 20c-3.5 0-6 4-6 4s2.5 4 6 4 6-4 6-4-2.5-4-6-4zm0 2c0.94 0 2 1.1 2 2s-1.1 2-2 2-2-1.1-2-2 1.1-2 2-2z" style="paint-order:stroke markers fill"/>
+  <path d="m9 32-8-8 8-8z" style="paint-order:stroke markers fill"/>
+  <path d="m16 10 8-8 8 8z" style="paint-order:stroke markers fill"/>
+  <path d="m38 16 8 8-8 7z" style="paint-order:stroke markers fill"/>
+  <path d="m32 38-8 8-8-8z" style="paint-order:stroke markers fill"/>
+  <path d="m24 16c-6.9 0-12 8-12 8s4.9 8 12 8c6.9 0 12-8 12-8s-4.9-8-12-8zm0.15 4a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4z" stroke-width=".5" style="paint-order:stroke markers fill"/>
  </g>
 </svg>

@@ -199,6 +199,7 @@ const projectTemplate = `
             <div class="viewport-position"></div>
             <div class="viewport-scale"></div>
         </div>
+        <div class="viewport-pointer-image"></div>
     </div>
 </div>`
 

@@ -44,7 +44,6 @@
     z-index: 3;
     /* background: red; */
     opacity: 0.1;
-    cursor: grabbing;
 }
 
 .project-hud {
@@ -64,4 +63,14 @@
     line-height: 18px;
     opacity: 0.5;
     width: 300px;
+}
+
+.viewport-pointer-image {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    z-index: 5;
+    top: -15px;
+    left: -15px;
+    transition-property: none;
 }
