@@ -1,0 +1,15 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "yarnboard",
+		"workbench.settings.showAISearchToggle": false,
+		"chat.disableAIFeatures": true,
+		"gitlens.ai.enabled": false,
+		"editor.bracketPairColorization.independentColorPoolPerBracketType": true,
+		"liveServer.settings.CustomBrowser": "microsoft-edge"
+	}
+}
