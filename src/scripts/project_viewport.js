@@ -1,4 +1,4 @@
-import { setContext } from "./keybinds.js"
+import { releaseContext, setContext } from "./keybinds.js"
 import { registeredPopups } from "./popup_menu.js"
 import { registeredIcons } from "./icon_manager.js"
 
@@ -11,12 +11,18 @@ var statsScale = undefined
 var grabbing = false
 var viewportId = ""
 
+export var viewPanningMult = {x:1,y:1}
+
 var viewport = {}
 
 const transforms = {
     zoomLevel: 0,
     scale : 1.0,
     offset : {
+        x: 0,
+        y: 0
+    },
+    oldOffset: {
         x: 0,
         y: 0
     },
@@ -33,9 +39,13 @@ const transforms = {
 document.addEventListener("mouseup", (ev) => {
     if (ev.button == 1) {
         if (grabbing) {
+            releaseContext()
             SetCursorPos()
             document.exitPointerLock()
             pointerElement.innerHTML = ""
+            viewPanningMult = {x:1,y:1}
+            viewport[viewportId].transforms.oldOffset.x = viewport[viewportId].transforms.offset.x
+            viewport[viewportId].transforms.oldOffset.y = viewport[viewportId].transforms.offset.y
         }
         grabbing = false
         // gridElement.style.transitionProperty = "background-image, background-position, background-size"
@@ -46,7 +56,9 @@ function updateViewport() {
     // updateBackground()
     updateElements()
     updateGrid()
-    statsPos.textContent = "X:" + parseInt((-viewport[viewportId].transforms.offset.x + viewport[viewportId].transforms.mouseOffset.x) * 1/viewport[viewportId].transforms.scale) + " Y:" + parseInt((-viewport[viewportId].transforms.offset.y + viewport[viewportId].transforms.mouseOffset.y) * 1/viewport[viewportId].transforms.scale)
+    if (!grabbing) {
+        statsPos.textContent = "X:" + parseInt((-viewport[viewportId].transforms.offset.x + viewport[viewportId].transforms.mouseOffset.x) * 1/viewport[viewportId].transforms.scale) + " Y:" + parseInt((-viewport[viewportId].transforms.offset.y + viewport[viewportId].transforms.mouseOffset.y) * 1/viewport[viewportId].transforms.scale)
+    }
     statsScale.textContent = "zoom: " + (viewport[viewportId].transforms.scale * 100).toFixed(3) + "%"
 }
 
@@ -119,12 +131,19 @@ function wheelEvent(ev) {
 function mouseDownEvent(ev) {
     if (ev.button == 1) {
         grabbing = true
+        setContext("view_panning")
         totalPointerMovement = {x:0,y:0}
         startingPointerPosition = {x:ev.layerX,y:ev.layerY}
         inputElement.requestPointerLock()
+        moveLockedPointerImage()
         pointerElement.appendChild(registeredIcons["icon.pointer.view.pan"].getElement(30,30,pointerElement))
     }
 }
+
+document.addEventListener("pointerlockchange", (_ev) => {
+    if (!document.pointerLockElement) cancelViewPanning()
+})
+
 function mouseUpEvent(ev) {
     if (ev.which == 3) {
         // test if clicked on any of the elements or connections or selection is active
@@ -183,10 +202,10 @@ var totalPointerMovement = {x:0,y:0}
 var startingPointerPosition = {x:0,y:0}
 
 function processLockedPointer(event) {
-    viewport[viewportId].transforms.offset.x += event.movementX
-    viewport[viewportId].transforms.offset.y += event.movementY
     totalPointerMovement.x += event.movementX
     totalPointerMovement.y += event.movementY
+    viewport[viewportId].transforms.offset.x = viewport[viewportId].transforms.oldOffset.x + totalPointerMovement.x * viewPanningMult.x
+    viewport[viewportId].transforms.offset.y = viewport[viewportId].transforms.oldOffset.y + totalPointerMovement.y * viewPanningMult.y
     moveLockedPointerImage()
 }
 
@@ -208,6 +227,7 @@ function moveLockedPointerImage() {
     }
     pointerElement.style.left = (newPos.x - 15)+"px"
     pointerElement.style.top = (newPos.y - 15)+"px"
+    statsPos.textContent = "X:" + parseInt(totalPointerMovement.x * viewPanningMult.x) + " Y:" + parseInt(totalPointerMovement.y * viewPanningMult.y)
 }
 
 function SetCursorPos() {
@@ -232,4 +252,28 @@ function SetCursorPos() {
     })
 }
 
+export function lockPanAxis(xAxis = true) {
+    if (xAxis) {
+        viewPanningMult.y == 0 ? viewPanningMult.y = 1 : viewPanningMult.y = 0
+        viewPanningMult.x = 1
+    } else {
+        viewPanningMult.x == 0 ? viewPanningMult.x = 1 : viewPanningMult.x = 0
+        viewPanningMult.y = 1
+    }
+    viewport[viewportId].transforms.offset.x = viewport[viewportId].transforms.oldOffset.x + totalPointerMovement.x * viewPanningMult.x
+    viewport[viewportId].transforms.offset.y = viewport[viewportId].transforms.oldOffset.y + totalPointerMovement.y * viewPanningMult.y
+    statsPos.textContent = "X:" + parseInt(totalPointerMovement.x * viewPanningMult.x) + " Y:" + parseInt(totalPointerMovement.y * viewPanningMult.y)
+    updateViewport()
+}
+export function cancelViewPanning() {
+    grabbing = false
+    SetCursorPos()
+    totalPointerMovement = {x:0,y:0}
+    releaseContext()
+    pointerElement.innerHTML = ""
+    viewPanningMult = {x:1,y:1}
+    viewport[viewportId].transforms.offset.x = viewport[viewportId].transforms.oldOffset.x
+    viewport[viewportId].transforms.offset.y = viewport[viewportId].transforms.oldOffset.y
+    updateViewport()
+}
 //  #endregion

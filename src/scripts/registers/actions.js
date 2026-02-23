@@ -1,9 +1,10 @@
-import {BindAction} from "../keybinds.js"
-import {togglePalette} from "../command_palette.js"
-import {moduleReady} from "./ready.js"
-import {openSettings, uuidv4, createWindow, closeCurrent} from "../window_manager.js"
+import { BindAction} from "../keybinds.js"
+import { togglePalette} from "../command_palette.js"
+import { moduleReady} from "./ready.js"
+import { openSettings, uuidv4, createWindow, closeCurrent } from "../window_manager.js"
 import { resetView } from "../project_viewport.js"
 import { registeredPopups } from "../popup_menu.js"
+import { lockPanAxis } from "../project_viewport.js"
 
 
 function newProject() {
@@ -32,6 +33,8 @@ new BindAction("action.app.viewport.command_palette" , () => {togglePalette(true
 new BindAction("action.app.general.close_app" , () => {window.yarnboardAPI.close()} , [] , 'alt+f4')
 new BindAction("action.app.theme.savepreset" , () => {alert("save_theme");window.yarnboardAPI.fixFocus()} , [] , '')
 new BindAction("action.app.viewport.main_popup" , (ev) => {openMainPopup(ev)} , [] , 'altleft', true, false, true)
+new BindAction("action.project.view_panning.lock_axis_x" , ()=> {lockPanAxis(true)} , ["view_panning"] , 'x')
+new BindAction("action.project.view_panning.lock_axis_y" , ()=> {lockPanAxis(false)} , ["view_panning"] , 'y')
 
 
 if (navigator.userAgent.includes("yarnboard")) {

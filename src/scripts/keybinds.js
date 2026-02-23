@@ -13,6 +13,14 @@ export var currentInputContext = "default"
 var previousInputContext = "default"
 
 export function setContext(newContext) {
+  previousInputContext = currentInputContext
+  currentInputContext = newContext
+  document.querySelector("#status-bar-context").textContent = newContext
+}
+
+export function releaseContext() {
+  let newContext = previousInputContext
+  previousInputContext = currentInputContext
   currentInputContext = newContext
   document.querySelector("#status-bar-context").textContent = newContext
 }
