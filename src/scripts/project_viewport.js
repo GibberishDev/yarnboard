@@ -1,6 +1,7 @@
 import { releaseContext, setContext } from "./keybinds.js"
 import { registeredPopups } from "./popup_menu.js"
 import { registeredIcons } from "./icon_manager.js"
+import { createBlankProjectData, openProjects } from "./project_data.js"
 
 var inputElement = undefined
 var gridElement = undefined
@@ -9,11 +10,9 @@ var pointerElement = undefined
 var statsPos = undefined
 var statsScale = undefined
 var grabbing = false
-var viewportId = ""
+var projectId = ""
 
 export var viewPanningMult = {x:1,y:1}
-
-var viewport = {}
 
 const transforms = {
     zoomLevel: 0,
@@ -44,8 +43,9 @@ document.addEventListener("mouseup", (ev) => {
             document.exitPointerLock()
             pointerElement.innerHTML = ""
             viewPanningMult = {x:1,y:1}
-            viewport[viewportId].transforms.oldOffset.x = viewport[viewportId].transforms.offset.x
-            viewport[viewportId].transforms.oldOffset.y = viewport[viewportId].transforms.offset.y
+            openProjects[projectId].viewportTransforms.oldOffset.x = openProjects[projectId].viewportTransforms.offset.x
+            openProjects[projectId].viewportTransforms.oldOffset.y = openProjects[projectId].viewportTransforms.offset.y
+            console.log(openProjects[projectId])
         }
         grabbing = false
         // gridElement.style.transitionProperty = "background-image, background-position, background-size"
@@ -57,19 +57,19 @@ function updateViewport() {
     updateElements()
     updateGrid()
     if (!grabbing) {
-        statsPos.textContent = "X:" + parseInt((-viewport[viewportId].transforms.offset.x + viewport[viewportId].transforms.mouseOffset.x) * 1/viewport[viewportId].transforms.scale) + " Y:" + parseInt((-viewport[viewportId].transforms.offset.y + viewport[viewportId].transforms.mouseOffset.y) * 1/viewport[viewportId].transforms.scale)
+        statsPos.textContent = "X:" + parseInt((-openProjects[projectId].viewportTransforms.offset.x + openProjects[projectId].viewportTransforms.mouseOffset.x) * 1/openProjects[projectId].viewportTransforms.scale) + " Y:" + parseInt((-openProjects[projectId].viewportTransforms.offset.y + openProjects[projectId].viewportTransforms.mouseOffset.y) * 1/openProjects[projectId].viewportTransforms.scale)
     }
-    statsScale.textContent = "zoom: " + (viewport[viewportId].transforms.scale * 100).toFixed(3) + "%"
+    statsScale.textContent = "zoom: " + (openProjects[projectId].viewportTransforms.scale * 100).toFixed(3) + "%"
 }
 
 function updateElements() {
-    elementsElement.style.translate = viewport[viewportId].transforms.offset.x + "px " + viewport[viewportId].transforms.offset.y + "px"
-    elementsElement.style.scale = viewport[viewportId].transforms.scale
+    elementsElement.style.translate = openProjects[projectId].viewportTransforms.offset.x + "px " + openProjects[projectId].viewportTransforms.offset.y + "px"
+    elementsElement.style.scale = openProjects[projectId].viewportTransforms.scale
 }
 
 function updateGrid() {
-    gridElement.style.backgroundPosition = viewport[viewportId].transforms.offset.x + "px " + viewport[viewportId].transforms.offset.y + "px"
-    gridElement.style.backgroundSize = wrapCellSize(viewport[viewportId].transforms.scale) * 100 + "px " + wrapCellSize(viewport[viewportId].transforms.scale) * 100 + "px"
+    gridElement.style.backgroundPosition = openProjects[projectId].viewportTransforms.offset.x + "px " + openProjects[projectId].viewportTransforms.offset.y + "px"
+    gridElement.style.backgroundSize = wrapCellSize(openProjects[projectId].viewportTransforms.scale) * 100 + "px " + wrapCellSize(openProjects[projectId].viewportTransforms.scale) * 100 + "px"
 }
 function wrapCellSize(scale, min = 1, max = 5) {
   const mod = (a, b) => ((a % b) + b) % b;
@@ -77,21 +77,21 @@ function wrapCellSize(scale, min = 1, max = 5) {
 }
 
 function zoom(ev, factor) {
-    if ((!(viewport[viewportId].transforms.zoomLevel < 75) && factor > 0) || (!(viewport[viewportId].transforms.zoomLevel > -50) && factor < 0)) {
+    if ((!(openProjects[projectId].viewportTransforms.zoomLevel < 75) && factor > 0) || (!(openProjects[projectId].viewportTransforms.zoomLevel > -50) && factor < 0)) {
         return
     }
-    viewport[viewportId].transforms.zoomLevel += factor
-    let newScale = Math.pow(1.1,viewport[viewportId].transforms.zoomLevel)
-    viewport[viewportId].transforms.scale = newScale
+    openProjects[projectId].viewportTransforms.zoomLevel += factor
+    let newScale = Math.pow(1.1,openProjects[projectId].viewportTransforms.zoomLevel)
+    openProjects[projectId].viewportTransforms.scale = newScale
     var mousePos = {
         x: ev.layerX,
         y: ev.layerY
     }
     var newOffset = {
-        x: mousePos.x - (mousePos.x - viewport[viewportId].transforms.offset.x) * Math.pow(1.1,factor),
-        y: mousePos.y - (mousePos.y - viewport[viewportId].transforms.offset.y) * Math.pow(1.1,factor)
+        x: mousePos.x - (mousePos.x - openProjects[projectId].viewportTransforms.offset.x) * Math.pow(1.1,factor),
+        y: mousePos.y - (mousePos.y - openProjects[projectId].viewportTransforms.offset.y) * Math.pow(1.1,factor)
     }
-    viewport[viewportId].transforms.offset = newOffset
+    openProjects[projectId].viewportTransforms.offset = newOffset
     updateViewport()
 }
 
@@ -152,10 +152,10 @@ function mouseUpEvent(ev) {
 }
 function mouseMoveEvent(ev) {
     let rect = inputElement.getBoundingClientRect()
-    viewport[viewportId].transforms.size.x = rect.width
-    viewport[viewportId].transforms.size.y = rect.height
-    viewport[viewportId].transforms.mouseOffset.x = ev.offsetX
-    viewport[viewportId].transforms.mouseOffset.y = ev.offsetY
+    openProjects[projectId].viewportTransforms.size.x = rect.width
+    openProjects[projectId].viewportTransforms.size.y = rect.height
+    openProjects[projectId].viewportTransforms.mouseOffset.x = ev.offsetX
+    openProjects[projectId].viewportTransforms.mouseOffset.y = ev.offsetY
     if (grabbing) {
         processLockedPointer(ev)
     }
@@ -167,22 +167,22 @@ function mouseClickEvent(ev) {
 }
 
 export function projectViewportId(id) {
-    viewportId = id
-    if (Object.keys(viewport).includes(id)) {
+    projectId = id
+    if (Object.keys(openProjects).includes(id)) {
         return
     }
     // TODO: project save data loading
-    viewport[id] = {"transforms":{}}
-    viewport[id].transforms = structuredClone(transforms)
+    createBlankProjectData(id)
+    openProjects[id].viewportTransforms = structuredClone(transforms)
 }
 
 export function getScale() {
-    return viewport[viewportId].transforms.scale
+    return openProjects[projectId].viewportTransforms.scale
 }
 export function getScreenRect() {
     let rect = {
-        x: -viewport[viewportId].transforms.offset.x / getScale(),
-        y: -viewport[viewportId].transforms.offset.y / getScale(),
+        x: -openProjects[projectId].viewportTransforms.offset.x / getScale(),
+        y: -openProjects[projectId].viewportTransforms.offset.y / getScale(),
         w: inputElement.getBoundingClientRect().width / getScale(),
         h: inputElement.getBoundingClientRect().height / getScale(),
     }
@@ -190,7 +190,7 @@ export function getScreenRect() {
 }
 
 export function resetView() {
-    viewport[viewportId].transforms = structuredClone(transforms)
+    openProjects[projectId].viewportTransforms = structuredClone(transforms)
     updateViewport()
 }
 
@@ -204,8 +204,8 @@ var startingPointerPosition = {x:0,y:0}
 function processLockedPointer(event) {
     totalPointerMovement.x += event.movementX
     totalPointerMovement.y += event.movementY
-    viewport[viewportId].transforms.offset.x = viewport[viewportId].transforms.oldOffset.x + totalPointerMovement.x * viewPanningMult.x
-    viewport[viewportId].transforms.offset.y = viewport[viewportId].transforms.oldOffset.y + totalPointerMovement.y * viewPanningMult.y
+    openProjects[projectId].viewportTransforms.offset.x = openProjects[projectId].viewportTransforms.oldOffset.x + totalPointerMovement.x * viewPanningMult.x
+    openProjects[projectId].viewportTransforms.offset.y = openProjects[projectId].viewportTransforms.oldOffset.y + totalPointerMovement.y * viewPanningMult.y
     moveLockedPointerImage()
 }
 
@@ -260,8 +260,8 @@ export function lockPanAxis(xAxis = true) {
         viewPanningMult.x == 0 ? viewPanningMult.x = 1 : viewPanningMult.x = 0
         viewPanningMult.y = 1
     }
-    viewport[viewportId].transforms.offset.x = viewport[viewportId].transforms.oldOffset.x + totalPointerMovement.x * viewPanningMult.x
-    viewport[viewportId].transforms.offset.y = viewport[viewportId].transforms.oldOffset.y + totalPointerMovement.y * viewPanningMult.y
+    openProjects[projectId].viewportTransforms.offset.x = openProjects[projectId].viewportTransforms.oldOffset.x + totalPointerMovement.x * viewPanningMult.x
+    openProjects[projectId].viewportTransforms.offset.y = openProjects[projectId].viewportTransforms.oldOffset.y + totalPointerMovement.y * viewPanningMult.y
     statsPos.textContent = "X:" + parseInt(totalPointerMovement.x * viewPanningMult.x) + " Y:" + parseInt(totalPointerMovement.y * viewPanningMult.y)
     updateViewport()
 }
@@ -272,8 +272,8 @@ export function cancelViewPanning() {
     releaseContext()
     pointerElement.innerHTML = ""
     viewPanningMult = {x:1,y:1}
-    viewport[viewportId].transforms.offset.x = viewport[viewportId].transforms.oldOffset.x
-    viewport[viewportId].transforms.offset.y = viewport[viewportId].transforms.oldOffset.y
+    openProjects[projectId].viewportTransforms.offset.x = openProjects[projectId].viewportTransforms.oldOffset.x
+    openProjects[projectId].viewportTransforms.offset.y = openProjects[projectId].viewportTransforms.oldOffset.y
     updateViewport()
 }
 //  #endregion
