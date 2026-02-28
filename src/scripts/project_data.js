@@ -1,4 +1,5 @@
 import { uuidv4 } from "./window_manager.js"
+import { Element, ELEMENT_TYPES } from "./elements.js"
 
 export var openProjects = {}
 
@@ -53,3 +54,9 @@ class ProjectStats {
 export function createBlankProjectData(id) {
     new ProjectData(id)
 }
+
+
+// #region Element data handling
+var el = new Element("test-element", ELEMENT_TYPES.PICTURE)
+console.log(el.getElement())
+// #endregion

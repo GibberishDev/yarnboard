@@ -26,8 +26,36 @@ export class Element {
         this.transforms = transforms
         this.data = data
         this.connections = connections
+        this.element = undefined
     }
     getElement() {
-        
+        if (this.element == undefined)  {
+            // Search for element if possible
+            var el = document.querySelector(".element [data-element-id='"+this.id+"']")
+            if (el == undefined) {
+                this.createElement()
+            } else {
+                // validateElement()
+                this.element = el
+            }
+        }
+        return this.element
+    }
+    createElement() {
+        if (this.element != undefined) {
+            this.element.remove()
+            this.element = undefined
+        }
+        this.element = document.createElement("div")
+        this.element.dataset.elementId = this.id
+        this.element.classList.add("element",getElementTypeClass(this.type))
+    }
+}
+
+function getElementTypeClass(type) {
+    if (Object.findKeyByValue(ELEMENT_TYPES, type)[0] != undefined) {
+        return Object.findKeyByValue(ELEMENT_TYPES, type)[0].toLowerCase()
+    } else {
+        return "picture"
     }
 }

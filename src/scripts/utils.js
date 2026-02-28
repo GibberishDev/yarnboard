@@ -11,3 +11,7 @@ Array.prototype.remove = function(element) {
         return this.splice(this.indexOf(element),1)
     }
 }
+
+Object.prototype.findKeyByValue = function(object, value) {
+    return Object.keys(object).filter(key => object[key] === value)
+}
