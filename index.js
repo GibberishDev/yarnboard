@@ -41,8 +41,8 @@ function createWindow() {
     "before-input-event",
     (ev,input) => {
       if ( input.code == 'F4' && input.alt ) {
+        win.webContents.send('bindAccelerator', "altleft+f4")
         ev.preventDefault()
-        mainWindow.webContents.send('bindAccelerator', "alt+f4")
       }
     }
   )
@@ -110,7 +110,6 @@ function disableDefaultSortcuts() {
   globalShortcut.register("F5", () => {mainWindow.webContents.send('bindAccelerator', "f5")}) //reload secondary
   globalShortcut.register("CommandOrControl+R", () => {mainWindow.webContents.send('bindAccelerator', "control+r")}) //reload
   globalShortcut.register("CommandOrControl+Shift+I", () => {mainWindow.webContents.send('bindAccelerator', "control+shift+i")}) //developer console
-  globalShortcut.register("Alt+F4", () => {mainWindow.webContents.send('bindAccelerator', "alt+f4")}) //close app
   globalShortcut.register("CommandOrControl+M", () => {mainWindow.webContents.send('bindAccelerator', "control+m")}) //minimize app
 }
 function enableDefaultSortcuts() {
@@ -122,7 +121,6 @@ function enableDefaultSortcuts() {
   globalShortcut.unregister("F5") //reload secondary
   globalShortcut.unregister("CommandOrControl+R") //reload
   globalShortcut.unregister("CommandOrControl+Shift+I") //developer console
-  globalShortcut.unregister("Alt+F4") //close app
   globalShortcut.unregister("CommandOrControl+M") //minimize app. Why is this even default bind on ctrl m wtf
 }
 

@@ -142,6 +142,7 @@ function checkBinds(accelerator, isHold, isKeyDown) {
       return
     }
     let contextBind = bind.context[ctx]
+    console.log(contextBind, isHold, isKeyDown)
     if (isHold == contextBind.holdAction && isKeyDown != contextBind.realeaseKeyAction) {
       keybindEvent.bind = contextBind
     } else {
@@ -168,7 +169,7 @@ document.addEventListener("bind", (ev) => {
   ev.bind.callable()
 })
 if (navigator.userAgent.includes("yarnboard")) {
-  window.yarnboardAPI.bindAccelerator((event, accelerator) => checkBinds(accelerator))
+  window.yarnboardAPI.bindAccelerator((event, accelerator) => checkBinds(accelerator, false, false))
 }
 
 export function executeAction(id) {

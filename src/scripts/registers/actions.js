@@ -30,11 +30,11 @@ new BindAction("action.app.project.save_as" , ()=> {alert("save_as");window.yarn
 new BindAction("action.app.project.close" ,  closeCurrent , [] , 'control+w')
 new BindAction("action.app.viewport.settings" , openSettings , [] , 'control+comma')
 new BindAction("action.app.viewport.command_palette" , () => {togglePalette(true)} , [] , 'control+p')
-new BindAction("action.app.general.close_app" , () => {window.yarnboardAPI.close()} , [] , 'alt+f4')
+new BindAction("action.app.general.close_app" , () => {window.yarnboardAPI.close()} , [] , 'altleft+f4', true)
 new BindAction("action.app.theme.savepreset" , () => {alert("save_theme");window.yarnboardAPI.fixFocus()} , [] , '')
 new BindAction("action.app.viewport.main_popup" , (ev) => {openMainPopup(ev)} , [] , 'altleft', true, false, true)
-new BindAction("action.project.view_panning.lock_axis_x" , ()=> {lockPanAxis(true)} , ["view_panning"] , 'x')
-new BindAction("action.project.view_panning.lock_axis_y" , ()=> {lockPanAxis(false)} , ["view_panning"] , 'y')
+new BindAction("action.project.view_panning.lock_axis_x" , ()=> {lockPanAxis(true)} , ["view_panning"] , 'x', true, false, true)
+new BindAction("action.project.view_panning.lock_axis_y" , ()=> {lockPanAxis(false)} , ["view_panning"] , 'y', true, false, true)
 
 
 if (navigator.userAgent.includes("yarnboard")) {
