@@ -65,6 +65,7 @@ function updateViewport() {
 function updateElements() {
     elementsElement.style.translate = openProjects[projectId].viewportTransforms.offset.x + "px " + openProjects[projectId].viewportTransforms.offset.y + "px"
     elementsElement.style.scale = openProjects[projectId].viewportTransforms.scale
+    document.querySelector(":root").style.setProperty("--outline-scale", 1 / openProjects[projectId].viewportTransforms.scale)
 }
 
 function updateGrid() {
@@ -91,7 +92,12 @@ function zoom(ev, factor) {
         x: mousePos.x - (mousePos.x - openProjects[projectId].viewportTransforms.offset.x) * Math.pow(1.1,factor),
         y: mousePos.y - (mousePos.y - openProjects[projectId].viewportTransforms.offset.y) * Math.pow(1.1,factor)
     }
+    var newOldOffset = { /* XD */
+        x: mousePos.x - (mousePos.x - openProjects[projectId].viewportTransforms.oldOffset.x) * Math.pow(1.1,factor),
+        y: mousePos.y - (mousePos.y - openProjects[projectId].viewportTransforms.oldOffset.y) * Math.pow(1.1,factor)
+    }
     openProjects[projectId].viewportTransforms.offset = newOffset
+    openProjects[projectId].viewportTransforms.oldOffset = newOldOffset
     updateViewport()
 }
 

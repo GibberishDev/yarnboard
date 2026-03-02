@@ -1,0 +1,8 @@
+.element {
+    position: absolute;
+    display: flex;
+}
+.element.selected {
+    outline: max(1px, calc(2px * var(--outline-scale))) dashed var(--var-color-theme-accent-bright);
+    outline-offset: max(1px, calc(2px * var(--outline-scale)));
+}
