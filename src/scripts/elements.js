@@ -7,7 +7,7 @@ export const ELEMENT_TYPES = Object.freeze({
     AUDIO: 5
 })
 
-const DEFAULT_TRANSFORMS = {
+export const DEFAULT_TRANSFORMS = {
     position: {
         x: 0,
         y: 0
@@ -27,11 +27,12 @@ export class Element {
         this.data = data
         this.connections = connections
         this.element = undefined
+        this.getElement()
     }
     getElement() {
         if (this.element == undefined)  {
             // Search for element if possible
-            var el = document.querySelector(".element [data-element-id='"+this.id+"']")
+            var el = document.querySelector("[data-element-id='"+this.id+"']")
             if (el == undefined) {
                 this.createElement()
             } else {
@@ -49,7 +50,20 @@ export class Element {
         this.element = document.createElement("div")
         this.element.dataset.elementId = this.id
         this.element.classList.add("element",getElementTypeClass(this.type))
+        switch (this.type) {
+            case ELEMENT_TYPES.PICTURE :
+                this.element.innerHTML = "<img class='element-data'>"
+                this.element.querySelector(".element-data").src = this.data.src
+                break
+            default :
+                this.element.innerHTML = ""
+        }
+        // this.bindEvents()
+        return this.element
     }
+    // bindEvents() {
+    //     this.element.addEventListener("click")
+    // }
 }
 
 function getElementTypeClass(type) {

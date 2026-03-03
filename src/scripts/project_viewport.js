@@ -10,7 +10,7 @@ var pointerElement = undefined
 var statsPos = undefined
 var statsScale = undefined
 var grabbing = false
-var projectId = ""
+export var projectId = ""
 
 export var viewPanningMult = {x:1,y:1}
 
@@ -45,7 +45,6 @@ document.addEventListener("mouseup", (ev) => {
             viewPanningMult = {x:1,y:1}
             openProjects[projectId].viewportTransforms.oldOffset.x = openProjects[projectId].viewportTransforms.offset.x
             openProjects[projectId].viewportTransforms.oldOffset.y = openProjects[projectId].viewportTransforms.offset.y
-            console.log(openProjects[projectId])
         }
         grabbing = false
         // gridElement.style.transitionProperty = "background-image, background-position, background-size"
@@ -147,7 +146,7 @@ function mouseDownEvent(ev) {
 }
 
 document.addEventListener("pointerlockchange", (_ev) => {
-    if (!document.pointerLockElement) cancelViewPanning()
+    if (!document.pointerLockElement && grabbing) cancelViewPanning()
 })
 
 function mouseUpEvent(ev) {

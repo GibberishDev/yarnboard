@@ -5,6 +5,7 @@ import { openSettings, uuidv4, createWindow, closeCurrent } from "../window_mana
 import { resetView } from "../project_viewport.js"
 import { registeredPopups } from "../popup_menu.js"
 import { lockPanAxis } from "../project_viewport.js"
+import { selectAll, deselectAll, invertSelection } from "../selection.js"
 
 
 function newProject() {
@@ -19,9 +20,9 @@ new BindAction("action.viewport.selection.transform_scale" , ()=> {alert("scale"
 new BindAction("action.viewport.selection.transform_scale_reset" , ()=> {alert("reset scale");window.yarnboardAPI.fixFocus()} , ["board"] , 'alt+s')
 new BindAction("action.viewport.selection.lock_axis_x" , ()=> {alert("lock_axis_x");window.yarnboardAPI.fixFocus()} , ["scale","move"] , 'x')
 new BindAction("action.viewport.selection.lock_axis_y" , ()=> {alert("lock_axis_y");window.yarnboardAPI.fixFocus()} , ["scale","move"] , 'y')
-new BindAction("action.viewport.selection.select_all" , ()=> {alert("select_all");window.yarnboardAPI.fixFocus()} , ["board"] , 'control+a')
-new BindAction("action.viewport.selection.deselect_all" , ()=> {alert("deselct_all");window.yarnboardAPI.fixFocus()} , ["board"] , 'control+shift+a')
-new BindAction("action.viewport.selection.invert" , ()=> {alert("invert_selection");window.yarnboardAPI.fixFocus()} , ["board"] , 'control+shift+i')
+new BindAction("action.viewport.selection.select_all" , selectAll , ["board"] , 'control+a')
+new BindAction("action.viewport.selection.deselect_all" , deselectAll , ["board"] , 'control+shift+a')
+new BindAction("action.viewport.selection.invert" , invertSelection, ["board"] , 'control+shift+i', true)
 new BindAction("action.viewport.view.reset" , resetView, ["board"] , 'numpaddecimal')
 new BindAction("action.app.project.new" , ()=> {newProject()} , [] , 'control+n')
 new BindAction("action.app.project.open" , ()=> {alert("open");window.yarnboardAPI.fixFocus()} , [] , 'control+o')

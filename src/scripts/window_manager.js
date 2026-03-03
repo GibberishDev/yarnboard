@@ -192,9 +192,6 @@ const projectTemplate = `
     <div class="project-cover project-grid"></div>
     <div class="project-cover project-elements">
         <div style="position: absolute; left: 0px; top: 0px; color: var(--var-color-theme-text);">New Project</div>
-        <div class="element picture selected">
-            <img class="element-data" src="https://static-cdn.jtvnw.net/jtv_user_pictures/3e987d45-269a-41b7-8d64-1f1f7c155682-profile_image-300x300.png">
-        </div>
     </div>
     <div class="project-cover project-input"></div>
     <div class="project-cover project-hud">

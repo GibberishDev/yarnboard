@@ -12,7 +12,7 @@ contextBridge.exposeInMainWorld('yarnboardAPI', {
     loadAppSettings: () => ipcRenderer.send('loadAppSettings'),
     setMouseScreenPos : (pos) => ipcRenderer.send('setMouseScreenPos', pos),
 
-    bindAccelerator : (accelerator) => ipcRenderer.on('bindAccelerator', accelerator),
+    bindAccelerator : (keybindData) => ipcRenderer.on('bindAccelerator', keybindData),
     loadSettings : (settingsObject) => ipcRenderer.on('loadSettings', settingsObject),
 })
 

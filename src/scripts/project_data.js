@@ -1,10 +1,11 @@
 import { uuidv4 } from "./window_manager.js"
-import { Element, ELEMENT_TYPES } from "./elements.js"
+import { Element, ELEMENT_TYPES, DEFAULT_TRANSFORMS } from "./elements.js"
+import { projectId } from "./project_viewport.js"
 
 export var openProjects = {}
 
 class ProjectData {
-    constructor(id, viewportTransforms = new ProjectViewportTransforms, elementsData = {}, connectionsData = {}, projectSettings = new ProjectSettings, projectStats = new ProjectStats) {
+    constructor(id, viewportTransforms = new ProjectViewportTransforms, elementsData = new ElementsData, connectionsData = {}, projectSettings = new ProjectSettings, projectStats = new ProjectStats) {
         this.id = id
         this.viewportTransforms = viewportTransforms
         this.elementsData = elementsData
@@ -23,6 +24,7 @@ class ProjectData {
         // call for save path if aaliable in window_manager.js
         // save file using text and file path via preload
     }
+
 }
 
 class ProjectViewportTransforms {
@@ -57,6 +59,18 @@ export function createBlankProjectData(id) {
 
 
 // #region Element data handling
-var el = new Element("test-element", ELEMENT_TYPES.PICTURE)
-console.log(el.getElement())
+
+class ElementsData {
+    constructor(elements = {}) {
+        this.elements = elements
+    }
+    addElement(id, element) {
+        this.elements[id] = element
+    }
+    removeElement(id) {
+        var returnElement = {"id":id,"data":this.elements[id]}
+        delete this.elements[id]
+        return returnElement
+    }
+}
 // #endregion

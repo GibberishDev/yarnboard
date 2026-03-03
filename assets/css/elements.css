@@ -1,6 +1,7 @@
 .element {
     position: absolute;
     display: flex;
+    transition-property: none;
 }
 .element.selected {
     outline: max(1px, calc(2px * var(--outline-scale))) dashed var(--var-color-theme-accent-bright);

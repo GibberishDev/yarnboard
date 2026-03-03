@@ -41,7 +41,8 @@ function createWindow() {
     "before-input-event",
     (ev,input) => {
       if ( input.code == 'F4' && input.alt ) {
-        win.webContents.send('bindAccelerator', "altleft+f4")
+        console.log(input)
+        win.webContents.send('bindAccelerator', {accelerator:"altleft+f4", isHold:false, isKeyDown:true})
         ev.preventDefault()
       }
     }
@@ -102,15 +103,15 @@ function fixFocus() {
 }
 
 function disableDefaultSortcuts() {
-  globalShortcut.register("CommandOrControl+=", () => {mainWindow.webContents.send('bindAccelerator', "control+=")}) //zoom in secondary
-  globalShortcut.register("CommandOrControl+Shift+=", () => {mainWindow.webContents.send('bindAccelerator', "control+shift+=")}) //zoom in
-  globalShortcut.register("CommandOrControl+-", () => {mainWindow.webContents.send('bindAccelerator', "control+-")}) //zoom out
-  globalShortcut.register("CommandOrControl+Shift+-", () => {mainWindow.webContents.send('bindAccelerator', "control+shift+-")}) //zoom out secondary
-  globalShortcut.register("CommandOrControl+W", () => {mainWindow.webContents.send('bindAccelerator', "control+w")}) //close window
-  globalShortcut.register("F5", () => {mainWindow.webContents.send('bindAccelerator', "f5")}) //reload secondary
-  globalShortcut.register("CommandOrControl+R", () => {mainWindow.webContents.send('bindAccelerator', "control+r")}) //reload
-  globalShortcut.register("CommandOrControl+Shift+I", () => {mainWindow.webContents.send('bindAccelerator', "control+shift+i")}) //developer console
-  globalShortcut.register("CommandOrControl+M", () => {mainWindow.webContents.send('bindAccelerator', "control+m")}) //minimize app
+  globalShortcut.register("CommandOrControl+=", () => {mainWindow.webContents.send('bindAccelerator', {accelerator:"control+=", isHold:false, isKeyDown:true})}) //zoom in secondary
+  globalShortcut.register("CommandOrControl+Shift+=", () => {mainWindow.webContents.send('bindAccelerator', {accelerator:"control+shift+=", isHold:false, isKeyDown:true})}) //zoom in
+  globalShortcut.register("CommandOrControl+-", () => {mainWindow.webContents.send('bindAccelerator', {accelerator:"control+-", isHold:false, isKeyDown:true})}) //zoom out
+  globalShortcut.register("CommandOrControl+Shift+-", () => {mainWindow.webContents.send('bindAccelerator', {accelerator:"control+shift+-", isHold:false, isKeyDown:true})}) //zoom out secondary
+  globalShortcut.register("CommandOrControl+W", () => {mainWindow.webContents.send('bindAccelerator', {accelerator:"control+w", isHold:false, isKeyDown:true})}) //close window
+  globalShortcut.register("F5", () => {mainWindow.webContents.send('bindAccelerator', {accelerator:"f5", isHold:false, isKeyDown:true})}) //reload secondary
+  globalShortcut.register("CommandOrControl+R", () => {mainWindow.webContents.send('bindAccelerator', {accelerator:"control+r", isHold:false, isKeyDown:true})}) //reload
+  globalShortcut.register("CommandOrControl+Shift+I", (ev) => {mainWindow.webContents.send('bindAccelerator', {accelerator:"control+shift+i", isHold:false, isKeyDown:true})}) //developer console
+  globalShortcut.register("CommandOrControl+M", () => {mainWindow.webContents.send('bindAccelerator', {accelerator:"control+m", isHold:false, isKeyDown:true})}) //minimize app
 }
 function enableDefaultSortcuts() {
   globalShortcut.unregister("CommandOrControl+=") //zoom in secondary
