@@ -2,6 +2,8 @@ import { releaseContext, setContext } from "./keybinds.js"
 import { registeredPopups } from "./popup_menu.js"
 import { registeredIcons } from "./icon_manager.js"
 import { createBlankProjectData, openProjects } from "./project_data.js"
+import { deselectAll, selectElement, toggleElementSelection } from "./selection.js"
+import { DEFAULT_TRANSFORMS, Element, ELEMENT_TYPES } from "./elements.js"
 
 var inputElement = undefined
 var gridElement = undefined
@@ -113,6 +115,7 @@ export function bindEvents(viewportElement) {
     inputElement.addEventListener("mouseup", mouseUpEvent)
     inputElement.addEventListener("mousemove", mouseMoveEvent)
     inputElement.addEventListener("click", mouseClickEvent)
+    elementsElement.addEventListener("mouseup", ()=>{console.log("AAAAAAA")})
 
     setContext("board")
     // if viewport
@@ -150,10 +153,20 @@ document.addEventListener("pointerlockchange", (_ev) => {
 })
 
 function mouseUpEvent(ev) {
-    if (ev.which == 3) {
+    var element = determineTopmostElement(ev)
+    if (ev.which == 3 && element == null) {
         // test if clicked on any of the elements or connections or selection is active
         registeredPopups["popup.project.addelement"].show({x:ev.clientX,y:ev.clientY})
+    } else if (ev.which == 1 && element != null) {
+        if (ev.shiftKey) {
+            toggleElementSelection(element.dataset.elementId)
+        } else {
+            selectElement(element.dataset.elementId)
+        }
+    } else if (ev.which == 1 && element == null) {
+        deselectAll()
     }
+    
 }
 function mouseMoveEvent(ev) {
     let rect = inputElement.getBoundingClientRect()
@@ -179,6 +192,7 @@ export function projectViewportId(id) {
     // TODO: project save data loading
     createBlankProjectData(id)
     openProjects[id].viewportTransforms = structuredClone(transforms)
+    openProjects[id].elementsData.addElement(new Element("default_text", ELEMENT_TYPES.TEXT,DEFAULT_TRANSFORMS,{text:"New Project"}))
 }
 
 export function getScale() {
@@ -282,3 +296,19 @@ export function cancelViewPanning() {
     updateViewport()
 }
 //  #endregion
+
+function determineTopmostElement(ev) {
+    var elements = []
+    var connections = [] 
+    for (let el of document.elementsFromPoint(ev.clientX,ev.clientY)) {
+        if (el.classList.contains("element")) elements.push(el)
+        if (el.classList.contains("connection")) connections.push(el)
+    }
+    if (connections.length != 0) {
+        return connections[0]
+    } else if (elements.length != 0) {
+        return elements[0]
+    } else {
+        return null
+    }
+}

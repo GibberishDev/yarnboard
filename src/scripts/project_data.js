@@ -64,8 +64,9 @@ class ElementsData {
     constructor(elements = {}) {
         this.elements = elements
     }
-    addElement(id, element) {
-        this.elements[id] = element
+    addElement(element) {
+        this.elements[element.id] = element
+        element.addDOMElementToProject(projectId)
     }
     removeElement(id) {
         var returnElement = {"id":id,"data":this.elements[id]}

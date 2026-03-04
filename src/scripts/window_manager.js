@@ -191,7 +191,6 @@ const projectTemplate = `
     <div class="project-cover project-background"></div>
     <div class="project-cover project-grid"></div>
     <div class="project-cover project-elements">
-        <div style="position: absolute; left: 0px; top: 0px; color: var(--var-color-theme-text);">New Project</div>
     </div>
     <div class="project-cover project-input"></div>
     <div class="project-cover project-hud">

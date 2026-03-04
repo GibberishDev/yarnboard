@@ -4,14 +4,8 @@ import { Element, ELEMENT_TYPES, DEFAULT_TRANSFORMS } from "./elements.js"
 
 export var selectedElements = []
 
-export function selectElement(id) {
-
-}
-
 export function selectAll() {
-    openProjects[projectId].elementsData.addElement("aaaa",new Element("aaaa",ELEMENT_TYPES.PICTURE, DEFAULT_TRANSFORMS, {"src":"https://static-cdn.jtvnw.net/jtv_user_pictures/3e987d45-269a-41b7-8d64-1f1f7c155682-profile_image-300x300.png"}))
-    let el = openProjects[projectId].elementsData.elements["aaaa"].element
-    document.querySelector("#viewport-id-" + projectId).querySelector(".project-elements").appendChild(el)
+    openProjects[projectId].elementsData.addElement(new Element("aaaa",ELEMENT_TYPES.PICTURE, DEFAULT_TRANSFORMS, {"src":"https://static-cdn.jtvnw.net/jtv_user_pictures/3e987d45-269a-41b7-8d64-1f1f7c155682-profile_image-300x300.png"}))
     let elements = getAllElements()
     selectedElements = []
     for (let elementId of Object.keys(elements)) {
@@ -41,6 +35,31 @@ export function invertSelection() {
     }
 }
 
+export function selectElement(id) {
+    let elementObject = getElement(id)
+    if (!selectedElements.includes(id)) selectedElements.push(id)
+    elementObject.element.classList.add("selected")
+}
+export function deselectElement(id) {
+    let elementObject = getElement(id)
+    if (selectedElements.includes(id)) selectedElements.remove(id)
+    elementObject.element.classList.remove("selected")
+}
+export function toggleElementSelection(id) {
+    let elementObject = getElement(id)
+    if (!selectedElements.includes(id)) {
+        selectedElements.push(id)
+        elementObject.element.classList.add("selected")
+    } else {
+        selectedElements.remove(id)
+        elementObject.element.classList.remove("selected")
+    }
+}
+
 function getAllElements() {
     return openProjects[projectId].elementsData.elements
+}
+
+function getElement(id) {
+    return openProjects[projectId].elementsData.elements[id]
 }

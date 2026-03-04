@@ -55,15 +55,20 @@ export class Element {
                 this.element.innerHTML = "<img class='element-data'>"
                 this.element.querySelector(".element-data").src = this.data.src
                 break
+            case ELEMENT_TYPES.TEXT :
+                this.element.innerHTML = "<div class='element-data'></div>"
+                this.element.querySelector(".element-data").textContent = this.data.text
+                break
             default :
                 this.element.innerHTML = ""
         }
-        // this.bindEvents()
         return this.element
     }
-    // bindEvents() {
-    //     this.element.addEventListener("click")
-    // }
+    addDOMElementToProject(projectId) {
+        this.getElement()
+        document.querySelector("#viewport-id-" + projectId).querySelector(".project-elements").appendChild(this.element)
+
+    }
 }
 
 function getElementTypeClass(type) {
