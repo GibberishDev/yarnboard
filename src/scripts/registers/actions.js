@@ -2,7 +2,7 @@ import { BindAction} from "../keybinds.js"
 import { togglePalette} from "../command_palette.js"
 import { moduleReady} from "./ready.js"
 import { openSettings, uuidv4, createWindow, closeCurrent } from "../window_manager.js"
-import { resetView, TRANSFORM_STATES } from "../project_viewport.js"
+import { lockTransformAxis, resetView, TRANSFORM_STATES } from "../project_viewport.js"
 import { registeredPopups } from "../popup_menu.js"
 import { lockPanAxis, setTransformMode } from "../project_viewport.js"
 import { selectAll, deselectAll, invertSelection } from "../selection.js"
@@ -14,12 +14,12 @@ function newProject() {
 
 new BindAction("action.viewport.selection.transform_move" , ()=> {setTransformMode(TRANSFORM_STATES.DRAG)} , ["board"] , 'g')
 new BindAction("action.viewport.selection.transform_move_reset" , ()=> {alert("reset move")} , ["board"] , 'alt+g')
-new BindAction("action.viewport.selection.transform_rotate" , ()=> {alert("rotate");window.yarnboardAPI.fixFocus()} , ["board"] , 'r')
-new BindAction("action.viewport.selection.transform_rotate_reset" , ()=> {alert("reset rotate");window.yarnboardAPI.fixFocus()} , ["board"] , 'alt+r')
-new BindAction("action.viewport.selection.transform_scale" , ()=> {alert("scale");window.yarnboardAPI.fixFocus()} , ["board"] , 's')
+// new BindAction("action.viewport.selection.transform_rotate" , ()=> {alert("rotate");window.yarnboardAPI.fixFocus()} , ["board"] , 'r')
+// new BindAction("action.viewport.selection.transform_rotate_reset" , ()=> {alert("reset rotate");window.yarnboardAPI.fixFocus()} , ["board"] , 'alt+r')
+new BindAction("action.viewport.selection.transform_scale" , ()=> {setTransformMode(TRANSFORM_STATES.SCALE)} , ["board"] , 's')
 new BindAction("action.viewport.selection.transform_scale_reset" , ()=> {alert("reset scale");window.yarnboardAPI.fixFocus()} , ["board"] , 'alt+s')
-new BindAction("action.viewport.selection.lock_axis_x" , ()=> {alert("lock_axis_x");window.yarnboardAPI.fixFocus()} , ["scale","move"] , 'x')
-new BindAction("action.viewport.selection.lock_axis_y" , ()=> {alert("lock_axis_y");window.yarnboardAPI.fixFocus()} , ["scale","move"] , 'y')
+new BindAction("action.viewport.selection.lock_axis_x" , ()=> {lockTransformAxis(true)} , ["scale","drag"] , 'x')
+new BindAction("action.viewport.selection.lock_axis_y" , ()=> {lockTransformAxis(false)} , ["scale","drag"] , 'y')
 new BindAction("action.viewport.selection.select_all" , selectAll , ["board"] , 'control+a')
 new BindAction("action.viewport.selection.deselect_all" , deselectAll , ["board"] , 'control+shift+a')
 new BindAction("action.viewport.selection.invert" , invertSelection, ["board"] , 'control+shift+i', true)

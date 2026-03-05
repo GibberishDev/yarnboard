@@ -50,7 +50,7 @@ export class Element {
         this.element = document.createElement("div")
         this.element.dataset.elementId = this.id
         this.element.classList.add("element",getElementTypeClass(this.type))
-        this.element.style = "left:0px;top:0px;"
+        this.element.style = "left:0px;top:0px;scale:100% 100%;"
         switch (this.type) {
             case ELEMENT_TYPES.PICTURE :
                 this.element.innerHTML = "<img class='element-data'>"
