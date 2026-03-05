@@ -37,7 +37,8 @@
 .project-elements {
     z-index: 2;
     transition-property: none;
-    transform-origin: 0 0 ;
+    transform-origin: 0 0;
+    overflow: visible;
 }
 
 .project-input {

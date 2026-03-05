@@ -12,6 +12,6 @@ Array.prototype.remove = function(element) {
     }
 }
 
-Object.prototype.findKeyByValue = function(object, value) {
+function findKeyByValue(object, value) {
     return Object.keys(object).filter(key => object[key] === value)
 }

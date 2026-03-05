@@ -41,8 +41,7 @@ function createWindow() {
     "before-input-event",
     (ev,input) => {
       if ( input.code == 'F4' && input.alt ) {
-        console.log(input)
-        win.webContents.send('bindAccelerator', {accelerator:"altleft+f4", isHold:false, isKeyDown:true})
+        win.webContents.send('bindAccelerator', {accelerator:"altleft+f4", isHold:false, isKeyDown:false})
         ev.preventDefault()
       }
     }
@@ -110,7 +109,7 @@ function disableDefaultSortcuts() {
   globalShortcut.register("CommandOrControl+W", () => {mainWindow.webContents.send('bindAccelerator', {accelerator:"control+w", isHold:false, isKeyDown:true})}) //close window
   globalShortcut.register("F5", () => {mainWindow.webContents.send('bindAccelerator', {accelerator:"f5", isHold:false, isKeyDown:true})}) //reload secondary
   globalShortcut.register("CommandOrControl+R", () => {mainWindow.webContents.send('bindAccelerator', {accelerator:"control+r", isHold:false, isKeyDown:true})}) //reload
-  globalShortcut.register("CommandOrControl+Shift+I", (ev) => {mainWindow.webContents.send('bindAccelerator', {accelerator:"control+shift+i", isHold:false, isKeyDown:true})}) //developer console
+  globalShortcut.register("CommandOrControl+Shift+I", () => {mainWindow.webContents.send('bindAccelerator', {accelerator:"control+shift+i", isHold:false, isKeyDown:true})}) //developer console
   globalShortcut.register("CommandOrControl+M", () => {mainWindow.webContents.send('bindAccelerator', {accelerator:"control+m", isHold:false, isKeyDown:true})}) //minimize app
 }
 function enableDefaultSortcuts() {

@@ -2,9 +2,9 @@ import { BindAction} from "../keybinds.js"
 import { togglePalette} from "../command_palette.js"
 import { moduleReady} from "./ready.js"
 import { openSettings, uuidv4, createWindow, closeCurrent } from "../window_manager.js"
-import { resetView } from "../project_viewport.js"
+import { resetView, TRANSFORM_STATES } from "../project_viewport.js"
 import { registeredPopups } from "../popup_menu.js"
-import { lockPanAxis } from "../project_viewport.js"
+import { lockPanAxis, setTransformMode } from "../project_viewport.js"
 import { selectAll, deselectAll, invertSelection } from "../selection.js"
 
 
@@ -12,7 +12,7 @@ function newProject() {
     createWindow(uuidv4())
 }
 
-new BindAction("action.viewport.selection.transform_move" , ()=> {alert("move");window.yarnboardAPI.fixFocus()} , ["board"] , 'g')
+new BindAction("action.viewport.selection.transform_move" , ()=> {setTransformMode(TRANSFORM_STATES.DRAG)} , ["board"] , 'g')
 new BindAction("action.viewport.selection.transform_move_reset" , ()=> {alert("reset move")} , ["board"] , 'alt+g')
 new BindAction("action.viewport.selection.transform_rotate" , ()=> {alert("rotate");window.yarnboardAPI.fixFocus()} , ["board"] , 'r')
 new BindAction("action.viewport.selection.transform_rotate_reset" , ()=> {alert("reset rotate");window.yarnboardAPI.fixFocus()} , ["board"] , 'alt+r')
@@ -31,7 +31,7 @@ new BindAction("action.app.project.save_as" , ()=> {alert("save_as");window.yarn
 new BindAction("action.app.project.close" ,  closeCurrent , [] , 'control+w')
 new BindAction("action.app.viewport.settings" , openSettings , [] , 'control+comma')
 new BindAction("action.app.viewport.command_palette" , () => {togglePalette(true)} , [] , 'control+p')
-new BindAction("action.app.general.close_app" , () => {window.yarnboardAPI.close()} , [] , 'altleft+f4', true)
+new BindAction("action.app.general.close_app" , () => {window.yarnboardAPI.close()} , [] , 'altleft+f4', true, false, true)
 new BindAction("action.app.theme.savepreset" , () => {alert("save_theme");window.yarnboardAPI.fixFocus()} , [] , '')
 new BindAction("action.app.viewport.main_popup" , (ev) => {openMainPopup(ev)} , [] , 'altleft', true, false, true)
 new BindAction("action.project.view_panning.lock_axis_x" , ()=> {lockPanAxis(true)} , ["view_panning"] , 'x', true, false, true)

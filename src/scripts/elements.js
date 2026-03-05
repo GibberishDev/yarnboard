@@ -50,6 +50,7 @@ export class Element {
         this.element = document.createElement("div")
         this.element.dataset.elementId = this.id
         this.element.classList.add("element",getElementTypeClass(this.type))
+        this.element.style = "left:0px;top:0px;"
         switch (this.type) {
             case ELEMENT_TYPES.PICTURE :
                 this.element.innerHTML = "<img class='element-data'>"
@@ -72,9 +73,9 @@ export class Element {
 }
 
 function getElementTypeClass(type) {
-    if (Object.findKeyByValue(ELEMENT_TYPES, type)[0] != undefined) {
-        return Object.findKeyByValue(ELEMENT_TYPES, type)[0].toLowerCase()
+    if (findKeyByValue(ELEMENT_TYPES, type)[0] != undefined) {
+        return findKeyByValue(ELEMENT_TYPES, type)[0].toLowerCase()
     } else {
-        return "picture"
+        return "picture" /*failsafe picture element default... what could go wrong */
     }
 }

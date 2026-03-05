@@ -1,21 +1,33 @@
-import { releaseContext, setContext } from "./keybinds.js"
+// #region Imports
+import { currentInputContext, releaseContext, setContext } from "./keybinds.js"
 import { registeredPopups } from "./popup_menu.js"
 import { registeredIcons } from "./icon_manager.js"
 import { createBlankProjectData, openProjects } from "./project_data.js"
-import { deselectAll, selectElement, toggleElementSelection } from "./selection.js"
+import { deselectAll, selectedElements, selectElement, toggleElementSelection } from "./selection.js"
 import { DEFAULT_TRANSFORMS, Element, ELEMENT_TYPES } from "./elements.js"
+// #endregion
 
+// #region Variables
+var inputMousePos = {x:0,y:0}
 var inputElement = undefined
 var gridElement = undefined
 var elementsElement = undefined
 var pointerElement = undefined
 var statsPos = undefined
 var statsScale = undefined
-var grabbing = false
+var viewPanning = false
+var elementTransformState = null
+
 export var projectId = ""
-
 export var viewPanningMult = {x:1,y:1}
+export var elementTransformMult = {x:1,y:1}
 
+export const TRANSFORM_STATES = Object.freeze({
+    NONE: 0,
+    DRAG: 1,
+    SCALE: 2,
+    ROTATE: 3
+})
 const transforms = {
     zoomLevel: 0,
     scale : 1.0,
@@ -36,28 +48,14 @@ const transforms = {
         y: 0
     }
 }
+// #endregion
 
-document.addEventListener("mouseup", (ev) => {
-    if (ev.button == 1) {
-        if (grabbing) {
-            releaseContext()
-            SetCursorPos()
-            document.exitPointerLock()
-            pointerElement.innerHTML = ""
-            viewPanningMult = {x:1,y:1}
-            openProjects[projectId].viewportTransforms.oldOffset.x = openProjects[projectId].viewportTransforms.offset.x
-            openProjects[projectId].viewportTransforms.oldOffset.y = openProjects[projectId].viewportTransforms.offset.y
-        }
-        grabbing = false
-        // gridElement.style.transitionProperty = "background-image, background-position, background-size"
-    }
-})
 
 function updateViewport() {
     // updateBackground()
     updateElements()
     updateGrid()
-    if (!grabbing) {
+    if (!viewPanning) {
         statsPos.textContent = "X:" + parseInt((-openProjects[projectId].viewportTransforms.offset.x + openProjects[projectId].viewportTransforms.mouseOffset.x) * 1/openProjects[projectId].viewportTransforms.scale) + " Y:" + parseInt((-openProjects[projectId].viewportTransforms.offset.y + openProjects[projectId].viewportTransforms.mouseOffset.y) * 1/openProjects[projectId].viewportTransforms.scale)
     }
     statsScale.textContent = "zoom: " + (openProjects[projectId].viewportTransforms.scale * 100).toFixed(3) + "%"
@@ -114,11 +112,9 @@ export function bindEvents(viewportElement) {
     inputElement.addEventListener("mousedown", mouseDownEvent)
     inputElement.addEventListener("mouseup", mouseUpEvent)
     inputElement.addEventListener("mousemove", mouseMoveEvent)
-    inputElement.addEventListener("click", mouseClickEvent)
     elementsElement.addEventListener("mouseup", ()=>{console.log("AAAAAAA")})
 
     setContext("board")
-    // if viewport
 }
 
 export function unbindEvents(viewportElement) {
@@ -126,63 +122,17 @@ export function unbindEvents(viewportElement) {
     viewportElement.querySelector(".project-cover.project-input").removeEventListener("mousedown", mouseDownEvent)
     viewportElement.querySelector(".project-cover.project-input").removeEventListener("mouseup", mouseUpEvent)
     viewportElement.querySelector(".project-cover.project-input").removeEventListener("mousemove", mouseMoveEvent)
-    viewportElement.querySelector(".project-cover.project-input").removeEventListener("click", mouseClickEvent)
     setContext("default")
-}
-function wheelEvent(ev) {
-    if (ev.deltaY > 0) {
-        zoom(ev, -1)
-    } else {
-        zoom(ev, 1)
-    }
-}
-function mouseDownEvent(ev) {
-    if (ev.button == 1) {
-        grabbing = true
-        setContext("view_panning")
-        totalPointerMovement = {x:0,y:0}
-        startingPointerPosition = {x:ev.layerX,y:ev.layerY}
-        inputElement.requestPointerLock()
-        moveLockedPointerImage()
-        pointerElement.appendChild(registeredIcons["icon.pointer.view.pan"].getElement(30,30,pointerElement))
-    }
 }
 
 document.addEventListener("pointerlockchange", (_ev) => {
-    if (!document.pointerLockElement && grabbing) cancelViewPanning()
-})
-
-function mouseUpEvent(ev) {
-    var element = determineTopmostElement(ev)
-    if (ev.which == 3 && element == null) {
-        // test if clicked on any of the elements or connections or selection is active
-        registeredPopups["popup.project.addelement"].show({x:ev.clientX,y:ev.clientY})
-    } else if (ev.which == 1 && element != null) {
-        if (ev.shiftKey) {
-            toggleElementSelection(element.dataset.elementId)
-        } else {
-            selectElement(element.dataset.elementId)
-        }
-    } else if (ev.which == 1 && element == null) {
-        deselectAll()
+    if (!document.pointerLockElement && viewPanning) {
+        cancelViewPanning()
+    } else if (!document.pointerLockElement && elementTransformState==TRANSFORM_STATES.DRAG) {
+        cancelDragElements()
     }
     
-}
-function mouseMoveEvent(ev) {
-    let rect = inputElement.getBoundingClientRect()
-    openProjects[projectId].viewportTransforms.size.x = rect.width
-    openProjects[projectId].viewportTransforms.size.y = rect.height
-    openProjects[projectId].viewportTransforms.mouseOffset.x = ev.offsetX
-    openProjects[projectId].viewportTransforms.mouseOffset.y = ev.offsetY
-    if (grabbing) {
-        processLockedPointer(ev)
-    }
-    updateViewport()
-
-}
-function mouseClickEvent(ev) {
-    // console.log(ev)
-}
+})
 
 export function projectViewportId(id) {
     projectId = id
@@ -285,7 +235,7 @@ export function lockPanAxis(xAxis = true) {
     updateViewport()
 }
 export function cancelViewPanning() {
-    grabbing = false
+    viewPanning = false
     SetCursorPos()
     totalPointerMovement = {x:0,y:0}
     releaseContext()
@@ -312,3 +262,148 @@ function determineTopmostElement(ev) {
         return null
     }
 }
+
+function dragElements(event) {
+    totalPointerMovement.x += event.movementX
+    totalPointerMovement.y += event.movementY
+    for (let id of selectedElements) {
+        let el = openProjects[projectId].elementsData.elements[id].element
+        el.style.left = (parseFloat(el.dataset.dragStartX) + totalPointerMovement.x * (1 / getScale())) + "px"
+        el.style.top = (parseFloat(el.dataset.dragStartY) + totalPointerMovement.y * (1 / getScale())) + "px"
+    }
+    moveLockedPointerImage()
+}
+export function cancelDragElements() {
+    setTransformMode(TRANSFORM_STATES.NONE)
+    for (let id of selectedElements) {
+        let el = openProjects[projectId].elementsData.elements[id].element
+        el.style.left = el.dataset.dragStartX + "px"
+        el.style.top = el.dataset.dragStartY + "px"
+    }
+}
+export function finishDragElements() {
+    setTransformMode(TRANSFORM_STATES.NONE)
+}
+
+export function setTransformMode(mode) {
+    switch (mode) {
+        case TRANSFORM_STATES.NONE :
+            document.exitPointerLock()
+            elementTransformState = TRANSFORM_STATES.NONE
+            releaseContext()
+            SetCursorPos()
+            pointerElement.innerHTML = ""
+            totalPointerMovement = {x:0,y:0}
+            elementTransformMult = {x:0,y:0}
+            break
+        case TRANSFORM_STATES.DRAG :
+            elementTransformState = TRANSFORM_STATES.DRAG
+            setContext("drag")
+            totalPointerMovement = {x:0,y:0}
+            startingPointerPosition = inputMousePos
+            inputElement.requestPointerLock()
+            moveLockedPointerImage()
+            elementTransformMult = {x:0,y:0}
+            pointerElement.appendChild(registeredIcons["icon.pointer.view.pan"].getElement(30,30,pointerElement))
+            for (let id of selectedElements) {
+                let el = openProjects[projectId].elementsData.elements[id].element
+                el.dataset.dragStartX = parseFloat(el.style.left)
+                el.dataset.dragStartY = parseFloat(el.style.top)
+            }
+    }
+}
+
+
+// #region event handlers
+/*
+mouseupEvent.button:
+0: Main button, usually the left button or the un-initialized state
+1: Auxiliary button, usually the wheel button or the middle button (if present)
+2: Secondary button, usually the right button
+3: Fourth button, typically the Browser Back button
+4: Fifth button, typically the Browser Forward button
+*/
+document.addEventListener("mouseup", (ev) => {
+    if (ev.button == 1) {
+        if (viewPanning) {
+            releaseContext()
+            SetCursorPos()
+            document.exitPointerLock()
+            pointerElement.innerHTML = ""
+            viewPanningMult = {x:1,y:1}
+            openProjects[projectId].viewportTransforms.oldOffset.x = openProjects[projectId].viewportTransforms.offset.x
+            openProjects[projectId].viewportTransforms.oldOffset.y = openProjects[projectId].viewportTransforms.offset.y
+            viewPanning = false
+        }
+    }
+})
+
+function wheelEvent(ev) {
+    if (currentInputContext == "board") {
+        if (ev.deltaY > 0) {
+            zoom(ev, -1)
+        } else {
+            zoom(ev, 1)
+        }
+    }
+}
+function mouseDownEvent(ev) {
+    if (ev.button == 1) {
+        viewPanning = true
+        setContext("view_panning")
+        totalPointerMovement = {x:0,y:0}
+        startingPointerPosition = {x:ev.layerX,y:ev.layerY}
+        inputElement.requestPointerLock()
+        moveLockedPointerImage()
+        pointerElement.appendChild(registeredIcons["icon.pointer.view.pan"].getElement(30,30,pointerElement))
+    }
+}
+function mouseUpEvent(ev) {
+    var element = determineTopmostElement(ev)
+    if (currentInputContext == "board") {
+        if (ev.shiftKey) {
+            if (ev.button == 0) { //Shift+Left click
+                if (element != null) {
+                    toggleElementSelection(element.dataset.elementId)
+                }
+            }
+        } else {
+            if (ev.button == 0) { //Left click
+                if (element == null) { //Left click on empty space = deselect everything
+                    deselectAll()
+                } else { //Left click on element = deselect all other elements and select this one
+                    selectElement(element.dataset.elementId)
+                }
+            }
+        }
+        if (ev.button == 2) { //Right click
+            if (element == null) { // Bring up context menu on clicking empty space
+                registeredPopups["popup.project.addelement"].show({x:ev.clientX,y:ev.clientY})
+            } else if (element != null) { //Bring up element context menu 
+                
+            }
+        }
+    }
+    
+}
+function mouseMoveEvent(ev) {
+    let rect = inputElement.getBoundingClientRect()
+    openProjects[projectId].viewportTransforms.size.x = rect.width
+    openProjects[projectId].viewportTransforms.size.y = rect.height
+    openProjects[projectId].viewportTransforms.mouseOffset.x = ev.offsetX
+    openProjects[projectId].viewportTransforms.mouseOffset.y = ev.offsetY
+    inputMousePos = {x:ev.layerX,y:ev.layerY}
+    if (viewPanning) {
+        processLockedPointer(ev)
+    }
+    if (elementTransformState == TRANSFORM_STATES.DRAG) {
+        dragElements(ev)
+    } else if (elementTransformState == TRANSFORM_STATES.SCALE) {
+        dragElements(ev)
+    } else if (elementTransformState == TRANSFORM_STATES.ROTATE) {
+        dragElements(ev)
+    }
+    updateViewport()
+
+}
+// #endregion

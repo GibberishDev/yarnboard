@@ -251,6 +251,9 @@ function updateViewports() {
     } else {
         document.querySelector("#" + viewportSelectedId).classList.add("current-viewport")
     }
+    if (selectedID == "") {
+        setContext("default")
+    }
 }
 
 function closeViewport(id) {
