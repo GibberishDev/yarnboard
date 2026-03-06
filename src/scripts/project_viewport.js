@@ -64,7 +64,7 @@ function updateViewport() {
 function updateElements() {
     elementsElement.style.translate = openProjects[projectId].viewportTransforms.offset.x + "px " + openProjects[projectId].viewportTransforms.offset.y + "px"
     elementsElement.style.scale = openProjects[projectId].viewportTransforms.scale
-    document.querySelector(":root").style.setProperty("--outline-scale", 1 / openProjects[projectId].viewportTransforms.scale)
+    document.querySelector(":root").style.setProperty("--var-outline-scale", 1 / openProjects[projectId].viewportTransforms.scale)
 }
 
 function updateGrid() {
@@ -271,9 +271,14 @@ function scaleElements(event) {
     for (let id of selectedElements) {
         let el = openProjects[projectId].elementsData.elements[id].element
         if (event.shiftKey) {
-            el.style.scale = (parseFloat(el.dataset.scaleStartX) + (totalPointerMovement.x / (100 * (getScale())) * elementTransformMult.x))
+            let dist = Math.sqrt(totalPointerMovement.x*totalPointerMovement.x+totalPointerMovement.y*totalPointerMovement.y)
+            el.style.scale = (parseFloat(el.dataset.scaleStartX) + (dist / (100 * (getScale())) * elementTransformMult.x))
+            el.style.setProperty("--var-domvar-inverse-scale-x", 1 / (parseFloat(el.dataset.scaleStartX) + (dist / (100 * (getScale())) * elementTransformMult.x)))
+            el.style.setProperty("--var-domvar-inverse-scale-y", 1 / (parseFloat(el.dataset.scaleStartX) + (dist / (100 * (getScale())) * elementTransformMult.x)))
         } else {
             el.style.scale = (parseFloat(el.dataset.scaleStartX) + (totalPointerMovement.x / (100 * (getScale())) * elementTransformMult.x)) + " " + (parseFloat(el.dataset.scaleStartY) + (totalPointerMovement.y / (100 * (getScale())) * elementTransformMult.y))
+            el.style.setProperty("--var-domvar-inverse-scale-x", 1 / (parseFloat(el.dataset.scaleStartX) + (totalPointerMovement.x / (100 * (getScale())) * elementTransformMult.x)))
+            el.style.setProperty("--var-domvar-inverse-scale-y", 1 / (parseFloat(el.dataset.scaleStartY) + (totalPointerMovement.y / (100 * (getScale())) * elementTransformMult.y)))
         }
     }
     moveLockedPointerImage()
@@ -306,6 +311,8 @@ export function cancelScaleElements() {
     for (let id of selectedElements) {
         let el = openProjects[projectId].elementsData.elements[id].element
         el.style.scale = el.dataset.scaleStartX + " " + el.dataset.scaleStartY
+        el.style.setProperty("--var-domvar-inverse-scale-x", 1 / el.dataset.scaleStartX)
+        el.style.setProperty("--var-domvar-inverse-scale-y", 1 / el.dataset.scaleStartY)
     }
     setTransformMode(TRANSFORM_STATES.NONE)
 }

@@ -1,11 +1,50 @@
 .element {
-    position: absolute;
+    transform-origin: 50% 50%;
     display: flex;
+    overflow: visible;
+    position: absolute;
     transition-property: none;
-    left: 0px;
-    top: 0px;
+    translate: -50% -50%;
 }
-.element.selected {
-    outline: max(1px, calc(2px * var(--outline-scale))) dashed var(--var-color-theme-accent-bright);
-    outline-offset: max(1px, calc(2px * var(--outline-scale)));
+
+.no-data {
+    display: none;
+}
+
+.element-transform {
+}
+.element-selection {
+    display: none;
+}
+/* .element.selected .element-selection {
+    --var-domvar-outline-x: max(0.26px,abs(calc(var(--var-outline-width) * var(--var-outline-scale) * var(--var-domvar-inverse-scale-x))));
+    --var-domvar-outline-y: max(0.26px,abs(calc(var(--var-outline-width) * var(--var-outline-scale) * var(--var-domvar-inverse-scale-y))));
+    display: block;
+    position: absolute;
+    transform-origin: 50% 50%;
+    background: var(--var-color-theme-accent-bright);
+    width: calc(100% + (var(--var-domvar-outline-x) * 4));
+    height: calc(100% + (var(--var-domvar-outline-y) * 4));
+    left: calc(var(--var-domvar-outline-x) * -2);
+    top: calc(var(--var-domvar-outline-y) * -2);
+    clip-path:  polygon(
+        var(--var-domvar-outline-x) var(--var-domvar-outline-y),
+        calc(100% - var(--var-domvar-outline-x)) var(--var-domvar-outline-y),
+        calc(100% - var(--var-domvar-outline-x)) calc(100% - var(--var-domvar-outline-y)),
+        var(--var-domvar-outline-x) calc(100% - var(--var-domvar-outline-y)),
+        0 100%, 100% 100%, 100% 0, 0 0, 0 100%,
+        var(--var-domvar-outline-x) calc(100% - var(--var-domvar-outline-y))
+        );
+    z-index: -1;
+    transition-property: none;
+} */
+.element.selected .element-selection {
+    background: rgb(from var(--var-color-theme-accent) r g b / 0.25);
+    width: 100%;
+    height: 100%;
+    display: block;
+    position: absolute;
+}
+
+.picture .element-data {
 }

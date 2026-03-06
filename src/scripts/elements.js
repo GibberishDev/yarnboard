@@ -50,14 +50,14 @@ export class Element {
         this.element = document.createElement("div")
         this.element.dataset.elementId = this.id
         this.element.classList.add("element",getElementTypeClass(this.type))
-        this.element.style = "left:0px;top:0px;scale:100% 100%;"
+        this.element.style = "scale:1;--var-domvar-inverse-scale-x:1;--var-domvar-inverse-scale-y:1;left:150px;top:150px;rotate:0deg;"
         switch (this.type) {
             case ELEMENT_TYPES.PICTURE :
-                this.element.innerHTML = "<img class='element-data'>"
+                this.element.innerHTML = templatePicture
                 this.element.querySelector(".element-data").src = this.data.src
                 break
             case ELEMENT_TYPES.TEXT :
-                this.element.innerHTML = "<div class='element-data'></div>"
+                this.element.innerHTML = templateText
                 this.element.querySelector(".element-data").textContent = this.data.text
                 break
             default :
@@ -79,3 +79,13 @@ function getElementTypeClass(type) {
         return "picture" /*failsafe picture element default... what could go wrong */
     }
 }
+
+
+// #region element templates
+// Picture
+// TODO: add empty picture element boilerplate to load up the image
+const templatePicture = `<div class="element-selection"></div>
+<img class="element-data" src="">`
+const templateText = `<div class="element-selection"></div>
+<div class="element-data"></div>`
+// #endregion

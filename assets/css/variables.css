@@ -5,7 +5,7 @@
     src: url(../fonts/JetBrainsMono-Regular.ttf);
 }
 :root {
-    --outline-scale: 1.0;
+    --var-outline-scale: 1.0;
     --var-outline-width : 2px;
     --var-selection-rect-inactive : all;
     --var-font-regular : "JetBrains Mono";
@@ -19,5 +19,10 @@
     --var-color-theme-text : #a6a6a6;
     --var-color-theme-accent : #1d6600;
     --var-color-theme-accent-bright : #33b300;
+
+    --var-domvar-outline-x: 2px; /*set in elements.css > .element.selected .element-selection*/
+    --var-domvar-outline-y: 2px; /*set in elements.css > .element.selected .element-selection*/
+    --var-domvar-inverse-scale-x: 1.0;
+    --var-domvar-inverse-scale-y: 1.0;
 }
 
