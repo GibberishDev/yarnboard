@@ -46,5 +46,6 @@
     position: absolute;
 }
 
-.picture .element-data {
+.element.text .element-data {
+    white-space: nowrap;
 }

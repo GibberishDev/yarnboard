@@ -493,6 +493,5 @@ document.addEventListener("pointerlockchange", (_ev) => {
     } else if (!document.pointerLockElement && elementTransformState==TRANSFORM_STATES.SCALE) {
         cancelScaleElements()
     }
-    
 })
 // #endregion
