@@ -4,7 +4,6 @@
     overflow: visible;
     position: absolute;
     transition-property: none;
-    translate: -50% -50%;
 }
 
 .no-data {
@@ -48,4 +47,11 @@
 
 .element.text .element-data {
     white-space: nowrap;
+}
+.transform-guide {
+    position:absolute;
+    z-index:1;
+    border-bottom: 2px dashed var(--var-color-theme-accent);
+    transition-property: none;
+    transform-origin: 0% 50%;
 }

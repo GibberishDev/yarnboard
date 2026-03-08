@@ -63,3 +63,29 @@ function getAllElements() {
 function getElement(id) {
     return openProjects[projectId].elementsData.elements[id]
 }
+
+
+export function getMiddlePoint() {
+    var points = []
+    let allElements = getAllElements()
+    for (let elementId of selectedElements) {
+        let rect = allElements[elementId].element.getBoundingClientRect()
+        var point = {
+            x: parseFloat(allElements[elementId].element.style.left) + (rect.width / 2.0),
+            y: parseFloat(allElements[elementId].element.style.top) + (rect.height / 2.0),
+        }
+        points.push(point)
+    }
+    var midPoint = {x:0,y:0}
+    for (var i = 0; i < points.length; i++) {
+        if (i == 0) {
+            midPoint = points[0]
+        } else {
+            midPoint = {
+                x: (midPoint.x + points[i].x)/2,
+                y: (midPoint.y + points[i].y)/2,
+            }
+        }
+    }
+    return midPoint
+}

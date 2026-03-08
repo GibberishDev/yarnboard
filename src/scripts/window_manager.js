@@ -191,6 +191,7 @@ const projectTemplate = `
     <div class="project-cover project-background"></div>
     <div class="project-cover project-grid"></div>
     <div class="project-cover project-elements">
+        <div class="transform-guide" styel="display:none;"></div>
     </div>
     <div class="project-cover project-input"></div>
     <div class="project-cover project-hud">

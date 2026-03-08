@@ -13,9 +13,9 @@ function newProject() {
 }
 
 new BindAction("action.viewport.selection.transform_move" , ()=> {setTransformMode(TRANSFORM_STATES.DRAG)} , ["board"] , 'g')
-new BindAction("action.viewport.selection.transform_move_reset" , ()=> {alert("reset move")} , ["board"] , 'alt+g')
-// new BindAction("action.viewport.selection.transform_rotate" , ()=> {alert("rotate");window.yarnboardAPI.fixFocus()} , ["board"] , 'r')
-// new BindAction("action.viewport.selection.transform_rotate_reset" , ()=> {alert("reset rotate");window.yarnboardAPI.fixFocus()} , ["board"] , 'alt+r')
+new BindAction("action.viewport.selection.transform_move_reset" , ()=> {alert("reset move");window.yarnboardAPI.fixFocus()} , ["board"] , 'alt+g')
+new BindAction("action.viewport.selection.transform_rotate" , ()=> {setTransformMode(TRANSFORM_STATES.ROTATE)} , ["board"] , 'r')
+new BindAction("action.viewport.selection.transform_rotate_reset" , ()=> {alert("reset rotate");window.yarnboardAPI.fixFocus()} , ["board"] , 'alt+r')
 new BindAction("action.viewport.selection.transform_scale" , ()=> {setTransformMode(TRANSFORM_STATES.SCALE)} , ["board"] , 's')
 new BindAction("action.viewport.selection.transform_scale_reset" , ()=> {alert("reset scale");window.yarnboardAPI.fixFocus()} , ["board"] , 'alt+s')
 new BindAction("action.viewport.selection.lock_axis_x" , ()=> {lockTransformAxis(true)} , ["scale","drag"] , 'x')
