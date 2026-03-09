@@ -190,7 +190,7 @@ function moveLockedPointerImage() {
     statsPos.textContent = "X:" + parseInt(totalPointerMovement.x * viewPanningMult.x) + " Y:" + parseInt(totalPointerMovement.y * viewPanningMult.y)
 }
 
-function SetCursorPos() {
+function setPointerPos() {
     var newPos = {
         x: startingPointerPosition.x + totalPointerMovement.x,
         y: startingPointerPosition.y + totalPointerMovement.y
@@ -227,7 +227,7 @@ export function lockPanAxis(xAxis = true) {
 }
 export function cancelViewPanning() {
     viewPanning = false
-    SetCursorPos()
+    setPointerPos()
     totalPointerMovement = {x:0,y:0}
     releaseContext()
     pointerElement.innerHTML = ""
@@ -358,148 +358,6 @@ export function lockTransformAxis(xAxis = true) {
     }
 }
 
-export function cancelDragElements() {
-    for (let id of selectedElements) {
-        let el = openProjects[projectId].elementsData.elements[id].element
-        el.style.left = el.dataset.dragStartX + "px"
-        el.style.top = el.dataset.dragStartY + "px"
-    }
-    setTransformMode(TRANSFORM_STATES.NONE)
-}
-export function cancelScaleElements() {
-    for (let id of selectedElements) {
-        let el = openProjects[projectId].elementsData.elements[id].element
-        el.style.scale = el.dataset.scaleStartX + " " + el.dataset.scaleStartY
-        el.style.setProperty("--var-domvar-inverse-scale-x", 1 / el.dataset.scaleStartX)
-        el.style.setProperty("--var-domvar-inverse-scale-y", 1 / el.dataset.scaleStartY)
-    }
-    setTransformMode(TRANSFORM_STATES.NONE)
-}
-export function cancelRotateElements() {
-    for (let id of selectedElements) {
-        let el = openProjects[projectId].elementsData.elements[id].element
-        el.style.rotate = el.dataset.rotateStart + "deg"
-    }
-    setTransformMode(TRANSFORM_STATES.NONE)
-}
-
-export function setTransformMode(mode) {
-    if (selectedElements.length == 0) {
-        document.exitPointerLock()
-        elementTransformState = TRANSFORM_STATES.NONE
-        setContext("board")
-        pointerElement.innerHTML = ""
-        totalPointerMovement = {x:0,y:0}
-        elementTransformMult = {x:1,y:1}
-        document.querySelector(".transform-guide").style.display = "none"
-        document.querySelector(".transform-guide").style.width = "0"
-        return
-    }
-    switch (mode) {
-        case TRANSFORM_STATES.NONE :
-            document.exitPointerLock()
-            elementTransformState = TRANSFORM_STATES.NONE
-            setContext("board")
-            SetCursorPos()
-            pointerElement.innerHTML = ""
-            totalPointerMovement = {x:0,y:0}
-            elementTransformMult = {x:1,y:1}
-            document.querySelector(".transform-guide").style.display = "none"
-            document.querySelector(".transform-guide").style.width = "0"
-            for (let id of selectedElements) {
-                let el = openProjects[projectId].elementsData.elements[id].element
-                el.dataset.dragStartX = parseFloat(el.style.left)
-                el.dataset.dragStartY = parseFloat(el.style.top)
-                let scaleValue = el.style.scale.split(" ")
-                if (scaleValue.length < 2) { // JANK!!!!!!!! BETTER TO SPLIT TO scaleX and scaleY transform properties but that would interfeer with rotation
-                    el.dataset.scaleStartX = parseFloat(el.style.scale.split(" ")[0])
-                    el.dataset.scaleStartY = parseFloat(el.style.scale.split(" ")[0])
-                } else {
-                    el.dataset.scaleStartX = parseFloat(el.style.scale.split(" ")[0])
-                    el.dataset.scaleStartY = parseFloat(el.style.scale.split(" ")[1])
-                }
-                    
-            }
-            break
-        case TRANSFORM_STATES.DRAG :
-            elementTransformState = TRANSFORM_STATES.DRAG
-            setContext("drag")
-            totalPointerMovement = {x:0,y:0}
-            startingPointerPosition = inputMousePos
-            inputElement.requestPointerLock()
-            moveLockedPointerImage()
-            elementTransformMult = {x:1,y:1}
-            pointerElement.appendChild(registeredIcons["icon.pointer.view.pan"].getElement(30,30,pointerElement))
-            var midPoint = getMiddlePoint()
-            document.querySelector(".transform-guide").style.left = midPoint.x + "px"
-            document.querySelector(".transform-guide").style.top = midPoint.y + "px"
-            document.querySelector(".transform-guide").style.display = "block"
-            for (let id of selectedElements) {
-                let el = openProjects[projectId].elementsData.elements[id].element
-                el.dataset.dragStartX = parseFloat(el.style.left)
-                el.dataset.dragStartY = parseFloat(el.style.top)
-            }
-            break
-        case TRANSFORM_STATES.SCALE :
-            elementTransformState = TRANSFORM_STATES.SCALE
-            setContext("scale")
-            totalPointerMovement = {x:0,y:0}
-            startingPointerPosition = inputMousePos
-            inputElement.requestPointerLock()
-            moveLockedPointerImage()
-            elementTransformMult = {x:1,y:1}
-            var midPoint = getMiddlePoint()
-            document.querySelector(".transform-guide").style.left = midPoint.x + "px"
-            document.querySelector(".transform-guide").style.top = midPoint.y + "px"
-            document.querySelector(".transform-guide").style.display = "block"
-            pointerElement.appendChild(registeredIcons["icon.pointer.view.pan"].getElement(30,30,pointerElement))
-            for (let id of selectedElements) {
-                let el = openProjects[projectId].elementsData.elements[id].element
-                let scaleValue = el.style.scale.split(" ")
-                if (scaleValue.length < 2) {
-                    el.dataset.scaleStartX = parseFloat(el.style.scale.split(" ")[0])
-                    el.dataset.scaleStartY = parseFloat(el.style.scale.split(" ")[0])
-                } else {
-                    el.dataset.scaleStartX = parseFloat(el.style.scale.split(" ")[0])
-                    el.dataset.scaleStartY = parseFloat(el.style.scale.split(" ")[1])
-                }
-                    
-            }
-            break
-        case TRANSFORM_STATES.ROTATE :
-            elementTransformState = TRANSFORM_STATES.ROTATE
-            setContext("rotate")
-            totalPointerMovement = {x:0,y:0}
-            startingPointerPosition = inputMousePos
-            var midPoint = getMiddlePoint()
-            document.querySelector(".transform-guide").style.left = midPoint.x + "px"
-            document.querySelector(".transform-guide").style.top = midPoint.y + "px"
-            document.querySelector(".transform-guide").style.display = "block"
-            inputElement.requestPointerLock()
-            moveLockedPointerImage()
-            pointerElement.appendChild(registeredIcons["icon.pointer.view.pan"].getElement(30,30,pointerElement))
-            rotateStartingAngle = new Line(
-                {
-                    x:midPoint.x,
-                    y:midPoint.y
-                },
-                {
-                    x:startingPointerPosition.x,
-                    y:startingPointerPosition.y
-                }
-            ).getAngle() * 180 / Math.PI * -1 + 180
-            for (let id of selectedElements) {
-                let el = openProjects[projectId].elementsData.elements[id].element
-                el.dataset.rotateStart = parseFloat(el.style.rotate)
-            }
-            break
-        
-    }
-    
-    moveLockedPointerImage()
-    showTransformGuide()
-}
-
 
 // #region event handlers
 /*
@@ -514,7 +372,7 @@ document.addEventListener("mouseup", (ev) => {
     if (ev.button == 1) {
         if (viewPanning) {
             releaseContext()
-            SetCursorPos()
+            setPointerPos()
             document.exitPointerLock()
             pointerElement.innerHTML = ""
             viewPanningMult = {x:1,y:1}
@@ -523,22 +381,11 @@ document.addEventListener("mouseup", (ev) => {
             viewPanning = false
         }
     }
-    if (currentInputContext == "drag" || currentInputContext == "scale" || currentInputContext == "rotate") {
+    if (elementTransformState != TRANSFORM_STATES.NONE && projectId != "") {
         if (ev.button == 0) { // left click while dragging/scaling to apply changes
             setTransformMode(TRANSFORM_STATES.NONE)
         } else if (ev.button == 2) {
-            switch (elementTransformState) {
-                case TRANSFORM_STATES.DRAG :
-                    cancelDragElements()
-                    break
-                case TRANSFORM_STATES.SCALE :
-                    cancelScaleElements()
-                    break
-                case TRANSFORM_STATES.ROTATE :
-                    cancelRotateElements()
-                    break
-
-            }
+            cancelCurrentTransform()
         }
     }
 })
@@ -616,12 +463,182 @@ function mouseMoveEvent(ev) {
 document.addEventListener("pointerlockchange", (_ev) => {
     if (!document.pointerLockElement && viewPanning) {
         cancelViewPanning()
-    } else if (!document.pointerLockElement && elementTransformState==TRANSFORM_STATES.DRAG) {
-        cancelDragElements()
-    } else if (!document.pointerLockElement && elementTransformState==TRANSFORM_STATES.SCALE) {
-        cancelScaleElements()
-    } else if (!document.pointerLockElement && elementTransformState==TRANSFORM_STATES.ROTATE) {
-        cancelRotateElements()
+    } else if (!document.pointerLockElement && elementTransformState!=TRANSFORM_STATES.NONE) {
+        cancelCurrentTransform()
     }
 })
+// #endregion
+
+
+// #region point translation
+/**
+ * Translates from element layer point to input layer point
+ * @param {Object} point Object with x and y keys for coordinates
+ * @returns {Object} point in input layer system
+ */
+function getInputLayerPoint(point) {
+    let inputRect = inputElement.getBoundingClientRect()
+    let newPoint = {x:point.x,y:point.y}
+    if (newPoint.x > (inputRect.width)) {
+        newPoint.x = newPoint.x % inputRect.width
+    } else if (newPoint.x < 0) {
+        newPoint.x = inputElement.width + (newPoint.x % inputElement.width)
+    }
+    if (newPoint.y > (inputRect.height)) {
+        newPoint.y = newPoint.x % inputRect.height
+    } else if (newPoint.y < 0) {
+        newPoint.y = inputElement.height + (newPoint.y % inputElement.height)
+    }
+    return newPoint
+}
+
+/**
+ * Translates from input layer point to element layer point
+ * @param {Object} point Object with x and y keys for coordinates
+ * @returns {Object} point in element layer system
+ */
+function getElementLayerPoint(point) {
+    let elementPos = {
+        x:openProjects[projectId].viewportTransforms.offset.x,
+        y:openProjects[projectId].viewportTransforms.offset.y
+    }
+    return {x:elementPos.x + point.x, y:elementPos.y + point.y}
+}
+
+// #endregion
+
+
+// #region element transform
+
+/**
+ * 
+ * @param {TRANSFORM_STATES} mode selects transformation mode. if none it applies transformation 
+ */
+export function setTransformMode(mode) {
+    totalPointerMovement = {x:0,y:0}
+    elementTransformMult = {x:1,y:1}
+    if (mode == TRANSFORM_STATES.NONE || selectedElements.length == 0) {
+        document.exitPointerLock()
+        setContext("board")
+        setPointerPos()
+        pointerElement.innerHTML = ""
+        document.querySelector(".transform-guide").style.display = "none"
+        document.querySelector(".transform-guide").style.width = "0"
+        if (elementTransformState != TRANSFORM_STATES.NONE) {
+            for (let id of selectedElements) {
+                let el = openProjects[projectId].elementsData.elements[id].element
+                el.dataset.dragStartX = parseFloat(el.style.left)
+                el.dataset.dragStartY = parseFloat(el.style.top)
+                let scaleValue = el.style.scale.split(" ")
+                if (scaleValue.length < 2) {
+                    el.dataset.scaleStartX = scaleValue[0]
+                    el.dataset.scaleStartY = scaleValue[0]
+                } else {
+                    el.dataset.scaleStartX = scaleValue[0]
+                    el.dataset.scaleStartY = scaleValue[1]
+                }
+                el.dataset.rotateStart = parseFloat(el.style.rotate)
+            }
+        }
+        elementTransformState = TRANSFORM_STATES.NONE
+        return
+    }
+    switch (mode) {
+        case TRANSFORM_STATES.NONE :
+            break
+        case TRANSFORM_STATES.DRAG :
+            elementTransformState = TRANSFORM_STATES.DRAG
+            setContext("drag")
+            startingPointerPosition = inputMousePos
+            inputElement.requestPointerLock()
+            moveLockedPointerImage()
+            pointerElement.appendChild(registeredIcons["icon.pointer.view.pan"].getElement(30,30,pointerElement))
+            var midPoint = getMiddlePoint()
+            document.querySelector(".transform-guide").style.left = midPoint.x + "px"
+            document.querySelector(".transform-guide").style.top = midPoint.y + "px"
+            document.querySelector(".transform-guide").style.display = "block"
+            for (let id of selectedElements) {
+                let el = openProjects[projectId].elementsData.elements[id].element
+                el.dataset.dragStartX = parseFloat(el.style.left)
+                el.dataset.dragStartY = parseFloat(el.style.top)
+            }
+            break
+        case TRANSFORM_STATES.SCALE :
+            elementTransformState = TRANSFORM_STATES.SCALE
+            setContext("scale")
+            startingPointerPosition = inputMousePos
+            inputElement.requestPointerLock()
+            moveLockedPointerImage()
+            var midPoint = getMiddlePoint()
+            document.querySelector(".transform-guide").style.left = midPoint.x + "px"
+            document.querySelector(".transform-guide").style.top = midPoint.y + "px"
+            document.querySelector(".transform-guide").style.display = "block"
+            pointerElement.appendChild(registeredIcons["icon.pointer.view.pan"].getElement(30,30,pointerElement))
+            for (let id of selectedElements) {
+                let el = openProjects[projectId].elementsData.elements[id].element
+                let scaleValue = el.style.scale.split(" ")
+                if (scaleValue.length < 2) {
+                    el.dataset.scaleStartX = parseFloat(el.style.scale.split(" ")[0])
+                    el.dataset.scaleStartY = parseFloat(el.style.scale.split(" ")[0])
+                } else {
+                    el.dataset.scaleStartX = parseFloat(el.style.scale.split(" ")[0])
+                    el.dataset.scaleStartY = parseFloat(el.style.scale.split(" ")[1])
+                }
+                    
+            }
+            break
+        case TRANSFORM_STATES.ROTATE :
+            elementTransformState = TRANSFORM_STATES.ROTATE
+            setContext("rotate")
+            startingPointerPosition = inputMousePos
+            var midPoint = getMiddlePoint()
+            document.querySelector(".transform-guide").style.left = midPoint.x + "px"
+            document.querySelector(".transform-guide").style.top = midPoint.y + "px"
+            document.querySelector(".transform-guide").style.display = "block"
+            inputElement.requestPointerLock()
+            moveLockedPointerImage()
+            pointerElement.appendChild(registeredIcons["icon.pointer.view.pan"].getElement(30,30,pointerElement))
+            rotateStartingAngle = new Line(
+                {
+                    x:midPoint.x,
+                    y:midPoint.y
+                },
+                {
+                    x:startingPointerPosition.x,
+                    y:startingPointerPosition.y
+                }
+            ).getAngle() * 180 / Math.PI * -1 + 180
+            for (let id of selectedElements) {
+                let el = openProjects[projectId].elementsData.elements[id].element
+                el.dataset.rotateStart = parseFloat(el.style.rotate)
+            }
+            break
+        
+    }
+    
+    moveLockedPointerImage()
+    showTransformGuide()
+}
+
+export function cancelCurrentTransform() {
+    if (elementTransformState == TRANSFORM_STATES.DRAG) {
+        for (let id of selectedElements) {
+            let el = openProjects[projectId].elementsData.elements[id].element
+            el.style.left = el.dataset.dragStartX + "px"
+            el.style.top = el.dataset.dragStartY + "px"
+        }
+    } else if (elementTransformState == TRANSFORM_STATES.SCALE) {
+        for (let id of selectedElements) {
+            let el = openProjects[projectId].elementsData.elements[id].element
+            el.style.scale = el.dataset.scaleStartX + " " + el.dataset.scaleStartY
+        }
+    } else if (elementTransformState == TRANSFORM_STATES.ROTATE) {
+        for (let id of selectedElements) {
+            let el = openProjects[projectId].elementsData.elements[id].element
+            el.style.rotate = el.dataset.rotateStart + "deg"
+        }
+    }
+    setTransformMode(TRANSFORM_STATES.NONE)
+}
+
 // #endregion

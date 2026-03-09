@@ -1,9 +1,9 @@
 .element {
-    transform-origin: 50% 50%;
     display: flex;
     overflow: visible;
     position: absolute;
     transition-property: none;
+    translate: -50% -50%;
 }
 
 .no-data {

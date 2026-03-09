@@ -71,8 +71,8 @@ export function getMiddlePoint() {
     for (let elementId of selectedElements) {
         let rect = allElements[elementId].element.getBoundingClientRect()
         var point = {
-            x: parseFloat(allElements[elementId].element.style.left) + (rect.width / 2.0),
-            y: parseFloat(allElements[elementId].element.style.top) + (rect.height / 2.0),
+            x: parseFloat(allElements[elementId].element.style.left),
+            y: parseFloat(allElements[elementId].element.style.top),
         }
         points.push(point)
     }
