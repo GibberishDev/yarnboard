@@ -311,38 +311,6 @@ function rotateElements(event) {
     moveLockedPointerImage()
 }
 
-function showTransformGuide() {
-    let el = document.querySelector(".transform-guide")
-    var line
-    if (elementTransformState == TRANSFORM_STATES.ROTATE) {
-        line = new Line(
-            {
-                x:parseFloat(el.style.left),
-                y:parseFloat(el.style.top)
-            },
-            {
-                x:inputMousePos.x + totalPointerMovement.x,
-                y:inputMousePos.y + totalPointerMovement.y
-            }
-        )
-    } else {
-        line = new Line(
-            {
-                x:startingPointerPosition.x,
-                y:startingPointerPosition.y
-            },
-            {
-                x:startingPointerPosition.x + totalPointerMovement.x *elementTransformMult.x,
-                y:startingPointerPosition.y + totalPointerMovement.y *elementTransformMult.y
-            }
-        )
-    }
-    el.style.left = line.start.x
-    el.style.top = line.start.y
-    el.style.width = line.getLength() + "px"
-    el.style.rotate = (90-(line.getAngle() * 180 / Math.PI)) + "deg"
-}
-
 export function lockTransformAxis(xAxis = true) {
     if (xAxis) {
         elementTransformMult.y == 0 ? elementTransformMult.y = 1 : elementTransformMult.y = 0
@@ -522,8 +490,7 @@ export function setTransformMode(mode) {
         setContext("board")
         setPointerPos()
         pointerElement.innerHTML = ""
-        document.querySelector(".transform-guide").style.display = "none"
-        document.querySelector(".transform-guide").style.width = "0"
+        inputElement.querySelector(".transform-guide").style.display = "none"
         if (elementTransformState != TRANSFORM_STATES.NONE) {
             for (let id of selectedElements) {
                 let el = openProjects[projectId].elementsData.elements[id].element
@@ -553,10 +520,6 @@ export function setTransformMode(mode) {
             inputElement.requestPointerLock()
             moveLockedPointerImage()
             pointerElement.appendChild(registeredIcons["icon.pointer.view.pan"].getElement(30,30,pointerElement))
-            var midPoint = getMiddlePoint()
-            document.querySelector(".transform-guide").style.left = midPoint.x + "px"
-            document.querySelector(".transform-guide").style.top = midPoint.y + "px"
-            document.querySelector(".transform-guide").style.display = "block"
             for (let id of selectedElements) {
                 let el = openProjects[projectId].elementsData.elements[id].element
                 el.dataset.dragStartX = parseFloat(el.style.left)
@@ -569,10 +532,6 @@ export function setTransformMode(mode) {
             startingPointerPosition = inputMousePos
             inputElement.requestPointerLock()
             moveLockedPointerImage()
-            var midPoint = getMiddlePoint()
-            document.querySelector(".transform-guide").style.left = midPoint.x + "px"
-            document.querySelector(".transform-guide").style.top = midPoint.y + "px"
-            document.querySelector(".transform-guide").style.display = "block"
             pointerElement.appendChild(registeredIcons["icon.pointer.view.pan"].getElement(30,30,pointerElement))
             for (let id of selectedElements) {
                 let el = openProjects[projectId].elementsData.elements[id].element
@@ -591,13 +550,10 @@ export function setTransformMode(mode) {
             elementTransformState = TRANSFORM_STATES.ROTATE
             setContext("rotate")
             startingPointerPosition = inputMousePos
-            var midPoint = getMiddlePoint()
-            document.querySelector(".transform-guide").style.left = midPoint.x + "px"
-            document.querySelector(".transform-guide").style.top = midPoint.y + "px"
-            document.querySelector(".transform-guide").style.display = "block"
             inputElement.requestPointerLock()
             moveLockedPointerImage()
             pointerElement.appendChild(registeredIcons["icon.pointer.view.pan"].getElement(30,30,pointerElement))
+            var midPoint = getMiddlePoint()
             rotateStartingAngle = new Line(
                 {
                     x:midPoint.x,
@@ -639,6 +595,38 @@ export function cancelCurrentTransform() {
         }
     }
     setTransformMode(TRANSFORM_STATES.NONE)
+}
+
+
+function showTransformGuide() {
+    let el = inputElement.querySelector(".transform-guide")
+    el.style.display = "block"
+    var line
+    var midPoint = getMiddlePoint()
+    if (elementTransformState == TRANSFORM_STATES.ROTATE) {
+        line = new Line(
+            getInputLayerPoint(midPoint),
+            getInputLayerPoint({
+                x:inputMousePos.x + totalPointerMovement.x,
+                y:inputMousePos.y + totalPointerMovement.y
+            })
+        )
+    } else {
+        line = new Line(
+            getInputLayerPoint({
+                x:startingPointerPosition.x,
+                y:startingPointerPosition.y
+            }),
+            getInputLayerPoint({
+                x:startingPointerPosition.x + totalPointerMovement.x *elementTransformMult.x,
+                y:startingPointerPosition.y + totalPointerMovement.y *elementTransformMult.y
+            })
+        )
+    }
+    el.style.left = line.start.x
+    el.style.top = line.start.y
+    el.style.width = line.getLength() + "px"
+    el.style.rotate = (90-(line.getAngle() * 180 / Math.PI)) + "deg"
 }
 
 // #endregion
