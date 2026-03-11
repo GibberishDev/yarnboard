@@ -603,6 +603,7 @@ function showTransformGuide() {
     el.style.display = "block"
     var line
     var midPoint = getMiddlePoint()
+    console.log(midPoint, getInputLayerPoint(midPoint))
     if (elementTransformState == TRANSFORM_STATES.ROTATE) {
         line = new Line(
             getInputLayerPoint(midPoint),
@@ -613,18 +614,15 @@ function showTransformGuide() {
         )
     } else {
         line = new Line(
-            getInputLayerPoint({
-                x:startingPointerPosition.x,
-                y:startingPointerPosition.y
-            }),
+            getInputLayerPoint(midPoint),
             getInputLayerPoint({
                 x:startingPointerPosition.x + totalPointerMovement.x *elementTransformMult.x,
                 y:startingPointerPosition.y + totalPointerMovement.y *elementTransformMult.y
             })
         )
     }
-    el.style.left = line.start.x
-    el.style.top = line.start.y
+    el.style.left = line.start.x + "px"
+    el.style.top = line.start.y + "px"
     el.style.width = line.getLength() + "px"
     el.style.rotate = (90-(line.getAngle() * 180 / Math.PI)) + "deg"
 }

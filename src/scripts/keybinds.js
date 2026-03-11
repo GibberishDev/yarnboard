@@ -90,9 +90,11 @@ window.onfocus = ()=>{
 }
 document.addEventListener("keydown", (ev) => {
   determineBind(ev, true)
+  ev.preventDefault()
 })
 document.addEventListener("keyup", (ev) => {
   determineBind(ev, false)
+  ev.preventDefault()
 })
 
 function determineBind(ev, keyDown) {
