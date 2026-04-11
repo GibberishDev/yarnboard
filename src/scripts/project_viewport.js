@@ -617,3 +617,11 @@ function showTransformGuide(start, end) {
 }
 
 // #endregion
+
+// TODO: element transform, locked pointer checklist:
+// [ ] move with axis locking and move coords preview
+// [ ] scale with axis locking and coords preview
+// [ ] rotate around individual origins
+// [ ] rotate around the mid point
+// [ ] transform snapping
+// [ ] locked cursor view panning coordinate preview (when moving rn it shows tatic coordinates due to cursor not actually moving) 
