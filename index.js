@@ -158,7 +158,9 @@ function saveAppSettings(data) {
 
 function loadAppSettings() {
   let userPath = app.getPath("userData")
-  mainWindow.webContents.send("loadSettings", fs.readFileSync(PATH.join(userPath, "settings.json"),"utf-8"))
+  if (fs.existsSync(PATH.join(userPath, "settings.json"))) {
+    mainWindow.webContents.send("loadSettings", fs.readFileSync(PATH.join(userPath, "settings.json"),"utf-8"))
+  }
 }
 
 function setMousePosition(pos={x:0,y:0}) {
