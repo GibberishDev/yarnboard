@@ -8,8 +8,8 @@
   "main": "index.js",
   "scripts": {
     "start": "electron .",
-    "package": "electron-forge package",
-    "make": "electron-forge make"
+    "app:dir": "electron-builder --dir",
+    "app:dist": "electron-builder"
   },
   "devDependencies": {
     "@electron-forge/cli": "^7.10.2",
@@ -20,11 +20,19 @@
     "@electron-forge/plugin-auto-unpack-natives": "^7.10.2",
     "@electron-forge/plugin-fuses": "^7.10.2",
     "@electron/fuses": "^1.8.0",
-    "electron": "^39.2.7"
+    "electron-builder": "^26.8.1"
   },
   "dependencies": {
     "@electron/build-tools": "^2.1.1",
     "@jitsi/robotjs": "^0.6.21",
+    "electron": "^42.5.0",
     "electron-squirrel-startup": "^1.0.1"
+  },
+  "build": {
+    "appId": "gibbdev.yarnboard"
+  },
+  "postinstall": "electron-builder install-app-deps",
+  "allowScripts": {
+    "electron@42.5.0": true
   }
 }

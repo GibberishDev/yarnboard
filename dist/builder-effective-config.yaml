@@ -1,0 +1,6 @@
+directories:
+  output: dist
+  buildResources: build
+appId: gibbdev.yarnboard
+files: []
+electronVersion: 39.8.9

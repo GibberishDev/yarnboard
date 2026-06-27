@@ -382,6 +382,7 @@ function genSearchList() {
 }
 
 function searchSettings(event) {
+    console.log(event.target.value)
     let searchTerm = event.target.value
     if (searchTerm == "") {
         updateSettingsViewport()
