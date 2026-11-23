@@ -12,21 +12,11 @@
     "app:dist": "electron-builder"
   },
   "devDependencies": {
-    "@electron-forge/cli": "^7.10.2",
-    "@electron-forge/maker-deb": "^7.10.2",
-    "@electron-forge/maker-rpm": "^7.10.2",
-    "@electron-forge/maker-squirrel": "^7.10.2",
-    "@electron-forge/maker-zip": "^7.10.2",
-    "@electron-forge/plugin-auto-unpack-natives": "^7.10.2",
-    "@electron-forge/plugin-fuses": "^7.10.2",
-    "@electron/fuses": "^1.8.0",
     "electron-builder": "^26.8.1"
   },
   "dependencies": {
-    "@electron/build-tools": "^2.1.1",
     "@jitsi/robotjs": "^0.6.21",
-    "electron": "^42.5.0",
-    "electron-squirrel-startup": "^1.0.1"
+    "electron": "^45.0.0"
   },
   "build": {
     "appId": "gibbdev.yarnboard"
