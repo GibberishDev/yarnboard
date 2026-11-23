@@ -33,6 +33,8 @@
   },
   "postinstall": "electron-builder install-app-deps",
   "allowScripts": {
-    "electron@42.5.0": true
+    "electron@42.5.0": true,
+    "@electron/build-tools@2.1.5": true,
+    "@jitsi/robotjs@0.6.24": true
   }
 }

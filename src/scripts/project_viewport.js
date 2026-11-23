@@ -382,7 +382,7 @@ function mouseMoveEvent(ev) {
 
 }
 
-document.addEventListener("pointerlockchange", (_ev) => {
+document.addEventListener("pointerlockchange", () => {
     if (!document.pointerLockElement && viewPanning) {
         cancelViewPanning()
     } else if (!document.pointerLockElement && elementTransformState!=TRANSFORM_STATES.NONE) {
@@ -464,21 +464,8 @@ export function setTransformMode(mode) {
         return
     }
     switch (mode) {
-        case TRANSFORM_STATES.NONE :
-            break
-        case TRANSFORM_STATES.DRAG :
-            elementTransformState = TRANSFORM_STATES.DRAG
-            setContext("drag")
-            startingPointerPosition = inputMousePos
-            inputElement.requestPointerLock()
-            moveLockedPointerImage()
-            pointerElement.appendChild(registeredIcons["icon.pointer.view.pan"].getElement(30,30,pointerElement))
-            for (let id of selectedElements) {
-                let el = openProjects[projectId].elementsData.elements[id].element
-                el.dataset.dragStartX = parseFloat(el.style.left)
-                el.dataset.dragStartY = parseFloat(el.style.top)
-            }
-            break
+        case TRANSFORM_STATES.NONE : break;
+        case TRANSFORM_STATES.DRAG : setTransformModeDrag(); break;
         case TRANSFORM_STATES.SCALE :
             elementTransformState = TRANSFORM_STATES.SCALE
             setContext("scale")
@@ -526,6 +513,21 @@ export function setTransformMode(mode) {
     }
     
     moveLockedPointerImage()
+}
+
+function setTransformModeDrag() {
+    elementTransformState = TRANSFORM_STATES.DRAG
+    setContext("drag")
+    startingPointerPosition = inputMousePos
+    inputElement.requestPointerLock()
+    moveLockedPointerImage()
+    pointerElement.appendChild(registeredIcons["icon.pointer.view.pan"].getElement(30,30,pointerElement))
+    for (let id of selectedElements) {
+        let el = openProjects[projectId].elementsData.elements[id].element
+        el.dataset.dragStartX = parseFloat(el.style.left)
+        el.dataset.dragStartY = parseFloat(el.style.top)
+    }
+
 }
 
 export function cancelCurrentTransform() {

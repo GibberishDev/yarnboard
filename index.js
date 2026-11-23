@@ -1,8 +1,8 @@
-const { app, BrowserWindow, ipcMain, globalShortcut, Menu, MenuItem } = require('electron')
+const { app, BrowserWindow, ipcMain, globalShortcut, } = require('electron')
 const fs = require('fs')
 const electron = require('electron')
 const PATH = require('path')
-const robot = require('@jitsi/robotjs')
+const {moveMouse} = require('@jitsi/robotjs')
 
 let mainWindow;
 
@@ -149,7 +149,7 @@ function saveAppSettings(data) {
   let userPath = app.getPath("userData")
   fs.writeFile(PATH.join(userPath, "settings.json"), data, function (err) {if (err) {
       if (err.code == "EPERM") {
-        console.log("ERROR: cannot save in " + path + ". Missing admin priviledges")
+        console.log("ERROR: cannot save in " + userPath + ". Missing admin priviledges")
         return
       }
       throw err
@@ -165,7 +165,8 @@ function loadAppSettings() {
 
 function setMousePosition(pos={x:0,y:0}) {
   let winRect = mainWindow.getContentBounds()
-  robot.moveMouse(pos.x + winRect.x,pos.y + winRect.y)
+  setTimeout(()=>moveMouse(pos.x + winRect.x,pos.y + winRect.y),1) //Without the delay "sometimes" it just does nothing. with delay one can see cursor appear on screen for 1 ms. maybe its due to janky mouse locking idk 
+  
 }
 
 // #endregion
